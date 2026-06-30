@@ -1,0 +1,137 @@
+# ==============================
+# ROOT .gitignore for Full-Stack Project
+# ==============================
+
+# =================================
+# BACKEND SPECIFIC
+# =================================
+backend/node_modules/
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/package-lock.json
+backend/yarn.lock
+backend/pnpm-lock.yaml
+backend/.env
+backend/.env.local
+backend/.env.production
+backend/.env.development
+backend/logs/
+backend/*.sqlite
+backend/*.sqlite3
+backend/*.db
+backend/uploads/
+backend/media/
+backend/dist/
+backend/build/
+backend/coverage/
+backend/.nyc_output/
+
+# =================================
+# MOBILE/EXPO SPECIFIC
+# =================================
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+mobile/.expo-shared/
+mobile/npm-debug.*
+mobile/*.log
+mobile/package-lock.json
+mobile/yarn.lock
+mobile/.env
+mobile/.env.local
+mobile/ios/
+mobile/android/
+mobile/*.xcodeproj
+mobile/*.xcworkspace
+mobile/Pods/
+mobile/*.apk
+mobile/*.ipa
+
+# =================================
+# SHARED/COMMON
+# =================================
+# Environment
+.env
+.env.local
+.env.production
+.env.development
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+*.code-workspace
+.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+access.log
+error.log
+combined.log
+
+# Temporary files
+tmp/
+temp/
+.cache/
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+
+# Secrets/Certificates
+*.pem
+*.p12
+*.key
+*.crt
+*.cer
+*.csr
+*.p7b
+*.der
+*.jks
+*.keystore
+*.secret
+
+# Backup
+backup/
+backups/
+*.backup
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+jest/
+
+# Build artifacts
+dist/
+build/
+out/
+*.min.js
+*.min.css
+*.map
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Docker
+*.dockerfile
+docker-compose.override.yml
+
+# GitHub
+.github/
+*.github
