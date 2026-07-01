@@ -1,0 +1,56 @@
+{
+  "common": {
+    "error": "Error"
+  },
+  "menu": {
+    "language": "Language",
+    "selectLanguage": "Choose your preferred language",
+    
+    "currency": "Currency",
+    "selectCurrency": "Choose your preferred currency",
+    "profile": "Profile"
+  },
+  "languages": {
+    "en": {
+      "native": "English",
+      "translated": "English",
+      "short": "🇺🇸 English"
+    },
+    "ja": {
+      "native": "日本語",
+      "translated": "Japanese",
+      "short": "🇯🇵 日本語"
+    },
+    "zh": {
+      "native": "中文",
+      "translated": "Chinese",
+      "short": "🇨🇳 中文"
+    }
+  },
+  "currency": {
+    "title": "Currency",
+    "MYR": "🇲🇾 Malaysian Ringgit",
+    "JPY": "🇯🇵 Japanese Yen",
+    "CNY": "🇨🇳 Chinese Yuan"
+  },
+  "auth": {
+    "google": "Continue with Google",
+    "apple": "Continue with Apple",
+    "socialLoginFailed": "Failed to sign in with %{provider}. Please try again.",
+    "terms": "Terms",
+    "privacy": "Privacy Policy",
+    "cookie": "Cookie Use",
+    "agreement": "By signing up, you agree to our ",
+    "selectLanguage": "Select Language",
+    "cancel": "Cancel",
+    "signOut": "Sign Out",
+    "signOutConfirm": "Are you sure you want to sign out?"
+  },
+  "tabs": {
+    "home": "Home",
+    "expenses": "Expenses",
+    "transactions": "Transactions",
+    "chat": "Chat",
+    "menu": "Menu"
+  }
+}

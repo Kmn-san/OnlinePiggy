@@ -1,0 +1,55 @@
+{
+  "common": {
+    "error": "错误"
+  },
+  "menu": {
+    "language": "语言",
+    "selectLanguage": "请选择您偏好的语言",
+    "currency": "货币",
+    "selectCurrency": "请选择您偏好的货币",
+    "profile": "个人资料"
+  },
+  "languages": {
+    "en": {
+      "native": "English",
+      "translated": "英语",
+      "short": "🇺🇸 English"
+    },
+    "ja": {
+      "native": "日本語",
+      "translated": "日语",
+      "short": "🇯🇵 日本語"
+    },
+    "zh": {
+      "native": "中文",
+      "translated": "中文",
+      "short": "🇨🇳 中文"
+    }
+  },
+  "currency": {
+    "title": "货币",
+    "MYR": "🇲🇾 马来西亚林吉特",
+    "JPY": "🇯🇵 日元",
+    "CNY": "🇨🇳 人民币"
+  },
+  "auth": {
+    "google": "使用 Google 登录",
+    "apple": "使用 Apple 登录",
+    "socialLoginFailed": "使用 %{provider} 登录失败，请重试。",
+    "terms": "服务条款",
+    "privacy": "隐私政策",
+    "cookie": "Cookie 使用",
+    "agreement": "注册即表示您同意我们的",
+    "selectLanguage": "选择语言",
+    "cancel": "取消",
+    "signOut": "退出登录",
+    "signOutConfirm": "确定要退出登录吗？"
+  },
+  "tabs": {
+    "home": "首页",
+    "expenses": "支出",
+    "transactions": "交易",
+    "chat": "聊天",
+    "menu": "菜单"
+  }
+}

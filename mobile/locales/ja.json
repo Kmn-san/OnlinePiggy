@@ -1,0 +1,55 @@
+{
+  "common": {
+    "error": "エラー"
+  },
+  "menu": {
+    "language": "言語",
+    "selectLanguage": "使用する言語を選択してください",
+    "currency": "通貨",
+    "selectCurrency": "使用する通貨を選択してください",
+    "profile": "プロフィール"
+  },
+  "languages": {
+    "en": {
+      "native": "English",
+      "translated": "英語",
+      "short": "🇺🇸 English"
+    },
+    "ja": {
+      "native": "日本語",
+      "translated": "日本語",
+      "short": "🇯🇵 日本語"
+    },
+    "zh": {
+      "native": "中文",
+      "translated": "中国語",
+      "short": "🇨🇳 中文"
+    }
+  },
+  "currency": {
+    "title": "通貨",
+    "MYR": "🇲🇾 マレーシアリンギット",
+    "JPY": "🇯🇵 日本円",
+    "CNY": "🇨🇳 中国人民元"
+  },
+  "auth": {
+    "google": "Googleで続行",
+    "apple": "Appleで続行",
+    "socialLoginFailed": "%{provider}でのサインインに失敗しました。もう一度お試しください。",
+    "terms": "利用規約",
+    "privacy": "プライバシーポリシー",
+    "cookie": "Cookieの使用",
+    "agreement": "登録することで、",
+    "selectLanguage": "言語を選択",
+    "cancel": "キャンセル",
+    "signOut": "サインアウト",
+    "signOutConfirm": "サインアウトしてもよろしいですか？"
+  },
+  "tabs": {
+    "home": "ホーム",
+    "expenses": "支出",
+    "transactions": "取引",
+    "chat": "チャット",
+    "menu": "メニュー"
+  }
+}
