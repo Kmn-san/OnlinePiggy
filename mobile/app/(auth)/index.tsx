@@ -13,7 +13,6 @@ const languages = [
 export default function AuthScreen() {
   const { loadingStrategy, handleSocialAuth } = useSocialAuth();
   const { language, setLanguage } = useLanguage();
-  console.log("Auth render:", language, i18n.locale);
   const [modalVisible, setModalVisible] = useState(false);
 
   return (

@@ -16,12 +16,8 @@ export default function TabsLayout() {
 
   // Subscribe to language changes
   const { language } = useLanguage();
-  console.log("Language in menu",language);
-  console.log(i18n.t("tabs.home"));
-  
-  
-  const insets = useSafeAreaInsets();
 
+  const insets = useSafeAreaInsets();
   if (!isLoaded || userLoading) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
@@ -36,8 +32,8 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      key={language}
       screenOptions={{
+        lazy: false,
         headerShown: false,
         tabBarActiveTintColor: "#1DB954",
         tabBarInactiveTintColor: "#888888",

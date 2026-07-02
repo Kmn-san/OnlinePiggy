@@ -3,7 +3,8 @@ import { ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "../global.css";
-import { LanguageProvider } from "../context/languageContext";
+import { LanguageProvider } from "@/context/languageContext";
+
 
 const queryClient = new QueryClient();
 

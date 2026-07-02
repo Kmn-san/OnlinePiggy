@@ -1,20 +1,30 @@
+// app/(tabs)/Menu.js
+
 import { useAuth } from "@clerk/clerk-expo";
 import { Text, View, TouchableOpacity, Alert, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import i18n from "../../lib/i18n";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";
+import { useLayoutEffect } from "react";
 
 export default function Menu() {
   const { user } = useCurrentUser();
   const { signOut } = useAuth();
-  const { language } = useLanguage();
+  const { language } = useLanguage(); // subscribe for re-render
+  const navigation = useNavigation();
 
   const currency = user?.currency ?? "MYR";
 
-  const handleLogout = async () => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: i18n.t("tabs.menu"),
+    });
+  }, [language, navigation]);
+
+  const handleLogout = () => {
     Alert.alert(
       i18n.t("auth.signOut"),
       i18n.t("auth.signOutConfirm"),

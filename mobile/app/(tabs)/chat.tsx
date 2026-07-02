@@ -1,11 +1,15 @@
-import { Text, View } from "react-native";
- 
+// app/(tabs)/index.tsx
+import { useLayoutEffect } from "react";
+import { useNavigation } from "expo-router";
+import i18n from "../../lib/i18n";
+import { useLanguage } from "../../context/languageContext";
+
 export default function Chat() {
-  return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-xl font-bold text-blue-500">
-        Chat
-      </Text>
-    </View>
-  );
+  const navigation = useNavigation();
+  const { language } = useLanguage();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: i18n.t("tabs.chat") });
+  }, [language]);
+
 }

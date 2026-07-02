@@ -1,9 +1,9 @@
-import * as Localization from 'expo-localization';
-import { I18n } from 'i18n-js';
+import { I18n } from "i18n-js";
+import * as Localization from "expo-localization";
 
-const en = require('../locales/en.json');
-const ja = require('../locales/ja.json');
-const zh = require('../locales/zh.json');
+import en from "../locales/en.json";
+import ja from "../locales/ja.json";
+import zh from "../locales/zh.json";
 
 const i18n = new I18n({
   en,
@@ -11,8 +11,11 @@ const i18n = new I18n({
   zh,
 });
 
-i18n.defaultLocale = 'en';
-i18n.locale = Localization.locale || 'en';
 i18n.enableFallback = true;
+
+const locales = Localization.getLocales();
+
+i18n.locale =
+  locales?.[0]?.languageCode ?? "en";
 
 export default i18n;

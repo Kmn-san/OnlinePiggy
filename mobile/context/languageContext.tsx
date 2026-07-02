@@ -27,11 +27,9 @@ export function LanguageProvider({
     loadLanguage();
   }, []);
   useEffect(() => {
-    console.log("LanguageProvider:", language);
   }, [language]);
 
   const setLanguage = async (lang: Language) => {
-    console.log("Changing language to", lang);
     await languageService.setLanguage(lang);
     setCurrentLanguage(lang);
   };
