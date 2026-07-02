@@ -1,3 +1,4 @@
+// app/(tabs)/_layout.tsx
 import { Redirect, Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "@clerk/clerk-expo";
@@ -14,10 +15,12 @@ export default function TabsLayout() {
     enabled: isLoaded && isSignedIn,
   });
 
-  // Subscribe to language changes
   const { language } = useLanguage();
-
   const insets = useSafeAreaInsets();
+
+  // FIX 1: Set locale synchronously right here in the layout!
+  i18n.locale = language;
+
   if (!isLoaded || userLoading) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
@@ -32,6 +35,9 @@ export default function TabsLayout() {
 
   return (
     <Tabs
+      // FIX 2: Attach the language as a key to force React Navigation to 
+      // completely refresh the tab options when the language changes.
+      key={language}
       screenOptions={{
         lazy: false,
         headerShown: false,
@@ -64,7 +70,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="expenses"
         options={{
@@ -74,7 +79,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="transactions"
         options={{
@@ -84,7 +88,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="chat"
         options={{
@@ -94,7 +97,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="menu"
         options={{

@@ -1,5 +1,4 @@
 // app/(tabs)/Menu.js
-
 import { useAuth } from "@clerk/clerk-expo";
 import { Text, View, TouchableOpacity, Alert, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,13 +7,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect } from "react"; // Removed useState and useEffect
 
 export default function Menu() {
   const { user } = useCurrentUser();
   const { signOut } = useAuth();
-  const { language } = useLanguage(); // subscribe for re-render
+  const { language } = useLanguage();
   const navigation = useNavigation();
+  
+  // FIX: Set the locale synchronously before any translation happens.
+  // This ensures the current render cycle uses the correct language immediately.
+  i18n.locale = language;
 
   const currency = user?.currency ?? "MYR";
 
@@ -52,7 +55,7 @@ export default function Menu() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white p-4">
+    <SafeAreaView key={language} className="flex-1 bg-white p-4">
       {/* Profile */}
       <TouchableOpacity
         className="bg-gray-50 rounded-2xl p-4 mb-4"

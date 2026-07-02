@@ -3,8 +3,6 @@ import axios from "axios"
 import { useEffect } from "react"
 
 const API_URL = process.env.EXPO_PUBLIC_BASE_URL
-console.log("API:",API_URL);
-
 
 const api = axios.create({
   baseURL: API_URL,

@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Modal } from "react-native";
-import { useState } from "react";
+import { useState } from "react"; // Removed useEffect
 import useSocialAuth from "../../hooks/useSocialAuth";
 import i18n from "../../lib/i18n";
 import { useLanguage } from "../../context/languageContext";
@@ -14,6 +14,16 @@ export default function AuthScreen() {
   const { loadingStrategy, handleSocialAuth } = useSocialAuth();
   const { language, setLanguage } = useLanguage();
   const [modalVisible, setModalVisible] = useState(false);
+  
+  // REMOVED: forceUpdate and useEffect 
+
+  // FIX: Set the locale synchronously before creating the translation helper
+  // This ensures the current render cycle uses the correct, updated language.
+  i18n.locale = language; 
+
+  // Helper function to get translations. 
+  // (Optional: If using i18n-js, you can also do `i18n.t(key, { locale: language })` as a fail-safe)
+  const t = (key: string) => i18n.t(key);
 
   return (
     <View className="flex-1 justify-center items-center bg-white px-8">
@@ -39,7 +49,7 @@ export default function AuthScreen() {
               className="w-8 h-8 mr-3"
             />
             <Text className="text-base font-medium">
-              {i18n.t("auth.google")}
+              {t("auth.google")}
             </Text>
           </>
         )}
@@ -60,7 +70,7 @@ export default function AuthScreen() {
               className="w-7 h-7 mr-3"
             />
             <Text className="text-base font-medium">
-              {i18n.t("auth.apple")}
+              {t("auth.apple")}
             </Text>
           </>
         )}
@@ -72,7 +82,7 @@ export default function AuthScreen() {
         onPress={() => setModalVisible(true)}
       >
         <Text>
-          {i18n.t(`languages.${language}.short`)}
+          {t(`languages.${language}.short`)}
         </Text>
       </TouchableOpacity>
 
@@ -90,16 +100,17 @@ export default function AuthScreen() {
         >
           <View className="bg-white rounded-2xl w-72 p-5">
             <Text className="text-xl font-bold text-center mb-5">
-              {i18n.t("menu.selectLanguage")}
+              {t("menu.selectLanguage")}
             </Text>
 
             {languages.map((item) => (
               <TouchableOpacity
                 key={item.code}
-                className={`flex-row justify-between items-center p-4 rounded-xl mb-2 ${language === item.code
-                  ? "bg-green-50 border border-green-500"
-                  : "bg-gray-50"
-                  }`}
+                className={`flex-row justify-between items-center p-4 rounded-xl mb-2 ${
+                  language === item.code
+                    ? "bg-green-50 border border-green-500"
+                    : "bg-gray-50"
+                }`}
                 onPress={async () => {
                   await setLanguage(item.code);
                   setModalVisible(false);
@@ -107,12 +118,12 @@ export default function AuthScreen() {
               >
                 <View>
                   <Text className="text-lg font-semibold">
-                    {i18n.t(`languages.${item.code}.native`)}
+                    {t(`languages.${item.code}.native`)}
                   </Text>
 
                   {language !== item.code && (
                     <Text className="text-gray-500">
-                      {i18n.t(`languages.${item.code}.translated`)}
+                      {t(`languages.${item.code}.translated`)}
                     </Text>
                   )}
                 </View>
@@ -128,7 +139,7 @@ export default function AuthScreen() {
               onPress={() => setModalVisible(false)}
             >
               <Text className="text-center text-gray-500">
-                {i18n.t("auth.cancel")}
+                {t("auth.cancel")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -137,17 +148,17 @@ export default function AuthScreen() {
 
       {/* Terms */}
       <Text className="text-xs text-center text-gray-500 mt-8 px-2">
-        {i18n.t("auth.agreement")}{" "}
+        {t("auth.agreement")}{" "}
         <Text className="text-blue-500">
-          {i18n.t("auth.terms")}
+          {t("auth.terms")}
         </Text>
         {", "}
         <Text className="text-blue-500">
-          {i18n.t("auth.privacy")}
+          {t("auth.privacy")}
         </Text>
         {", "}
         <Text className="text-blue-500">
-          {i18n.t("auth.cookie")}
+          {t("auth.cookie")}
         </Text>
       </Text>
     </View>
