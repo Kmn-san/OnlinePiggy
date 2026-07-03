@@ -2,13 +2,36 @@
   "common": {
     "error": "错误",
     "confirm": "确定",
-    "searchCountry":"搜索国家"
+    "success": "成功",
+    "searchCountry": "搜索国家"
+  },
+  "success": {
+    "profilePicUpdated": "你的帅/美照更新好啦！",
+    "profileUpdated": "已黑入资料库更新你的资料啦！"
+  },
+  "error": {
+    "cooldown": "改ID卡冷却中",
+    "notFound": "查无此人",
+    "noDataGiven": "没有输入资料",
+    "opidExists": "OPID 错误",
+    "noValidFields": "没有更改",
+    "noFileUpload": "没有资料"
+  },
+  "errorDetial": {
+    "UNKNOWN_ERROR": "啊呀！发生了一些预料之外的错误。稍等一下再尝试！",
+    "OPID_CHANGE_COOLDOWN": "距离可更新ID还有{{days}}天",
+    "INTERNAL_SERVER_ERROR": "啊呀！ 系统出问题了 稍等一下再尝试！",
+    "USER_NOT_FOUND": "奇怪？查无此人",
+    "NO_DATA_PROVIDED": "啊呀！我看不懂无字天书，再输入一遍吧！",
+    "OPID_ALREADY_EXISTS": "你这个OPID出了点问题。 再想一个新的吧！",
+    "NO_VALID_FIELDS": "你好像没更改些什么。再确认一次吧！",
+    "NO_FILE_UPLOAD": "我的天线没收到你的资料。再发送一次吧！"
   },
   "menu": {
     "language": "语言",
     "selectLanguage": "请选择您偏好的语言",
     "currency": "货币",
-    "selectCurrency": "请选择您偏好的货币",
+    "selectCurrency": "请选择您使用的货币",
     "profile": "个人资料"
   },
   "languages": {
@@ -45,7 +68,7 @@
     "selectLanguage": "选择语言",
     "cancel": "取消",
     "signOut": "退出登录",
-    "signOutConfirm": "确定要退出登录吗？"
+    "signOutConfirm": "你要离开我了吗 Q _ Q"
   },
   "tabs": {
     "home": "首页",
@@ -64,5 +87,8 @@
   "detial": {
     "username": "名字",
     "country": "国家"
+  },
+  "profile": {
+    "opidWarning": "OnlinePiggy ID是账号唯一的凭证，一个月只能修改一次哦！"
   }
 }

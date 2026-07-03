@@ -22,7 +22,7 @@ export const updateUser = async (req, res) => {
     try {
         const clerkId = req.clerkId;
         const clientData = req.body;
-        
+
         if (!Object.keys(clientData).length) {
             return res.status(400).json({ code: "NO_DATA_PROVIDED" })
         }//if no data given
@@ -35,10 +35,20 @@ export const updateUser = async (req, res) => {
                 const lastChanged = new Date(user.opid_updated_at);
                 const now = new Date();
 
-                const daysPassed = (now - lastChanged) / (1000 * 60 * 60 * 24)
+                // Calculate the difference in milliseconds
+                const diffInMs = now - lastChanged;
+
+                // Calculate full days passed as an integer
+                const daysPassed = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+                // Calculate remaining days as an integer
+                const daysRemaining = Math.max(0, 30 - daysPassed);
 
                 if (daysPassed < 30) {
-                    return res.status(403).json({ code: "OPID_CHANGE_COOLDOWN", daysRemaining: (30 - daysPassed) })
+                    return res.status(403).json({
+                        code: "OPID_CHANGE_COOLDOWN",
+                        daysRemaining: daysRemaining
+                    });
                 }
             }
             const existingOpid = await userService.existedOpid(Opid, clerkId)
@@ -69,34 +79,46 @@ export const updateUser = async (req, res) => {
 
 export const updateProfilePic = async (req, res) => {
     try {
-        const clerkId = req.user.id;
+        const clerkId = req.clerkId;
         if (!req.file) {
-            return res.status(400).json({ code: "NO_FILE_UPLOAD" })
+            return res.status(400).json({ code: "NO_FILE_UPLOAD" });
         }
-        const user = await userService.userData(clerkId)
-        const oldPublicId = user.avatar_public_id;
-        const uploadResult = await new Promise((resolve, reject) => {
-            const stream = cloudinary.uploader.upload_stream({ folder: "onlinepiggy_profilePic" }, (error, result) => {
-                if (error) reject(error)
-                else resolve(result)
-            })
-            stream.end(req.file.buffer)
-        })
-        const imageUrl = uploadResult.secure_url;
-        const newPublicId = uploadResult.public_id
 
-        await userService.changeProfilePic(imageUrl, newPublicId, clerkId)
+        const user = await userService.userData(clerkId);
+        // Scoped variable to handle the old ID
+        const oldPublicId = user.avatar_public_id;
+
+        const uploadResult = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                {
+                    folder: "onlinepiggy_profilePic",
+                    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+                    api_key: process.env.CLOUDINARY_API_KEY,
+                    api_secret: process.env.CLOUDINARY_API_SECRET
+                },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            );
+            stream.end(req.file.buffer);
+        });
+
+        const imageUrl = uploadResult.secure_url;
+        const newPublicId = uploadResult.public_id;
+
+        await userService.changeProfilePic(imageUrl, newPublicId, clerkId);
 
         if (oldPublicId) {
-            await cloudinary.uploader.destroy(oldPublicId)
+            await cloudinary.uploader.destroy(oldPublicId);
         }
 
-        return res.status(200).json({ code: "PROFILEPIC_UPDATE_SUCCESS", url: imageUrl })
+        return res.status(200).json({ code: "PROFILEPIC_UPDATE_SUCCESS", url: imageUrl });
     } catch (error) {
-        console.error("Error in updateProfilePic controller: ", error.message);
+        console.error("Error in updateProfilePic controller:", error);
         return res.status(500).json({
             code: "INTERNAL_SERVER_ERROR",
+            message: error.message // Helpful for debugging
         });
     }
 }
-

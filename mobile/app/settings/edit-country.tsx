@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
 import i18n from "../../lib/i18n";
-import countries from "../../lib/countries"; // Using your perfectly configured lib
+import countries from "../../lib/countries"; // 
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";
 
@@ -26,7 +26,6 @@ export default function EditCountry() {
 
   const locale = ["ja", "zh"].includes(language) ? language : "en";
 
-  // 1. Generate the translated list for the UI
   const countryList = useMemo(() => {
     return Object.entries(countries.getNames(locale)).map(
       ([code, name]) => ({
@@ -36,18 +35,9 @@ export default function EditCountry() {
     );
   }, [locale]);
 
-  // FIX: 2. Wait for async user data to load, THEN find the matching code
   useEffect(() => {
     if (user?.country) {
-      const englishCountries = countries.getNames("en");
-      const entry = Object.entries(englishCountries).find(
-        ([, englishName]) => 
-          englishName.toLowerCase() === user.country.toLowerCase()
-      );
-
-      if (entry) {
-        setCountryCode(entry[0]); // entry[0] is the ISO code (e.g., 'US', 'JP')
-      }
+      setCountryCode(user.country);
     }
   }, [user?.country]);
 
@@ -59,17 +49,10 @@ export default function EditCountry() {
 
   const handleSave = async () => {
     if (!countryCode) return;
-
-    // 3. Convert the selected code explicitly back to English for the DB
-    const englishCountryName = countries.getName(countryCode, "en");
-
-    if (!englishCountryName) return;
-
     try {
       await updateUser.mutateAsync({
-        country: englishCountryName,
+        country: countryCode,
       });
-
       router.back();
     } catch (err) {
       console.log(err);
@@ -90,9 +73,8 @@ export default function EditCountry() {
 
         <TouchableOpacity onPress={handleSave} disabled={updateUser.isPending}>
           <Text
-            className={`font-semibold text-lg ${
-              updateUser.isPending ? "text-gray-400" : "text-green-600"
-            }`}
+            className={`font-semibold text-lg ${updateUser.isPending ? "text-gray-400" : "text-green-600"
+              }`}
           >
             {i18n.t("common.confirm")}
           </Text>
@@ -122,17 +104,13 @@ export default function EditCountry() {
       <FlatList
         data={filteredCountries}
         keyExtractor={(item) => item.code}
-        keyboardShouldPersistTaps="handled"
-        initialNumToRender={20}
-        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 30 }}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => setCountryCode(item.code)}
-            className={`flex-row items-center justify-between p-4 rounded-xl mb-3 border ${
-              item.code === countryCode
+            className={`flex-row items-center justify-between p-4 rounded-xl mb-3 border ${item.code === countryCode
                 ? "border-green-500 bg-green-50"
                 : "border-gray-200 bg-white"
-            }`}
+              }`}
           >
             <Text className="text-lg text-gray-800">{item.name}</Text>
 

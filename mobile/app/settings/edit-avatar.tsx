@@ -6,18 +6,49 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-
+import * as ImagePicker from 'expo-image-picker';
 import useCurrentUser from "@/hooks/useCurrentUser";
 import i18n from "@/lib/i18n";
 
 export default function EditAvatar() {
-  const { user } = useCurrentUser();
-  
+  const { user, updateAvatar } = useCurrentUser();
 
-  const handlePickImage = () => {
-    // TODO:
-    // Open image picker
+
+  const handlePickImage = async () => {
+    if (updateAvatar.isPending) return;
+
+    try {
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permission.granted) {
+        Alert.alert('Permission required', 'Please allow gallery access');
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.7,
+      });
+
+      if (result.canceled) return;
+
+      const image = result.assets[0];
+      const formData = new FormData();
+      formData.append('profilePic', {
+        uri: image.uri,
+        name: 'profile.jpg',
+        type: 'image/jpeg',
+      } as any);
+
+      await updateAvatar.mutateAsync(formData);
+      Alert.alert(i18n.t("common.success"), i18n.t("success.profilePicUpdated"))
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Failed to upload image');
+    }
   };
 
   return (

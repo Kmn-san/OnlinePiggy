@@ -1,8 +1,31 @@
 {
   "common": {
     "error": "Error",
-    "confirm":"confirm",
-    "searchCountry":"Search Country"
+    "confirm": "Confirm",
+    "success": "Success",
+    "searchCountry": "Search Country"
+  },
+  "success": {
+    "profilePicUpdated":"Update Profile Pic Successfully!",
+    "profileUpdated":"Update Profile Successfully!"
+  },
+  "error": {
+    "cooldown": "Update Cooldown",
+    "notFound": "User not found",
+    "noDataGiven": "No data given",
+    "opidExists": "OPID Error",
+    "noValidFields": "No valid fields",
+    "noFileUpload": "No file upload"
+  },
+  "errorDetial": {
+    "UNKNOWN_ERROR": "Unknown error occur. Please try again later.",
+    "OPID_CHANGE_COOLDOWN": "Try again in {{days}} days",
+    "INTERNAL_SERVER_ERROR": "System error. Please try again later.",
+    "USER_NOT_FOUND": "User not found.",
+    "NO_DATA_PROVIDED": "No data provided. Please try again.",
+    "OPID_ALREADY_EXISTS": "There is an error in this OPID. Try a new one.",
+    "NO_VALID_FIELDS": "No changes were made. Please try again.",
+    "NO_FILE_UPLOAD": "No file was uploaded. Please try again."
   },
   "menu": {
     "language": "Language",
@@ -55,14 +78,17 @@
     "menu": "Menu"
   },
   "title": {
-    "profile":"Profile",
-    "profilePicture":"Profile Picture",
-    "editUsername":"Edit Username",
-    "editOpid":"Edit Opid",
-    "editCountry":"Edit Country"
+    "profile": "Profile",
+    "profilePicture": "Profile Picture",
+    "editUsername": "Edit Username",
+    "editOpid": "Edit Opid",
+    "editCountry": "Edit Country"
   },
-  "detial":{
-    "username":"Username",
-    "country":"Country"
+  "detial": {
+    "username": "Username",
+    "country": "Country"
+  },
+  "profile": {
+    "opidWarning": "Your OnlinePiggy ID is your unique account identifier. It can only be changed once every month."
   }
 }

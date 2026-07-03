@@ -15,8 +15,6 @@ export default function Menu() {
   const { language } = useLanguage();
   const navigation = useNavigation();
 
-  console.log(user);
-
   i18n.locale = language;
 
   const currency = user?.currency ?? "MYR";

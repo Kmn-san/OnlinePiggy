@@ -1,7 +1,31 @@
 {
   "common": {
     "error": "エラー",
-    "confirm":"確定","searchCountry":"国を検索"
+    "confirm": "確定",
+    "success": "成功",
+    "searchCountry": "国を検索"
+  },
+  "success": {
+    "profilePicUpdated": "プロファイル　ピクチャーを変更しました",
+    "profileUpdated": "プロファイルを変更しました"
+  },
+  "error": {
+    "cooldown": "更新クールダウン",
+    "notFound": "User not found",
+    "noDataGiven": "No data given",
+    "opidExists": "OPID　エラー",
+    "noValidFields": "変更ありません",
+    "noFileUpload": "ファイルありません"
+  },
+  "errorDetial": {
+    "UNKNOWN_ERROR": "未知なエラーが出った。しばらくしてからまた操作してください。",
+    "OPID_CHANGE_COOLDOWN": "{{days}}日後また変更してください",
+    "INTERNAL_SERVER_ERROR": "システムにエラーが出た。しばらくしてからまた操作してください。",
+    "USER_NOT_FOUND": "ウーザーがありません。",
+    "NO_DATA_PROVIDED": "インプットがありません。もう一度入力してください。",
+    "OPID_ALREADY_EXISTS": "このOPIDにエラーが出ってきた。新しいのをやってください。",
+    "NO_VALID_FIELDS": "変更された項目がありません。もう一度入力してください。",
+    "NO_FILE_UPLOAD": "アップロードしたファイルがありません。もう一度やってしてください。"
   },
   "menu": {
     "language": "言語",
@@ -54,14 +78,17 @@
     "menu": "メニュー"
   },
   "title": {
-    "profile":"プロファイル",
-    "profilePicture":"プロファイル　ピクチャー",
-    "editUsername":"ウーザー名を設定",
-    "editOpid":"Opidを設定",
-    "editCountry":"国を設定"
+    "profile": "プロファイル",
+    "profilePicture": "プロファイル　ピクチャー",
+    "editUsername": "ウーザー名を設定",
+    "editOpid": "Opidを設定",
+    "editCountry": "国を設定"
   },
-  "detial":{
-    "username":"ユーザー名",
-    "country":"国名"
+  "detial": {
+    "username": "ユーザー名",
+    "country": "国名"
+  },
+  "profile": {
+    "opidWarning": "OnlinePiggy IDはアカウント固有のIDです。変更は1か月に1回まで可能です。"
   }
 }
