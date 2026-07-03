@@ -1,6 +1,8 @@
 {
   "common": {
-    "error": "错误"
+    "error": "错误",
+    "confirm": "确定",
+    "searchCountry":"搜索国家"
   },
   "menu": {
     "language": "语言",
@@ -51,5 +53,16 @@
     "transactions": "交易",
     "chat": "聊天",
     "menu": "菜单"
+  },
+  "title": {
+    "profile": "个人资料",
+    "profilePicture": "个人头像",
+    "editUsername": "设置名字",
+    "editOpid": "设置Opid",
+    "editCountry": "设置国家"
+  },
+  "detial": {
+    "username": "名字",
+    "country": "国家"
   }
 }

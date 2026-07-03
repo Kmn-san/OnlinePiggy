@@ -1,11 +1,12 @@
 {
   "common": {
-    "error": "Error"
+    "error": "Error",
+    "confirm":"confirm",
+    "searchCountry":"Search Country"
   },
   "menu": {
     "language": "Language",
     "selectLanguage": "Choose your preferred language",
-    
     "currency": "Currency",
     "selectCurrency": "Choose your preferred currency",
     "profile": "Profile"
@@ -52,5 +53,16 @@
     "transactions": "Transactions",
     "chat": "Chat",
     "menu": "Menu"
+  },
+  "title": {
+    "profile":"Profile",
+    "profilePicture":"Profile Picture",
+    "editUsername":"Edit Username",
+    "editOpid":"Edit Opid",
+    "editCountry":"Edit Country"
+  },
+  "detial":{
+    "username":"Username",
+    "country":"Country"
   }
 }

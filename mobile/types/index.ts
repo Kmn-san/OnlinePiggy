@@ -6,7 +6,7 @@ export interface User {
 
     language: string;
     username: string;
-    coutry: string;
+    country: string;
     currency: string;
 
     avatar_url: string | null;

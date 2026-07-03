@@ -31,6 +31,7 @@ export const createUserFromClerk = async ({ clerkId, username, avatar_url }) => 
         opid,
         username,
         avatar_url,
+        avatar_public_id,
         country,
         currency,
         is_premium
@@ -42,7 +43,7 @@ export const createUserFromClerk = async ({ clerkId, username, avatar_url }) => 
 
 export const userData = async (clerkId) => {
     const { rows } = await query(
-        `SELECT id, opid, opid_updated_at, username, country, is_premium, currency, avatar_url
+        `SELECT id, opid, opid_updated_at, username, country, is_premium, currency, avatar_url, avatar_public_id
         FROM users
         WHERE clerkid = $1`,
         [clerkId])

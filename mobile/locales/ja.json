@@ -1,6 +1,7 @@
 {
   "common": {
-    "error": "エラー"
+    "error": "エラー",
+    "confirm":"確定","searchCountry":"国を検索"
   },
   "menu": {
     "language": "言語",
@@ -51,5 +52,16 @@
     "transactions": "取引",
     "chat": "チャット",
     "menu": "メニュー"
+  },
+  "title": {
+    "profile":"プロファイル",
+    "profilePicture":"プロファイル　ピクチャー",
+    "editUsername":"ウーザー名を設定",
+    "editOpid":"Opidを設定",
+    "editCountry":"国を設定"
+  },
+  "detial":{
+    "username":"ユーザー名",
+    "country":"国名"
   }
 }

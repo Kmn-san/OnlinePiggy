@@ -20,8 +20,9 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        const clerkId = req.user.id;
+        const clerkId = req.clerkId;
         const clientData = req.body;
+        
         if (!Object.keys(clientData).length) {
             return res.status(400).json({ code: "NO_DATA_PROVIDED" })
         }//if no data given

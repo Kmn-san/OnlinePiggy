@@ -18,7 +18,6 @@ export default function TabsLayout() {
   const { language } = useLanguage();
   const insets = useSafeAreaInsets();
 
-  // FIX 1: Set locale synchronously right here in the layout!
   i18n.locale = language;
 
   if (!isLoaded || userLoading) {
@@ -35,8 +34,6 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      // FIX 2: Attach the language as a key to force React Navigation to 
-      // completely refresh the tab options when the language changes.
       key={language}
       screenOptions={{
         lazy: false,

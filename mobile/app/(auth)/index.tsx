@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Modal } from "react-native";
-import { useState } from "react"; // Removed useEffect
+import { useState } from "react"; 
 import useSocialAuth from "../../hooks/useSocialAuth";
 import i18n from "../../lib/i18n";
 import { useLanguage } from "../../context/languageContext";
@@ -15,14 +15,9 @@ export default function AuthScreen() {
   const { language, setLanguage } = useLanguage();
   const [modalVisible, setModalVisible] = useState(false);
   
-  // REMOVED: forceUpdate and useEffect 
 
-  // FIX: Set the locale synchronously before creating the translation helper
-  // This ensures the current render cycle uses the correct, updated language.
   i18n.locale = language; 
 
-  // Helper function to get translations. 
-  // (Optional: If using i18n-js, you can also do `i18n.t(key, { locale: language })` as a fail-safe)
   const t = (key: string) => i18n.t(key);
 
   return (

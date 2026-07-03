@@ -14,9 +14,9 @@ export default function Menu() {
   const { signOut } = useAuth();
   const { language } = useLanguage();
   const navigation = useNavigation();
-  
-  // FIX: Set the locale synchronously before any translation happens.
-  // This ensures the current render cycle uses the correct language immediately.
+
+  console.log(user);
+
   i18n.locale = language;
 
   const currency = user?.currency ?? "MYR";
