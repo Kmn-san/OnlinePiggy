@@ -1,10 +1,10 @@
 import { query } from "../utlis/db.js"
 import { v4 as uuidv4 } from "uuid";
 
-export const findByClerkId = async (clerkId) => {
+export const findByUserId = async (userId) => {
     const { rows } = await query(
-        `SELECT id FROM users WHERE clerkid =$1`,
-        [clerkId]
+        `SELECT * FROM users WHERE id = $1`,
+        [usesrId]
     )
     return rows[0]
 }
@@ -39,7 +39,6 @@ export const createUserFromClerk = async ({ clerkId, username, avatar_url }) => 
     )
     return rows[0]
 }
-
 
 export const userData = async (clerkId) => {
     const { rows } = await query(
