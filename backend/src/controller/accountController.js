@@ -1,6 +1,7 @@
 import * as accountService from "../service/accountService.js"
 import * as userService from "../service/userService.js"
-export const getAccount = async () => {
+
+export const getAccount = async (req, res) => {
     const userId = req.user.id
     const userExist = await userService.findByUserId(userId)
     if (!userExist) {
@@ -14,7 +15,7 @@ export const getAccount = async () => {
     return res.status(200).json(accountDetial)
 }
 
-export const addGoalAccount = async () => {
+export const addGoalAccount = async (req, res) => {
     const userId = req.user.id;
     const { goalName, targetAmount } = req.body;
     const userExist = await userService.findByUserId(userId)
@@ -26,7 +27,7 @@ export const addGoalAccount = async () => {
     return res.status(200).json(acccounts)
 }
 
-export const addAccount = async () => {
+export const addAccount = async (req, res) => {
     const userId = req.user.id;
     const { accountName, accountType } = req.body;
     const userExist = await userService.findByUserId(userId)
@@ -38,7 +39,7 @@ export const addAccount = async () => {
     return res.status(200).json(acccounts)
 }
 
-export const deleteGoalAccount = async () => {
+export const deleteGoalAccount = async (req, res) => {
     const userId = req.user.id;
     const goalId = req.body;
     const userExist = await userService.findByUserId(userId)

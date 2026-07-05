@@ -5,10 +5,10 @@ const router = Router()
 
 router.use(protectRoute)
 
-router.get("/accounts", getAccount)
-router.patch("/goal-accounts", addGoalAccount) // add goal
-router.patch("/add-accounts", addAccount) // add new account
-router.delete("/goal-account", deleteGoalAccount) // delete goal
+router.get("/getAccounts", getAccount)
+router.patch("/goalAccounts", addGoalAccount) // add goal
+router.patch("/addAccounts", addAccount) // add new account
+router.delete("/goalAccount", deleteGoalAccount) // delete goal
 
 
 export default router

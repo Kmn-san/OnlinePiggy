@@ -90,5 +90,14 @@
   },
   "profile": {
     "opidWarning": "OnlinePiggy IDはアカウント固有のIDです。変更は1か月に1回まで可能です。"
+  },
+  "savings": {
+    "totalSavings": "総貯蓄額",
+    "currentBalance": "現在の残高",
+    "goalAccount": "目標口座",
+    "WORKING_CAPITAL": "生活資金",
+    "EMERGENCY_FUND": "緊急資金",
+    "SAVINGS": "貯蓄",
+    "YOUR_SAVINGS_ACCOUNTS": "あなたの貯蓄口座"
   }
 }

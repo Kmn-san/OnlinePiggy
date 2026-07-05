@@ -61,7 +61,7 @@ export default function Profile() {
           {/* OPID */}
           <TouchableOpacity
             className="flex-row justify-between items-center px-5 py-5 border-b border-gray-200"
-            onPress={() => router.push("/components/opidConfirm")}
+            onPress={() => router.push("/settings/opidConfirm")}
           >
             <View>
               <Text className="text-gray-400 text-sm">OnlinePiggy ID</Text>

@@ -90,5 +90,14 @@
   },
   "profile": {
     "opidWarning": "OnlinePiggy ID是账号唯一的凭证，一个月只能修改一次哦！"
+  },
+  "savings": {
+    "totalSavings": "总存款",
+    "currentBalance": "现余额",
+    "goalAccount": "目标账户",
+    "WORKING_CAPITAL": "日常周转金",
+    "EMERGENCY_FUND": "备用金",
+    "SAVINGS": "存款",
+    "YOUR_SAVINGS_ACCOUNTS": "您的存款账户"
   }
 }

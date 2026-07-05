@@ -90,5 +90,14 @@
   },
   "profile": {
     "opidWarning": "Your OnlinePiggy ID is your unique account identifier. It can only be changed once every month."
+  },
+  "savings":{
+    "totalSavings":"Total Savings",
+    "currentBalance":"Current Balance",
+    "goalAccount":"Goal Account",
+    "WORKING_CAPITAL":"Working Capital",
+    "EMERGENCY_FUND":"Emergency Capital",
+    "SAVINGS":"SAVINGS",
+    "YOUR_SAVINGS_ACCOUNTS":"Your Savings Accounts"
   }
 }

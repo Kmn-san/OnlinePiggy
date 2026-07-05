@@ -4,7 +4,15 @@ import { v4 as uuidv4 } from "uuid";
 export const findByUserId = async (userId) => {
     const { rows } = await query(
         `SELECT * FROM users WHERE id = $1`,
-        [usesrId]
+        [userId]
+    )
+    return rows[0]
+}
+
+export const findByClerkId = async (clerkId) => {
+    const { rows } = await query(
+        `SELECT * FROM users WHERE clerkid = $1`,
+        [clerkId]
     )
     return rows[0]
 }

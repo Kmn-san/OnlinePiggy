@@ -6,11 +6,8 @@ export const getAccount = async (userId) => {
         `SELECT * from account WHERE userId = $1`,
         [userId]
     )
-    return rows[0]
+    return rows;
 }
-
-import { v4 as uuidv4 } from "uuid";
-import { query } from "../db";
 
 // when user just created the account
 export const createAccountForUser = async (userId) => {
