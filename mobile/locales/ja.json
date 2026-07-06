@@ -94,10 +94,22 @@
   "savings": {
     "totalSavings": "総貯蓄額",
     "currentBalance": "現在の残高",
-    "goalAccount": "目標口座",
+    "ADD_NEW_GOAL_ACCOUNT": "目標口座の追加",
     "WORKING_CAPITAL": "生活資金",
     "EMERGENCY_FUND": "緊急資金",
     "SAVINGS": "貯蓄",
     "YOUR_SAVINGS_ACCOUNTS": "あなたの貯蓄口座"
+  },
+  "expenses": {
+    "EXPENSES": "支出",
+    "totalExpenses": "総支出",
+    "expensesCategory": "支出カテゴリ",
+    "All_EXPENSES": "すべての支出",
+    "DAILY_EXPENSES": "日常の支出",
+    "ADD_EXPENSES_ACCOUNT": "支出口座を追加",
+    "CATEGORIES": "カテゴリ",
+    "noExpensesDataDetial": "支出口座を追加すると表示されます",
+    "noExpensesData": "データがありません",
+    "noExpensesAccount": "支出口座がありません"
   }
 }

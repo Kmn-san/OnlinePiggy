@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ComponentProps } from "react";
 import i18n from "../../lib/i18n";
+import { formatCurrency } from "@/constants/currency";
 
 interface Account {
   id: string;
@@ -46,15 +47,6 @@ const getLocalizedType = (type: string): string => {
     default:
       return type;
   }
-};
-
-const formatCurrency = (amount: number, currency: string): string => {
-  const safeAmount = isNaN(amount) || !amount ? 0 : amount;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-    minimumFractionDigits: 2,
-  }).format(safeAmount);
 };
 
 export function SavingsAccountCard({ item }: SavingsAccountCardProps) {

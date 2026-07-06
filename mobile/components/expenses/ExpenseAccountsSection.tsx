@@ -1,6 +1,8 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import i18n from "@/lib/i18n";
+import { formatCurrency } from "@/constants/currency";
 
 interface Account {
     id: string;
@@ -14,21 +16,13 @@ interface ExpenseAccountsSectionProps {
     expenseAccounts: Account[];
 }
 
-const formatCurrency = (amount: number, currency: string): string => {
-    const safeAmount = isNaN(amount) || !amount ? 0 : amount;
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: currency,
-        minimumFractionDigits: 2,
-    }).format(safeAmount);
-};
 
 export function ExpenseAccountsSection({ expenseAccounts }: ExpenseAccountsSectionProps) {
     if (expenseAccounts.length === 0) return null;
 
     return (
         <View className="px-4 mt-4">
-            <Text className="text-gray-900 text-lg font-bold mb-3">All Expenses</Text>
+            <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.All_EXPENSES")}</Text>
             {expenseAccounts.map((account) => (
                 <TouchableOpacity
                     key={account.id}
@@ -45,8 +39,8 @@ export function ExpenseAccountsSection({ expenseAccounts }: ExpenseAccountsSecti
                                 <Ionicons name="cash-outline" size={20} color="#DC2626" />
                             </View>
                             <View className="flex-1">
-                                <Text className="text-gray-900 font-bold">{account.name}</Text>
-                                <Text className="text-gray-400 text-xs">{account.type}</Text>
+                                <Text className="text-gray-900 font-bold">{i18n.t(`expenses.${account.name}`)}</Text>
+                                <Text className="text-gray-400 text-xs">{i18n.t(`expenses.${account.type}`)}</Text>
                             </View>
                         </View>
                         <Text className="text-gray-900 font-bold">

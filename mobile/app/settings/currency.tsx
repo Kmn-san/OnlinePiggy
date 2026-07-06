@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const currencies = ["MYR", "JPY", "CNY"] as const;
 
 export default function CurrencyScreen() {
-  const { user, updateUser } = useCurrentUser();
+  const { user, updateCurrency } = useCurrentUser();
 
   const handleSelectCurrency = (currency: string) => {
     if (currency === user?.currency) {
@@ -16,18 +16,12 @@ export default function CurrencyScreen() {
       return;
     }
 
-    updateUser.mutate(
+    updateCurrency.mutate(
       { currency },
       {
         onSuccess: () => {
           router.back();
-        },
-        onError: () => {
-          Alert.alert(
-            i18n.t("common.error"),
-            i18n.t("currency.updateFailed")
-          );
-        },
+        }
       }
     );
   };
@@ -60,12 +54,11 @@ export default function CurrencyScreen() {
           return (
             <TouchableOpacity
               key={currency}
-              disabled={updateUser.isPending}
-              className={`flex-row items-center justify-between p-5 rounded-xl mb-3 border ${
-                selected
+              disabled={updateCurrency.isPending}
+              className={`flex-row items-center justify-between p-5 rounded-xl mb-3 border ${selected
                   ? "border-green-500 bg-green-50"
                   : "border-gray-200"
-              }`}
+                }`}
               onPress={() => handleSelectCurrency(currency)}
             >
               <Text className="text-lg">

@@ -6,8 +6,8 @@
     "searchCountry": "Search Country"
   },
   "success": {
-    "profilePicUpdated":"Update Profile Pic Successfully!",
-    "profileUpdated":"Update Profile Successfully!"
+    "profilePicUpdated": "Update Profile Pic Successfully!",
+    "profileUpdated": "Update Profile Successfully!"
   },
   "error": {
     "cooldown": "Update Cooldown",
@@ -91,13 +91,25 @@
   "profile": {
     "opidWarning": "Your OnlinePiggy ID is your unique account identifier. It can only be changed once every month."
   },
-  "savings":{
-    "totalSavings":"Total Savings",
-    "currentBalance":"Current Balance",
-    "goalAccount":"Goal Account",
-    "WORKING_CAPITAL":"Working Capital",
-    "EMERGENCY_FUND":"Emergency Capital",
-    "SAVINGS":"SAVINGS",
-    "YOUR_SAVINGS_ACCOUNTS":"Your Savings Accounts"
+  "savings": {
+    "totalSavings": "Total Savings",
+    "currentBalance": "Current Balance",
+    "ADD_NEW_GOAL_ACCOUNT": "Add New Goal Account",
+    "WORKING_CAPITAL": "Working Capital",
+    "EMERGENCY_FUND": "Emergency Capital",
+    "SAVINGS": "SAVINGS",
+    "YOUR_SAVINGS_ACCOUNTS": "Your Savings Accounts"
+  },
+  "expenses": {
+    "EXPENSES": "Expenses",
+    "totalExpenses": "Total Expenses",
+    "expensesCategory": "Expense Categories",
+    "All_EXPENSES": "All Expenses",
+    "DAILY_EXPENSES": "Daily Expenses",
+    "ADD_EXPENSES_ACCOUNT": "Add Expense Account",
+    "CATEGORIES": "Categories",
+    "noExpensesDataDetial": "Add an expense account to view your expenses.",
+    "noExpensesData": "No Data",
+    "noExpensesAccount": "No Expense Accounts"
   }
 }

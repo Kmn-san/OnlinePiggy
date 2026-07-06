@@ -10,13 +10,13 @@ export function FloatingActionButton() {
   return (
     <TouchableOpacity
       className="absolute left-6 right-6 bg-emerald-600 rounded-xl py-3.5 shadow-md shadow-emerald-700/20 active:opacity-90"
-      onPress={() => router.push("/accounts/createGoal")}
+      onPress={() => router.push()}
       style={{ bottom: 24 + insets.bottom }}
     >
       <View className="flex-row items-center justify-center">
         <Ionicons name="add" size={20} color="white" />
         <Text className="text-white text-base font-semibold ml-1.5">
-          {i18n.t("savings.goalAccount")}
+          {i18n.t("savings.ADD_NEW_GOAL_ACCOUNT")}
         </Text>
       </View>
     </TouchableOpacity>

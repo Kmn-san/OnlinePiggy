@@ -1,3 +1,4 @@
+import { fetchExchangeRate } from "../service/currencyService.js";
 import * as userService from "../service/userService.js"
 import cloudinary from "../utlis/cloudinary.js"
 
@@ -22,13 +23,19 @@ export const updateUser = async (req, res) => {
     try {
         const clerkId = req.clerkId;
         const clientData = req.body;
+        const Opid = clientData.opid
 
         if (!Object.keys(clientData).length) {
             return res.status(400).json({ code: "NO_DATA_PROVIDED" })
         }//if no data given
+        const existingOpid = await userService.existedOpid(Opid)
 
+        if (existingOpid) {
+            return res.status(409).json({
+                code: "OPID_ALREADY_EXISTS"
+            })
+        }
         if (clientData.opid) {
-            const Opid = clientData.opid
             const user = await userService.userData(clerkId)
 
             if (user.opid_updated_at) {
@@ -51,12 +58,7 @@ export const updateUser = async (req, res) => {
                     });
                 }
             }
-            const existingOpid = await userService.existedOpid(Opid, clerkId)
-            if (existingOpid) {
-                return res.status(409).json({
-                    code: "OPID_ALREADY_EXISTS"
-                })
-            }
+
         }// is the opid exist or not
 
         const result = await userService.updateData(clientData, clerkId)
@@ -66,6 +68,35 @@ export const updateUser = async (req, res) => {
         return res.status(200).json({ code: "UPDATE_SUCCESS", result })
     } catch (error) {
         console.error("Error in updateUser controller: ", error.message);
+        if (error.message === "NO_VALID_FIELDS") {
+            return res.status(400).json({
+                code: "NO_VALID_FIELDS"
+            })
+        }
+        return res.status(500).json({
+            code: "INTERNAL_SERVER_ERROR",
+        });
+    }
+}
+
+export const changeCurrency = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const clerkId = req.clerkId;
+        const clientData = req.body;
+        const userData = await userService.findByUserId(userId);
+
+        const exchangeRate = await fetchExchangeRate(userData.currency, clientData.currency);
+
+        const result = await userService.updateData(clientData, clerkId)
+        const updatedCurrency = await userService.changeCurrency(clientData.currency, exchangeRate, userId)
+
+        if (!result) {
+            return res.status(404).json({ code: "USER_NOT_FOUND" })
+        }
+        return res.status(200).json({ code: "UPDATE_SUCCESS", result, updatedCurrency })
+    } catch (error) {
+        console.error("Error in changeCurrency controller: ", error.message);
         if (error.message === "NO_VALID_FIELDS") {
             return res.status(400).json({
                 code: "NO_VALID_FIELDS"

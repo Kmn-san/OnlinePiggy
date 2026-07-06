@@ -3,21 +3,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import i18n from "../../lib/i18n";
+import { formatCurrency } from "@/constants/currency";
 
 interface HomeHeaderProps {
   totalBalance: number;
   primaryCurrency: string;
   accountCount: number;
 }
-
-const formatCurrency = (amount: number, currency: string): string => {
-  const safeAmount = isNaN(amount) || !amount ? 0 : amount;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-    minimumFractionDigits: 2,
-  }).format(safeAmount);
-};
 
 export function HomeHeader({ totalBalance, primaryCurrency, accountCount }: HomeHeaderProps) {
   const insets = useSafeAreaInsets();

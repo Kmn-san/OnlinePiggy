@@ -94,10 +94,22 @@
   "savings": {
     "totalSavings": "总存款",
     "currentBalance": "现余额",
-    "goalAccount": "目标账户",
+    "ADD_NEW_GOAL_ACCOUNT": "添加新的目标账户",
     "WORKING_CAPITAL": "日常周转金",
     "EMERGENCY_FUND": "备用金",
     "SAVINGS": "存款",
     "YOUR_SAVINGS_ACCOUNTS": "您的存款账户"
+  },
+  "expenses": {
+    "EXPENSES":"支出",
+    "totalExpenses": "总支出",
+    "expensesCategory": "支出分类",
+    "All_EXPENSES": "全部支出",
+    "DAILY_EXPENSES": "日常开销",
+    "ADD_EXPENSES_ACCOUNT": "添加支出账户",
+    "CATEGORIES":"分类",
+    "noExpensesDataDetial":"添加支出账户以查看",
+    "noExpensesData":"无数据",
+    "noExpensesAccount":"无支出账号"
   }
 }

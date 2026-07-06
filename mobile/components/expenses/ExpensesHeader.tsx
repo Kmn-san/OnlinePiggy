@@ -2,21 +2,13 @@ import { View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import i18n from "../../lib/i18n";
+import { formatCurrency } from "@/constants/currency";
 
 interface ExpensesHeaderProps {
   totalExpenses: number;
   primaryCurrency: string;
   categoryCount: number;
 }
-
-const formatCurrency = (amount: number, currency: string): string => {
-  const safeAmount = isNaN(amount) || !amount ? 0 : amount;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-    minimumFractionDigits: 2,
-  }).format(safeAmount);
-};
 
 export function ExpensesHeader({ totalExpenses, primaryCurrency, categoryCount }: ExpensesHeaderProps) {
   const insets = useSafeAreaInsets();
@@ -38,14 +30,14 @@ export function ExpensesHeader({ totalExpenses, primaryCurrency, categoryCount }
 
       {/* Total Expenses Card */}
       <View className="mt-5 bg-white/20 rounded-2xl p-5 backdrop-blur-sm">
-        <Text className="text-white/80 text-sm font-medium mb-1">Total Expenses</Text>
+        <Text className="text-white/80 text-sm font-medium mb-1">{i18n.t("expenses.totalExpenses")}</Text>
         <Text className="text-white text-3xl font-bold tracking-tight">
           {formatCurrency(totalExpenses, primaryCurrency)}
         </Text>
         <View className="flex-row items-center mt-2">
           <View className="bg-red-400/30 px-2.5 py-1 rounded-full">
             <Text className="text-red-50 text-xs font-semibold">
-              {categoryCount} Categories
+              {categoryCount} {i18n.t("expenses.CATEGORIES")}
             </Text>
           </View>
         </View>

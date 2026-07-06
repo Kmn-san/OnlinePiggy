@@ -57,14 +57,13 @@ export const userData = async (clerkId) => {
     return rows[0]
 }
 
-export const existedOpid = async (Opid, clerkId) => {
+export const existedOpid = async (Opid) => {
     const { rows } = await query(
         `SELECT id 
         FROM users
-        WHERE opid = $1
-        AND clerkid = $2`,
+        WHERE opid = $1`,
 
-        [Opid, clerkId]
+        [Opid]
     )
     return rows[0]
 }
@@ -105,6 +104,19 @@ export const updateData = async (clientData, clerkId) => {
         values
     )
     return rows[0]
+}
+
+export const changeCurrency = async (currency, exchangeRate, userId) => {
+    const { rows } = await query(
+        `UPDATE account 
+        SET currency = $1,
+        current_balance = current_balance * $2
+        WHERE userid = $3
+        RETURNING *`, [
+        currency, exchangeRate, userId
+    ]
+    )
+    return rows;
 }
 
 export const changeProfilePic = async (imageUrl, newPublicId, clerkId) => {

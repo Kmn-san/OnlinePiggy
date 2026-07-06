@@ -8,6 +8,7 @@ import { ActivityIndicator, View } from "react-native";
 import i18n from "../../lib/i18n";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";
+import LoadingComponent from "@/components/LoadingComponent";
 
 export default function TabsLayout() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -22,10 +23,8 @@ export default function TabsLayout() {
 
   if (!isLoaded || userLoading) {
     return (
-      <View className="flex-1 items-center justify-center bg-white">
-        <ActivityIndicator size="large" color="#1DB954" />
-      </View>
-    );
+      <LoadingComponent />
+    )
   }
 
   if (!isSignedIn) {

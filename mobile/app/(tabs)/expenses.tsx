@@ -13,6 +13,7 @@ import { ExpensesHeader } from "../../components/expenses/ExpensesHeader";
 import { ExpenseChartCard } from "../../components/expenses/ExpenseChartCard";
 import { ExpenseCategorySection } from "../../components/expenses/ExpenseCategorySection";
 import { ExpenseAccountsSection } from "../../components/expenses/ExpenseAccountsSection";
+import LoadingComponent from "@/components/LoadingComponent";
 
 interface Account {
   id: string;
@@ -27,7 +28,7 @@ export default function Expenses() {
   const { language } = useLanguage();
   const insets = useSafeAreaInsets();
   i18n.locale = language;
-  
+
   const { data: accounts, isLoading } = useAccounts();
 
   // Data processing logic kept isolated here at root context level
@@ -48,50 +49,34 @@ export default function Expenses() {
       <Tabs.Screen options={{ title: i18n.t("tabs.expenses"), headerShown: false }} />
 
       {isLoading ? (
-        <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#DC2626" />
-          <Text className="text-gray-500 mt-3 text-sm">Loading expenses...</Text>
-        </View>
+        <LoadingComponent />
       ) : (
         <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 130 }} showsVerticalScrollIndicator={false}>
-          
-          <ExpensesHeader 
-            totalExpenses={totalExpenses} 
-            primaryCurrency={primaryCurrency} 
-            categoryCount={categoryData.length} 
+
+          <ExpensesHeader
+            totalExpenses={totalExpenses}
+            primaryCurrency={primaryCurrency}
+            categoryCount={categoryData.length}
           />
 
-          <ExpenseChartCard 
-            categoryData={categoryData} 
-            totalExpenses={totalExpenses} 
-            primaryCurrency={primaryCurrency} 
+          <ExpenseChartCard
+            categoryData={categoryData}
+            totalExpenses={totalExpenses}
+            primaryCurrency={primaryCurrency}
           />
 
-          <ExpenseCategorySection 
-            categoryData={categoryData} 
-            totalExpenses={totalExpenses} 
-            primaryCurrency={primaryCurrency} 
+          <ExpenseCategorySection
+            categoryData={categoryData}
+            totalExpenses={totalExpenses}
+            primaryCurrency={primaryCurrency}
           />
 
-          <ExpenseAccountsSection 
-            expenseAccounts={expenseAccounts} 
+          <ExpenseAccountsSection
+            expenseAccounts={expenseAccounts}
           />
 
         </ScrollView>
       )}
-
-      {/* Modern Fixed Action Accent Button */}
-      <TouchableOpacity 
-        className="absolute left-5 right-5 bg-red-600 rounded-xl py-3.5 shadow-md shadow-red-700/20 active:opacity-90" 
-        style={{ bottom: 24 }}
-        activeOpacity={0.8} 
-        onPress={() => router.push("/expenses/create-expense")}
-      >
-        <View className="flex-row items-center justify-center">
-          <Ionicons name="add" size={20} color="white" />
-          <Text className="text-white text-base font-semibold ml-1.5">Add Expense Account</Text>
-        </View>
-      </TouchableOpacity>
     </View>
   );
 }

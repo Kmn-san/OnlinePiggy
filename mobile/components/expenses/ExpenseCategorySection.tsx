@@ -1,6 +1,8 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import i18n from "@/lib/i18n";
+import { formatCurrency } from "@/constants/currency";
 
 interface ExpenseCategorySectionProps {
     categoryData: any[];
@@ -8,19 +10,10 @@ interface ExpenseCategorySectionProps {
     primaryCurrency: string;
 }
 
-const formatCurrency = (amount: number, currency: string): string => {
-    const safeAmount = isNaN(amount) || !amount ? 0 : amount;
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: currency,
-        minimumFractionDigits: 2,
-    }).format(safeAmount);
-};
-
 export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCurrency }: ExpenseCategorySectionProps) {
     return (
         <View className="px-4 mt-6">
-            <Text className="text-gray-900 text-lg font-bold mb-3">Expense Categories</Text>
+            <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.expensesCategory")}</Text>
             {categoryData.length > 0 ? (
                 categoryData.map((category) => (
                     <TouchableOpacity
@@ -58,7 +51,7 @@ export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCur
             ) : (
                 <View className="bg-white rounded-2xl p-8 items-center border border-gray-100">
                     <Ionicons name="receipt-outline" size={48} color="#d1d5db" />
-                    <Text className="text-gray-400 text-center mt-2">No expense accounts found</Text>
+                    <Text className="text-gray-400 text-center mt-2">{i18n.t("expenses.noExpensesAccount")}</Text>
                 </View>
             )}
         </View>
