@@ -70,8 +70,9 @@ export function SavingsAccountCard({ item }: SavingsAccountCardProps) {
           </View>
           <View className="flex-1">
             <Text className="text-gray-900 text-lg font-bold">
-              {i18n.t(`savings.${item.name}`)}
-              
+              {item.type === "GOAL"
+                ? item.name
+                : i18n.t(`savings.${item.name}`)}
             </Text>
             <View className="flex-row items-center mt-0.5">
               <View className="bg-emerald-100 px-2 py-0.5 rounded-full">

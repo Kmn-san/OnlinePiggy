@@ -3,7 +3,9 @@
     "error": "エラー",
     "confirm": "確定",
     "success": "成功",
-    "searchCountry": "国を検索"
+    "searchCountry": "国を検索",
+    "cancel": "取消",
+    "done": "完成"
   },
   "success": {
     "profilePicUpdated": "プロファイル　ピクチャーを変更しました",
@@ -111,5 +113,14 @@
     "noExpensesDataDetial": "支出口座を追加すると表示されます",
     "noExpensesData": "データがありません",
     "noExpensesAccount": "支出口座がありません"
+  },
+  "createAccount": {
+    "createNewGoal": "新しい目標を作成",
+    "goalTitle": "目標名",
+    "targetAmount": "目標金額",
+    "goalPreview": "目標プレビュー",
+    "cancelCreate": "作成をキャンセル",
+    "cancelInfo": "本当にキャンセルしますか？入力したデータはすべて失われます。",
+    "continueCreate": "作成を続ける"
   }
 }

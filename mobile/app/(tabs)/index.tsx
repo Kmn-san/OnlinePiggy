@@ -6,7 +6,6 @@ import i18n from "../../lib/i18n";
 import { useLanguage } from "../../context/languageContext";
 import useAccounts from "../../hooks/useAccounts";
 
-// Localized Sub-Components
 import { HomeHeader } from "../../components/home/HomeHeader";
 import { HomeSectionTitle } from "../../components/home/HomeSectionTitle";
 import { SavingsAccountCard } from "../../components/home/SavingsAccountCard";
@@ -26,7 +25,7 @@ export default function Home() {
   const insets = useSafeAreaInsets();
   i18n.locale = language;
 
-  const { data: accounts, isLoading } = useAccounts();
+  const { accounts, isLoading } = useAccounts();
 
   // Filter accounts intended for this section
   const savingsAccounts = accounts?.filter(
@@ -64,10 +63,10 @@ export default function Home() {
           contentContainerStyle={{ paddingBottom: 110 }}
           ListHeaderComponent={
             <>
-              <HomeHeader 
-                totalBalance={totalBalance} 
-                primaryCurrency={primaryCurrency} 
-                accountCount={savingsAccounts.length} 
+              <HomeHeader
+                totalBalance={totalBalance}
+                primaryCurrency={primaryCurrency}
+                accountCount={savingsAccounts.length}
               />
               <HomeSectionTitle count={savingsAccounts.length} />
             </>

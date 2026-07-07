@@ -17,14 +17,17 @@ export const getAccount = async (req, res) => {
 
 export const addGoalAccount = async (req, res) => {
     const userId = req.user.id;
+    console.log(req.body);
+
     const { goalName, targetAmount } = req.body;
+    
     const userExist = await userService.findByUserId(userId)
     if (!userExist) {
         return res.status(404).json({ code: "USER_NOT_FOUND" })
     }
     const result = await accountService.createGoalAccount(userExist.id, userExist.currency, goalName, targetAmount)
     const accounts = await accountService.getAccount(userExist.id)
-    return res.status(200).json(acccounts)
+    return res.status(200).json(accounts)
 }
 
 export const addAccount = async (req, res) => {

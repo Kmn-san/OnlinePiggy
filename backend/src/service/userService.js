@@ -110,7 +110,8 @@ export const changeCurrency = async (currency, exchangeRate, userId) => {
     const { rows } = await query(
         `UPDATE account 
         SET currency = $1,
-        current_balance = current_balance * $2
+        current_balance = current_balance * $2,
+        target_amount = target_amount * $2
         WHERE userid = $3
         RETURNING *`, [
         currency, exchangeRate, userId

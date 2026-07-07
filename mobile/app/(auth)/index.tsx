@@ -134,7 +134,7 @@ export default function AuthScreen() {
               onPress={() => setModalVisible(false)}
             >
               <Text className="text-center text-gray-500">
-                {t("auth.cancel")}
+                {t("common.cancel")}
               </Text>
             </TouchableOpacity>
           </View>

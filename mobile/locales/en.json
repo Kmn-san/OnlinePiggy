@@ -3,7 +3,9 @@
     "error": "Error",
     "confirm": "Confirm",
     "success": "Success",
-    "searchCountry": "Search Country"
+    "searchCountry": "Search Country",
+    "cancel": "Cancel",
+    "done": "Done"
   },
   "success": {
     "profilePicUpdated": "Update Profile Pic Successfully!",
@@ -111,5 +113,14 @@
     "noExpensesDataDetial": "Add an expense account to view your expenses.",
     "noExpensesData": "No Data",
     "noExpensesAccount": "No Expense Accounts"
+  },
+  "createAccount": {
+    "createNewGoal": "Create New Goal",
+    "goalTitle": "Goal Title",
+    "targetAmount": "Target Amount",
+    "goalPreview": "Goal Preview",
+    "cancelCreate": "Cancel Creation",
+    "cancelInfo": "Are you sure you want to cancel? All entered data will be lost.",
+    "continueCreate": "Continue Creating"
   }
 }

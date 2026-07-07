@@ -29,7 +29,7 @@ export default function Expenses() {
   const insets = useSafeAreaInsets();
   i18n.locale = language;
 
-  const { data: accounts, isLoading } = useAccounts();
+  const { accounts, isLoading } = useAccounts();
 
   // Data processing logic kept isolated here at root context level
   const expenseAccounts = accounts?.filter((a: Account) => a.type !== "SAVINGS" && a.type !== "GOAL") || [];

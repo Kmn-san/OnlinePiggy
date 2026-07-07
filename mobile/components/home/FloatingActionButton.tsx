@@ -10,7 +10,7 @@ export function FloatingActionButton() {
   return (
     <TouchableOpacity
       className="absolute left-6 right-6 bg-emerald-600 rounded-xl py-3.5 shadow-md shadow-emerald-700/20 active:opacity-90"
-      onPress={() => router.push()}
+      onPress={() => router.push("/accounts/add-goal")}
       style={{ bottom: 24 + insets.bottom }}
     >
       <View className="flex-row items-center justify-center">
