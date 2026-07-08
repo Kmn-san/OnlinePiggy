@@ -1,11 +1,13 @@
 {
   "common": {
-    "error": "错误",
+    "error": "啊哦！",
     "confirm": "确定",
     "success": "成功",
     "searchCountry": "搜索国家",
     "cancel": "取消",
-    "done": "完成"
+    "done": "完成",
+    "continue": "继续",
+    "cancelInfo": "真的要取消您的操作吗？您所输入的会被清空"
   },
   "success": {
     "profilePicUpdated": "你的帅/美照更新好啦！",
@@ -27,7 +29,13 @@
     "NO_DATA_PROVIDED": "啊呀！我看不懂无字天书，再输入一遍吧！",
     "OPID_ALREADY_EXISTS": "你这个OPID出了点问题。 再想一个新的吧！",
     "NO_VALID_FIELDS": "你好像没更改些什么。再确认一次吧！",
-    "NO_FILE_UPLOAD": "我的天线没收到你的资料。再发送一次吧！"
+    "NO_FILE_UPLOAD": "我的天线没收到你的资料。再发送一次吧！",
+    "SELECT_INCOME_ACCOUNT": "发工资啦！你想存到哪里呢?",
+    "SELECT_SOURCE_ACCOUNT": "要从哪里搬运你的钱呢？",
+    "SELECT_DESTINATION_ACCOUNT": "钱要寄去哪里呢?",
+    "SAME_ACCOUNT_ERROR": "不能自己转给自己！账号相同",
+  "INSUFFICIENT_BALANCE": "你的钱好像有点不太够哦！",
+    "INVALID_AMOUNT": "输入你想转的金额！"
   },
   "menu": {
     "language": "语言",
@@ -100,38 +108,54 @@
     "EMERGENCY_FUND": "备用金",
     "SAVINGS": "存款",
     "YOUR_SAVINGS_ACCOUNTS": "您的存款账户",
-    "goalAccount": "目标账户",
+    "GOAL_ACCOUNT": "目标账户",
     "progress": "进度条",
     "target": "目标"
   },
   "expenses": {
     "EXPENSES": "支出",
-    "totalExpenses": "总支出",
-    "expensesCategory": "支出分类",
-    "All_EXPENSES": "全部支出",
-    "ADD_EXPENSES_ACCOUNT": "添加支出账户",
-    "CATEGORIES": "分类",
-    "noExpensesDataDetial": "添加支出账户以查看",
-    "noExpensesData": "无数据",
-    "noExpensesAccount": "无支出账号",
+    "TOTAL_EXPENSES": "总支出",
+    "EXPENSES_CATEGORY": "支出分类",
+    "ALL_EXPENSES": "全部支出",
     "DAILY_EXPENSES": "日常开销",
-    "entertainment": "娱乐开支",
-    "housing": "房屋水电",
-    "utilities": "公用事业费",
-    "transportation": "交通出行",
-    "healthcare": "医疗健康",
-    "education": "教育学习",
-    "insurance": "保险支出",
-    "debt": "债务偿还",
-    "subscriptions": "订阅会员"
+    "ENTERTAINMENT": "娱乐开支",
+    "HOUSING": "住房费用",
+    "UTILITIES": "水电燃气",
+    "TRANSPORTATION": "交通出行",
+    "HEALTHCARE": "医疗健康",
+    "EDUCATION": "教育学习",
+    "INSURANCE": "保险支出",
+    "DEBT": "债务偿还",
+    "SUBSCRIPTIONS": "订阅会员",
+    "ADD_EXPENSE_ACCOUNT": "添加支出账户",
+    "CATEGORIES": "分类",
+    "NO_EXPENSES_DATA_DETAIL": "添加支出账户以查看",
+    "NO_EXPENSES_DATA": "无数据",
+    "NO_EXPENSE_ACCOUNT": "暂无支出账户"
   },
   "createAccount": {
     "createNewGoal": "创造新目标",
     "goalTitle": "目标名称",
     "targetAmount": "目标额",
     "goalPreview": "目标预览",
-    "cancelCreate": "取消创造",
-    "cancelInfo": "真的要取消创造新的账户吗？您所输入的会被清空",
-    "continueCreate": "继续创造"
+    "CANCEL_CREATE": "取消创造"
+  },
+  "transaction": {
+    "NEW_TRANSACTION": "新建交易",
+    "TRANSFER_MODE": "转账模式",
+    "INCOME_MODE": "收入模式",
+    "SWITCH_TO_INCOME": "切换到收入模式",
+    "SWITCH_TO_TRANSFER": "切换到转账模式",
+    "FROM_ACCOUNT": "转出账户",
+    "TO_ACCOUNT": "转入账户",
+    "SELECT_ACCOUNT_TO_ADD_INCOME": "选择接收收入的账户",
+    "SELECT_DESTINATION": "选择转入账户",
+    "SELECT_SOURCE_ACCOUNT": "选择转出账户",
+    "SELECT_AMOUNT": "输入金额",
+    "SELECT_ACCOUNT": "选择账户",
+    "AMOUNT": "金额",
+    "DESCRIPTION": "备注（可选）",
+    "TRANSFER": "转账",
+    "CANCEL_TRANSACTION": "取消转账"
   }
 }

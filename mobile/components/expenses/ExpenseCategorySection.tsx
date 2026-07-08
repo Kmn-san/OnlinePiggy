@@ -14,7 +14,7 @@ export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCur
 
     return (
         <View className="px-4 mt-6">
-            <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.expensesCategory")}</Text>
+            <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.EXPENSES_CATEGORY")}</Text>
             {categoryData.length > 0 ? (
                 categoryData.map((category) => (
                     <TouchableOpacity
@@ -49,7 +49,7 @@ export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCur
             ) : (
                 <View className="bg-white rounded-2xl p-8 items-center border border-gray-100">
                     <Ionicons name="receipt-outline" size={48} color="#d1d5db" />
-                    <Text className="text-gray-400 text-center mt-2">{i18n.t("expenses.noExpensesAccount")}</Text>
+                    <Text className="text-gray-400 text-center mt-2">{i18n.t("expenses.NO_EXPENSE_ACCOUNT")}</Text>
                 </View>
             )}
         </View>

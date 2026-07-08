@@ -76,6 +76,7 @@ export interface AccountModalProps {
     accounts: Account[];
     selectedAccountId?: string | number;
     isIncome: boolean;
+    iconName: ComponentProps<typeof Ionicons>["name"];
     onClose: () => void;
     onSelect: (account: Account) => void;
 }

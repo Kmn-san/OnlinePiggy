@@ -3,6 +3,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { AccountSelectorProps } from '@/types';
+import i18n from '@/lib/i18n';
+import { formatCurrency } from '@/constants/currency';
 
 export default function AccountSelector({
     label,
@@ -31,11 +33,17 @@ export default function AccountSelector({
                     </View>
                     <View>
                         <Text className="text-gray-900 font-bold">
-                            {account ? account.name : 'Select Account'}
+                            {account
+                                ? account.type === "SAVINGS"
+                                    ? i18n.t(`savings.${account.name}`)
+                                    : account.type === "EXPENSES"
+                                        ? i18n.t(`expenses.${account.name}`)
+                                        : account.name
+                                : i18n.t("transaction.SELECT_ACCOUNT")}
                         </Text>
                         {account && (
                             <Text className="text-gray-500 text-xs">
-                                Balance: {account.currency} {account.current_balance?.toLocaleString() || '0'}
+                                {formatCurrency(Number(account.current_balance), account.currency)}
                             </Text>
                         )}
                     </View>

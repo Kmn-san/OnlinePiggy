@@ -18,6 +18,7 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import { formatCurrency } from '@/constants/currency';
 import i18n from '@/lib/i18n';
 import useAccount from '@/hooks/useAccounts';
+import GradientHeader from '@/components/GradientHeader';
 
 export default function CreateGoal() {
   const [goalTitle, setGoalTitle] = useState('');
@@ -55,10 +56,10 @@ export default function CreateGoal() {
 
   const handleCancel = () => {
     Alert.alert(
-      i18n.t("createAccount.cancelCreate"),
-      i18n.t("createAccount.cancelInfo"),
+      i18n.t("createAccount.CANCEL_CREATE"),
+      i18n.t("common.cancelInfo"),
       [
-        { text: i18n.t("createAccount.continueCreate"), style: 'cancel' },
+        { text: i18n.t("common.continue"), style: 'cancel' },
         { text: i18n.t("common.cancel"), style: 'destructive', onPress: () => router.back() },
       ]
     );
@@ -67,30 +68,10 @@ export default function CreateGoal() {
   return (
     <View className="flex-1 bg-gray-50">
       {/* Header */}
-      <LinearGradient
-        colors={["#059669", "#047857"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        className="px-4 pt-12 pb-4"
-      >
-        <View className="flex-row items-center justify-between">
-          {/* Back Button */}
-          <TouchableOpacity
-            className="w-10 h-10 rounded-full bg-white/20 items-center justify-center"
-            onPress={handleCancel}
-          >
-            <Ionicons name="arrow-back" size={24} color="white" />
-          </TouchableOpacity>
-
-          {/* Title */}
-          <Text className="text-white text-lg font-bold">
-            {i18n.t("createAccount.createNewGoal")}
-          </Text>
-
-          {/* Placeholder for alignment */}
-          <View className="w-10" />
-        </View>
-      </LinearGradient>
+      <GradientHeader
+        title={i18n.t("createAccount.createNewGoal")}
+        onBackPress={handleCancel}
+      />
 
       <KeyboardAvoidingView
         className="flex-1"
@@ -162,7 +143,7 @@ export default function CreateGoal() {
               </Text>
               {targetAmount && (
                 <Text className="text-emerald-600 font-bold text-xl mt-1">
-                  {formatCurrency(targetAmount, user?.currency)}
+                  {formatCurrency(Number(targetAmount), user?.currency!)}
                 </Text>
               )}
             </View>

@@ -11,16 +11,66 @@ export interface CategoryConfig {
 }
 
 export const EXPENSE_CATEGORIES: CategoryConfig[] = [
-  { id: "daily", label: "DAILY_EXPENSES", icon: "restaurant-outline", color: "#FF6B6B" },
-  { id: "entertainment", label: "entertainment", icon: "film-outline", color: "#4ECDC4" },
-  { id: "housing", label: "housing", icon: "home-outline", color: "#FFA07A" },
-  { id: "utilities", label: "utilities", icon: "bulb-outline", color: "#FFD93D" },
-  { id: "transportation", label: "transportation", icon: "car-outline", color: "#6C5CE7" },
-  { id: "healthcare", label: "healthcare", icon: "medical-outline", color: "#FF6B6B" },
-  { id: "education", label: "education", icon: "book-outline", color: "#74B9FF" },
-  { id: "insurance", label: "insurance", icon: "shield-checkmark-outline", color: "#A8E6CF" },
-  { id: "debt", label: "debt", icon: "card-outline", color: "#FF8A5C" },
-  { id: "subscriptions", label: "subscriptions", icon: "phone-portrait-outline", color: "#A29BFE" },
+  {
+    id: "daily",
+    label: "DAILY_EXPENSES",
+    icon: "restaurant-outline",
+    color: "#FF6B6B",
+  },
+  {
+    id: "entertainment",
+    label: "ENTERTAINMENT",
+    icon: "film-outline",
+    color: "#4ECDC4",
+  },
+  {
+    id: "housing",
+    label: "HOUSING",
+    icon: "home-outline",
+    color: "#FFA07A",
+  },
+  {
+    id: "utilities",
+    label: "UTILITIES",
+    icon: "bulb-outline",
+    color: "#FFD93D",
+  },
+  {
+    id: "transportation",
+    label: "TRANSPORTATION",
+    icon: "car-outline",
+    color: "#6C5CE7",
+  },
+  {
+    id: "healthcare",
+    label: "HEALTHCARE",
+    icon: "medical-outline",
+    color: "#FF6B6B",
+  },
+  {
+    id: "education",
+    label: "EDUCATION",
+    icon: "book-outline",
+    color: "#74B9FF",
+  },
+  {
+    id: "insurance",
+    label: "INSURANCE",
+    icon: "shield-checkmark-outline",
+    color: "#A8E6CF",
+  },
+  {
+    id: "debt",
+    label: "DEBT",
+    icon: "card-outline",
+    color: "#FF8A5C",
+  },
+  {
+    id: "subscriptions",
+    label: "SUBSCRIPTIONS",
+    icon: "phone-portrait-outline",
+    color: "#A29BFE",
+  },
 ];
 
 export const getCategoryForAccount = (accountName: string): string => {

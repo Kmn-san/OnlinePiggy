@@ -17,9 +17,9 @@ export function ExpenseChartCard({ categoryData, totalExpenses, primaryCurrency 
         <View className="w-20 h-20 bg-gray-100 rounded-full items-center justify-center mb-4">
           <Ionicons name="pie-chart-outline" size={40} color="#9ca3af" />
         </View>
-        <Text className="text-gray-900 text-lg font-bold">{i18n.t("expenses.noExpensesData")}</Text>
+        <Text className="text-gray-900 text-lg font-bold">{i18n.t("expenses.NO_EXPENSES_DATA")}</Text>
         <Text className="text-gray-500 text-sm mt-1 text-center">
-          {i18n.t("expenses.noExpensesDataDetial")}
+          {i18n.t("expenses.NO_EXPENSES_DATA_DETAIL")}
         </Text>
       </View>
     );
@@ -28,10 +28,10 @@ export function ExpenseChartCard({ categoryData, totalExpenses, primaryCurrency 
   return (
     <View className="bg-white mx-4 mt-6 rounded-2xl p-6 shadow-sm border border-gray-100">
       <Text className="text-gray-900 text-lg font-bold text-center mb-4">Expense Breakdown</Text>
-      <DonutChart 
-        data={categoryData} 
-        total={totalExpenses} 
-        formatter={(amt) => formatCurrency(amt, primaryCurrency)} 
+      <DonutChart
+        data={categoryData}
+        total={totalExpenses}
+        formatter={(amt) => formatCurrency(amt, primaryCurrency)}
       />
     </View>
   );

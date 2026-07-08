@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ComponentProps } from "react";
 import i18n from "../../lib/i18n";
-import { formatCurrency } from "@/constants/currency";
+import { formatCurrency, getLocalizedType } from "@/constants/currency";
 import { SavingsAccountCardProps } from "@/types";
 
 type IoniconsName = ComponentProps<typeof Ionicons>['name'];
@@ -16,21 +16,6 @@ const getAccountIcon = (type: string): IoniconsName => {
       return "business-outline";
     default:
       return "wallet-outline";
-  }
-};
-
-const getLocalizedType = (type: string): string => {
-  switch (type) {
-    case "WORKING_CAPITAL":
-      return i18n.t("savings.WORKING_CAPITAL");
-    case "EMERGENCY_CAPITAL":
-      return i18n.t("savings.EMERGENCY_CAPITAL");
-    case "SAVINGS":
-      return i18n.t("savings.SAVINGS");
-    case "GOAL":
-      return i18n.t("savings.goalAccount");
-    default:
-      return type;
   }
 };
 
@@ -103,7 +88,7 @@ export function SavingsAccountCard({ item }: SavingsAccountCardProps) {
                 {formatCurrency(0, item.currency)}
               </Text>
               <Text className="text-gray-600 text-xs font-medium">
-                {i18n.t("savings.target")}: {formatCurrency(item.target_amount, item.currency)}
+                {i18n.t("savings.target")}: {formatCurrency(Number(item.target_amount), item.currency)}
               </Text>
             </View>
           </View>

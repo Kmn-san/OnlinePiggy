@@ -22,15 +22,15 @@ export function ExpensesHeader({ totalExpenses, primaryCurrency, categoryCount }
       style={{ paddingTop: insets.top + 16 }}
     >
       {/* Title View */}
-      <View className="flex-row items-center justify-between">
-        <Text className="text-white text-2xl font-bold tracking-tight ml-2">
+      <View className="flex-row items-center justify-center">
+        <Text className="text-white text-xl font-bold tracking-tight">
           {i18n.t("tabs.expenses")}
         </Text>
       </View>
 
       {/* Total Expenses Card */}
       <View className="mt-5 bg-white/20 rounded-2xl p-5 backdrop-blur-sm">
-        <Text className="text-white/80 text-sm font-medium mb-1">{i18n.t("expenses.totalExpenses")}</Text>
+        <Text className="text-white/80 text-sm font-medium mb-1">{i18n.t("expenses.TOTAL_EXPENSES")}</Text>
         <Text className="text-white text-3xl font-bold tracking-tight">
           {formatCurrency(totalExpenses, primaryCurrency)}
         </Text>

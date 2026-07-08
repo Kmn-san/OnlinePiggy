@@ -5,7 +5,9 @@
     "success": "成功",
     "searchCountry": "国を検索",
     "cancel": "取消",
-    "done": "完成"
+    "done": "完成",
+    "continue": "続ける",
+    "cancelInfo": "本当にキャンセルしますか？入力したデータはすべて失われます。"
   },
   "success": {
     "profilePicUpdated": "プロファイル　ピクチャーを変更しました",
@@ -27,7 +29,13 @@
     "NO_DATA_PROVIDED": "インプットがありません。もう一度入力してください。",
     "OPID_ALREADY_EXISTS": "このOPIDにエラーが出ってきた。新しいのをやってください。",
     "NO_VALID_FIELDS": "変更された項目がありません。もう一度入力してください。",
-    "NO_FILE_UPLOAD": "アップロードしたファイルがありません。もう一度やってしてください。"
+    "NO_FILE_UPLOAD": "アップロードしたファイルがありません。もう一度やってしてください。",
+    "SELECT_INCOME_ACCOUNT": "入金を受け取る口座を選択してください",
+    "SELECT_SOURCE_ACCOUNT": "振込元の口座を選択してください",
+    "SELECT_DESTINATION_ACCOUNT": "振込先の口座を選択してください",
+    "SAME_ACCOUNT_ERROR": "振込元と振込先の口座は異なる必要があります",
+    "INSUFFICIENT_BALANCE": "振込元口座の残高が不足しています",
+    "INVALID_AMOUNT": "有効な金額を入力してください"
   },
   "menu": {
     "language": "言語",
@@ -97,6 +105,7 @@
     "totalSavings": "総貯蓄額",
     "currentBalance": "現在の残高",
     "ADD_NEW_GOAL_ACCOUNT": "目標口座の追加",
+    "GOAL_ACCOUNT": "目標口座",
     "WORKING_CAPITAL": "生活資金",
     "EMERGENCY_FUND": "緊急資金",
     "SAVINGS": "貯蓄",
@@ -106,32 +115,48 @@
   },
   "expenses": {
     "EXPENSES": "支出",
-    "totalExpenses": "総支出",
-    "expensesCategory": "支出カテゴリー",
-    "All_EXPENSES": "すべての支出",
+    "TOTAL_EXPENSES": "総支出",
+    "EXPENSES_CATEGORY": "支出カテゴリー",
+    "ALL_EXPENSES": "すべての支出",
     "DAILY_EXPENSES": "日常の経費",
-    "ADD_EXPENSES_ACCOUNT": "支出アカウントを追加",
+    "ENTERTAINMENT": "娯楽・エンタメ",
+    "HOUSING": "住居費",
+    "UTILITIES": "光熱費・水道代",
+    "TRANSPORTATION": "交通費",
+    "HEALTHCARE": "医療・健康",
+    "EDUCATION": "教育・学習",
+    "INSURANCE": "保険料",
+    "DEBT": "債務返済",
+    "SUBSCRIPTIONS": "サブスクリプション",
+    "ADD_EXPENSE_ACCOUNT": "支出アカウントを追加",
     "CATEGORIES": "カテゴリー",
-    "noExpensesDataDetial": "閲覧するには支出アカウントを追加してください",
-    "noExpensesData": "データなし",
-    "noExpensesAccount": "支出アカウントなし",
-    "entertainment": "娯楽・エンタメ",
-    "housing": "住居費",
-    "utilities": "光熱費・水道代",
-    "transportation": "交通費",
-    "healthcare": "医療・健康",
-    "education": "教育・学習",
-    "insurance": "保険料",
-    "debt": "債務返済",
-    "subscriptions": "サブスクリプション"
+    "NO_EXPENSES_DATA_DETAIL": "閲覧するには支出アカウントを追加してください",
+    "NO_EXPENSES_DATA": "データなし",
+    "NO_EXPENSE_ACCOUNT": "支出アカウントなし"
   },
   "createAccount": {
     "createNewGoal": "新しい目標を作成",
     "goalTitle": "目標名",
     "targetAmount": "目標金額",
     "goalPreview": "目標プレビュー",
-    "cancelCreate": "作成をキャンセル",
-    "cancelInfo": "本当にキャンセルしますか？入力したデータはすべて失われます。",
-    "continueCreate": "作成を続ける"
+    "CANCEL_CREATE": "作成取消"
+  },
+  "transaction": {
+    "NEW_TRANSACTION": "新しい取引",
+    "TRANSFER_MODE": "振替モード",
+    "INCOME_MODE": "収入モード",
+    "SWITCH_TO_INCOME": "収入モードに切り替え",
+    "SWITCH_TO_TRANSFER": "振替モードに切り替え",
+    "FROM_ACCOUNT": "送金元口座",
+    "TO_ACCOUNT": "送金先口座",
+    "SELECT_ACCOUNT_TO_ADD_INCOME": "収入を追加する口座を選択",
+    "SELECT_DESTINATION": "振替先を選択",
+    "SELECT_SOURCE_ACCOUNT": "振替元口座を選択",
+    "SELECT_AMOUNT": "金額を入力",
+    "SELECT_ACCOUNT": "口座を選択",
+    "AMOUNT": "金額",
+    "DESCRIPTION": "説明（任意）",
+    "TRANSFER": "振替",
+    "CANCEL_TRANSACTION": "振替を続ける"
   }
 }

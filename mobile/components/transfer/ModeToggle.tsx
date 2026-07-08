@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ModeToggleProps } from '@/types';
+import i18n from '@/lib/i18n';
 
 export default function ModeToggle({ isIncome, onToggle }: ModeToggleProps) {
     return (
@@ -13,7 +14,7 @@ export default function ModeToggle({ isIncome, onToggle }: ModeToggleProps) {
                     color={isIncome ? "#059669" : "#6b7280"}
                 />
                 <Text className="text-gray-700 font-semibold ml-3">
-                    {isIncome ? 'Income Mode' : 'Transfer Mode'}
+                    {i18n.t(`transaction.${isIncome ? 'INCOME_MODE' : 'TRANSFER_MODE'}`)}
                 </Text>
             </View>
             <TouchableOpacity
@@ -21,7 +22,7 @@ export default function ModeToggle({ isIncome, onToggle }: ModeToggleProps) {
                 onPress={() => onToggle(!isIncome)}
             >
                 <Text className={`font-bold ${isIncome ? 'text-emerald-700' : 'text-gray-600'}`}>
-                    {isIncome ? 'Switch to Transfer' : 'Switch to Income'}
+                    {i18n.t(`transaction.${isIncome ? 'SWITCH_TO_TRANSFER' : 'SWITCH_TO_INCOME'}`)}
                 </Text>
             </TouchableOpacity>
         </View>

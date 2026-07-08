@@ -22,7 +22,7 @@ export function ExpenseAccountsSection({ expenseAccounts }: ExpenseAccountsSecti
 
     return (
         <View className="px-4 mt-4">
-            <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.All_EXPENSES")}</Text>
+            <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.ALL_EXPENSES")}</Text>
             {expenseAccounts.map((account) => (
                 <TouchableOpacity
                     key={account.id}

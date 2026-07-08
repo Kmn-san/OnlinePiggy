@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TransactionNoteProps } from '@/types';
+import i18n from '@/lib/i18n';
 
 export default function TransactionNote({
     value,
@@ -11,7 +12,7 @@ export default function TransactionNote({
     return (
         <View className="mb-6">
             <Text className="text-gray-700 font-semibold mb-2">
-                Description (Optional)
+                {i18n.t("transaction.DESCRIPTION")}
             </Text>
             <View className="bg-white rounded-2xl border border-gray-200 px-4 py-2 flex-row items-center">
                 <Ionicons name="document-text-outline" size={20} color="#9ca3af" />

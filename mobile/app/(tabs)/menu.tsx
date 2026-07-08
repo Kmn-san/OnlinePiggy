@@ -31,7 +31,7 @@ export default function Menu() {
       i18n.t("auth.signOutConfirm"),
       [
         {
-          text: i18n.t("auth.cancel"),
+          text: i18n.t("common.cancel"),
           style: "cancel",
         },
         {

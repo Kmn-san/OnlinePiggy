@@ -5,7 +5,9 @@
     "success": "Success",
     "searchCountry": "Search Country",
     "cancel": "Cancel",
-    "done": "Done"
+    "continue": "Continue",
+    "done": "Done",
+    "cancelInfo": "Are you sure you want to cancel? All entered data will be lost."
   },
   "success": {
     "profilePicUpdated": "Update Profile Pic Successfully!",
@@ -27,7 +29,13 @@
     "NO_DATA_PROVIDED": "No data provided. Please try again.",
     "OPID_ALREADY_EXISTS": "There is an error in this OPID. Try a new one.",
     "NO_VALID_FIELDS": "No changes were made. Please try again.",
-    "NO_FILE_UPLOAD": "No file was uploaded. Please try again."
+    "NO_FILE_UPLOAD": "No file was uploaded. Please try again.",
+    "SELECT_INCOME_ACCOUNT": "Please select an account to receive the income",
+    "SELECT_SOURCE_ACCOUNT": "Please select a source account",
+    "SELECT_DESTINATION_ACCOUNT": "Please select a destination account",
+    "SAME_ACCOUNT_ERROR": "Source and destination accounts must be different",
+    "INSUFFICIENT_BALANCE": "Insufficient balance in source account",
+    "INVALID_AMOUNT": "Please enter a valid amount"
   },
   "menu": {
     "language": "Language",
@@ -68,7 +76,6 @@
     "cookie": "Cookie Use",
     "agreement": "By signing up, you agree to our ",
     "selectLanguage": "Select Language",
-    "cancel": "Cancel",
     "signOut": "Sign Out",
     "signOutConfirm": "Are you sure you want to sign out?"
   },
@@ -100,38 +107,55 @@
     "WORKING_CAPITAL": "Working Capital",
     "EMERGENCY_FUND": "Emergency Capital",
     "SAVINGS": "SAVINGS",
+    "GOAL_ACCOUNT": "GOAL",
     "YOUR_SAVINGS_ACCOUNTS": "Your Savings Accounts",
     "progress": "Progress",
     "target": "Target"
   },
   "expenses": {
     "EXPENSES": "Expenses",
-    "totalExpenses": "Total Expenses",
-    "expensesCategory": "Expense Category",
-    "All_EXPENSES": "All Expenses",
+    "TOTAL_EXPENSES": "Total Expenses",
+    "EXPENSES_CATEGORY": "Expense Category",
+    "ALL_EXPENSES": "All Expenses",
     "DAILY_EXPENSES": "Daily Expenses",
-    "ADD_EXPENSES_ACCOUNT": "Add Expense Account",
+    "ENTERTAINMENT": "Entertainment",
+    "HOUSING": "Housing",
+    "UTILITIES": "Utilities",
+    "TRANSPORTATION": "Transportation",
+    "HEALTHCARE": "Healthcare",
+    "EDUCATION": "Education",
+    "INSURANCE": "Insurance",
+    "DEBT": "Debt Repayments",
+    "SUBSCRIPTIONS": "Subscriptions",
+    "ADD_EXPENSE_ACCOUNT": "Add Expense Account",
     "CATEGORIES": "Categories",
-    "noExpensesDataDetial": "Add an expense account to view",
-    "noExpensesData": "No Data",
-    "noExpensesAccount": "No Expense Account",
-    "entertainment": "Entertainment",
-    "housing": "Housing",
-    "utilities": "Utilities",
-    "transportation": "Transportation",
-    "healthcare": "Healthcare",
-    "education": "Education",
-    "insurance": "Insurance",
-    "debt": "Debt Repayments",
-    "subscriptions": "Subscriptions"
+    "NO_EXPENSES_DATA_DETAIL": "Add an expense account to view.",
+    "NO_EXPENSES_DATA": "No Data",
+    "NO_EXPENSE_ACCOUNT": "No Expense Account"
   },
   "createAccount": {
     "createNewGoal": "Create New Goal",
     "goalTitle": "Goal Title",
     "targetAmount": "Target Amount",
     "goalPreview": "Goal Preview",
-    "cancelCreate": "Cancel Creation",
-    "cancelInfo": "Are you sure you want to cancel? All entered data will be lost.",
-    "continueCreate": "Continue Creating"
+    "CANCEL_CREATE": "Cancel Create"
+  },
+  "transaction": {
+    "NEW_TRANSACTION": "New Transaction",
+    "TRANSFER_MODE": "Transfer Mode",
+    "INCOME_MODE": "Income Mode",
+    "SWITCH_TO_INCOME": "Switch To Income Mode",
+    "SWITCH_TO_TRANSFER": "Switch To Transfer Mode",
+    "FROM_ACCOUNT": "From Account",
+    "TO_ACCOUNT": "To Account",
+    "SELECT_ACCOUNT_TO_ADD_INCOME": "Select Account to Add Income",
+    "SELECT_DESTINATION": "Select Destination",
+    "SELECT_SOURCE_ACCOUNT": "Select Source Account",
+    "SELECT_AMOUNT": "Select Amount",
+    "SELECT_ACCOUNT": "Select Account",
+    "AMOUNT": "Amount",
+    "DESCRIPTION": "Description (Optional)",
+    "TRANSFER": "Transfer",
+    "CANCEL_TRANSACTION": "Cancel Transaction"
   }
 }
