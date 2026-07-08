@@ -4,12 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import i18n from "../../lib/i18n";
 import { formatCurrency } from "@/constants/currency";
-
-interface HomeHeaderProps {
-  totalBalance: number;
-  primaryCurrency: string;
-  accountCount: number;
-}
+import { HomeHeaderProps } from "@/types";
 
 export function HomeHeader({ totalBalance, primaryCurrency, accountCount }: HomeHeaderProps) {
   const insets = useSafeAreaInsets();

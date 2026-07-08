@@ -4,19 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ComponentProps } from "react";
 import i18n from "../../lib/i18n";
 import { formatCurrency } from "@/constants/currency";
-
-interface Account {
-  id: string;
-  name: string;
-  type: string;
-  currency: string;
-  current_balance: number;
-  target_amount?: number;
-}
-
-interface SavingsAccountCardProps {
-  item: Account;
-}
+import { SavingsAccountCardProps } from "@/types";
 
 type IoniconsName = ComponentProps<typeof Ionicons>['name'];
 
@@ -26,14 +14,11 @@ const getAccountIcon = (type: string): IoniconsName => {
       return "flag-outline";
     case "SAVINGS":
       return "business-outline";
-    case "CHECKING":
-      return "card-outline";
     default:
       return "wallet-outline";
   }
 };
 
-// Maps raw API account tags to your clean JSON locales seamlessly
 const getLocalizedType = (type: string): string => {
   switch (type) {
     case "WORKING_CAPITAL":
@@ -100,9 +85,9 @@ export function SavingsAccountCard({ item }: SavingsAccountCardProps) {
         {item.type === "GOAL" && item.target_amount && (
           <View className="mt-3">
             <View className="flex-row items-center justify-between mb-1.5">
-              <Text className="text-gray-500 text-xs">Progress</Text>
+              <Text className="text-gray-500 text-xs">{i18n.t("savings.progress")}</Text>
               <Text className="text-gray-600 text-xs font-medium">
-                {Math.round((item.current_balance / item.target_amount) * 100)}%
+                {Math.min(Math.round((Number(item.current_balance) / Number(item.target_amount)) * 100), 100)}%
               </Text>
             </View>
             <View className="w-full bg-gray-200 rounded-full h-2">
@@ -118,7 +103,7 @@ export function SavingsAccountCard({ item }: SavingsAccountCardProps) {
                 {formatCurrency(0, item.currency)}
               </Text>
               <Text className="text-gray-600 text-xs font-medium">
-                Target: {formatCurrency(item.target_amount, item.currency)}
+                {i18n.t("savings.target")}: {formatCurrency(item.target_amount, item.currency)}
               </Text>
             </View>
           </View>

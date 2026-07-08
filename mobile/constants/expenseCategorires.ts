@@ -11,16 +11,16 @@ export interface CategoryConfig {
 }
 
 export const EXPENSE_CATEGORIES: CategoryConfig[] = [
-  { id: "daily", label: "Daily Expenses", icon: "restaurant-outline", color: "#FF6B6B" },
-  { id: "entertainment", label: "Entertainment", icon: "film-outline", color: "#4ECDC4" },
-  { id: "housing", label: "Housing", icon: "home-outline", color: "#FFA07A" },
-  { id: "utilities", label: "Utilities", icon: "bulb-outline", color: "#FFD93D" },
-  { id: "transportation", label: "Transportation", icon: "car-outline", color: "#6C5CE7" },
-  { id: "healthcare", label: "Healthcare", icon: "medical-outline", color: "#FF6B6B" },
-  { id: "education", label: "Education", icon: "book-outline", color: "#74B9FF" },
-  { id: "insurance", label: "Insurance", icon: "shield-checkmark-outline", color: "#A8E6CF" },
-  { id: "debt", label: "Debt Repayments", icon: "card-outline", color: "#FF8A5C" },
-  { id: "subscriptions", label: "Subscriptions", icon: "phone-portrait-outline", color: "#A29BFE" },
+  { id: "daily", label: "DAILY_EXPENSES", icon: "restaurant-outline", color: "#FF6B6B" },
+  { id: "entertainment", label: "entertainment", icon: "film-outline", color: "#4ECDC4" },
+  { id: "housing", label: "housing", icon: "home-outline", color: "#FFA07A" },
+  { id: "utilities", label: "utilities", icon: "bulb-outline", color: "#FFD93D" },
+  { id: "transportation", label: "transportation", icon: "car-outline", color: "#6C5CE7" },
+  { id: "healthcare", label: "healthcare", icon: "medical-outline", color: "#FF6B6B" },
+  { id: "education", label: "education", icon: "book-outline", color: "#74B9FF" },
+  { id: "insurance", label: "insurance", icon: "shield-checkmark-outline", color: "#A8E6CF" },
+  { id: "debt", label: "debt", icon: "card-outline", color: "#FF8A5C" },
+  { id: "subscriptions", label: "subscriptions", icon: "phone-portrait-outline", color: "#A29BFE" },
 ];
 
 export const getCategoryForAccount = (accountName: string): string => {

@@ -100,19 +100,30 @@
     "WORKING_CAPITAL": "生活資金",
     "EMERGENCY_FUND": "緊急資金",
     "SAVINGS": "貯蓄",
-    "YOUR_SAVINGS_ACCOUNTS": "あなたの貯蓄口座"
+    "YOUR_SAVINGS_ACCOUNTS": "あなたの貯蓄口座",
+    "progress": "進捗",
+    "target": "目標"
   },
   "expenses": {
     "EXPENSES": "支出",
     "totalExpenses": "総支出",
-    "expensesCategory": "支出カテゴリ",
+    "expensesCategory": "支出カテゴリー",
     "All_EXPENSES": "すべての支出",
-    "DAILY_EXPENSES": "日常の支出",
-    "ADD_EXPENSES_ACCOUNT": "支出口座を追加",
-    "CATEGORIES": "カテゴリ",
-    "noExpensesDataDetial": "支出口座を追加すると表示されます",
-    "noExpensesData": "データがありません",
-    "noExpensesAccount": "支出口座がありません"
+    "DAILY_EXPENSES": "日常の経費",
+    "ADD_EXPENSES_ACCOUNT": "支出アカウントを追加",
+    "CATEGORIES": "カテゴリー",
+    "noExpensesDataDetial": "閲覧するには支出アカウントを追加してください",
+    "noExpensesData": "データなし",
+    "noExpensesAccount": "支出アカウントなし",
+    "entertainment": "娯楽・エンタメ",
+    "housing": "住居費",
+    "utilities": "光熱費・水道代",
+    "transportation": "交通費",
+    "healthcare": "医療・健康",
+    "education": "教育・学習",
+    "insurance": "保険料",
+    "debt": "債務返済",
+    "subscriptions": "サブスクリプション"
   },
   "createAccount": {
     "createNewGoal": "新しい目標を作成",

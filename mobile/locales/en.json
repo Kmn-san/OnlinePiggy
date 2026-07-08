@@ -100,19 +100,30 @@
     "WORKING_CAPITAL": "Working Capital",
     "EMERGENCY_FUND": "Emergency Capital",
     "SAVINGS": "SAVINGS",
-    "YOUR_SAVINGS_ACCOUNTS": "Your Savings Accounts"
+    "YOUR_SAVINGS_ACCOUNTS": "Your Savings Accounts",
+    "progress": "Progress",
+    "target": "Target"
   },
   "expenses": {
     "EXPENSES": "Expenses",
     "totalExpenses": "Total Expenses",
-    "expensesCategory": "Expense Categories",
+    "expensesCategory": "Expense Category",
     "All_EXPENSES": "All Expenses",
     "DAILY_EXPENSES": "Daily Expenses",
     "ADD_EXPENSES_ACCOUNT": "Add Expense Account",
     "CATEGORIES": "Categories",
-    "noExpensesDataDetial": "Add an expense account to view your expenses.",
+    "noExpensesDataDetial": "Add an expense account to view",
     "noExpensesData": "No Data",
-    "noExpensesAccount": "No Expense Accounts"
+    "noExpensesAccount": "No Expense Account",
+    "entertainment": "Entertainment",
+    "housing": "Housing",
+    "utilities": "Utilities",
+    "transportation": "Transportation",
+    "healthcare": "Healthcare",
+    "education": "Education",
+    "insurance": "Insurance",
+    "debt": "Debt Repayments",
+    "subscriptions": "Subscriptions"
   },
   "createAccount": {
     "createNewGoal": "Create New Goal",

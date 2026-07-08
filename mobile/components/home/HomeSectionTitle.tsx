@@ -1,9 +1,6 @@
 import { View, Text } from "react-native";
 import i18n from "../../lib/i18n";
-
-interface HomeSectionTitleProps {
-  count: number;
-}
+import { HomeSectionTitleProps } from "@/types";
 
 export function HomeSectionTitle({ count }: HomeSectionTitleProps) {
   return (

@@ -16,7 +16,7 @@ interface Account {
   name: string;
   type: string;
   currency: string;
-  current_balance: number;
+  current_balance: number | number;
   target_amount?: number;
 }
 
@@ -32,8 +32,9 @@ export default function Home() {
     (account: Account) => account.type === "SAVINGS" || account.type === "GOAL"
   ) || [];
 
+
   const totalBalance = savingsAccounts.reduce(
-    (sum: number, account: Account) => sum + (account.current_balance || 0),
+    (sum: number, account: Account) => sum + Number(account.current_balance || 0),
     0
   );
 

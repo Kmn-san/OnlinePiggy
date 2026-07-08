@@ -9,6 +9,42 @@ export const getAccount = async (userId) => {
     return rows;
 }
 
+export const getAccountByName = async (userId, accountName) => {
+    const { rows } = await query(
+        `SELECT * from account 
+        WHERE userId = $1 
+        AND name = $2
+        `,
+        [userId, accountName]
+    )
+    return rows;
+}
+
+export const updateAccount = async (userId, fromAccId, toAccId, amount) => {
+    if (fromAccId) {
+        const { rows } = await query(
+            `UPDATE account
+        SET current_balance = current_balance - $1
+        WHERE userid = $2 AND id = $3`,
+            [amount, userId, fromAccId]
+        )
+        updatedFromAccount = rows[0]
+    }
+    if (toAccId) {
+        const { rows } = await query(
+            `UPDATE account
+        SET current_balance = current_balance + $1
+        WHERE userid = $2 AND id = $3`,
+            [amount, userId, toAccId]
+        )
+        updatedToAccount = rows[0]
+    }
+    return {
+        fromAccount: updatedFromAccount,
+        toAccount: updatedToAccount
+    };
+}
+
 // when user just created the account
 export const createAccountForUser = async (userId) => {
     const workingCapitalId = uuidv4();

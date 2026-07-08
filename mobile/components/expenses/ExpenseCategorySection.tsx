@@ -11,6 +11,7 @@ interface ExpenseCategorySectionProps {
 }
 
 export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCurrency }: ExpenseCategorySectionProps) {
+
     return (
         <View className="px-4 mt-6">
             <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.expensesCategory")}</Text>
@@ -31,10 +32,7 @@ export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCur
                                     <Ionicons name={category.icon} size={22} color={category.color} />
                                 </View>
                                 <View className="flex-1">
-                                    <Text className="text-gray-900 text-lg font-bold">{category.label}</Text>
-                                    <Text className="text-gray-500 text-sm" numberOfLines={1}>
-                                        {category.accounts.length} accounts • {category.accounts.map((a: any) => a.name).join(', ')}
-                                    </Text>
+                                    <Text className="text-gray-900 text-lg font-bold">{i18n.t(`expenses.${category.label}`)}</Text>
                                 </View>
                             </View>
                             <View className="items-end">

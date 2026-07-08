@@ -5,7 +5,7 @@
     "success": "成功",
     "searchCountry": "搜索国家",
     "cancel": "取消",
-    "done":"完成"
+    "done": "完成"
   },
   "success": {
     "profilePicUpdated": "你的帅/美照更新好啦！",
@@ -100,27 +100,38 @@
     "EMERGENCY_FUND": "备用金",
     "SAVINGS": "存款",
     "YOUR_SAVINGS_ACCOUNTS": "您的存款账户",
-    "goalAccount":"目标账户"
+    "goalAccount": "目标账户",
+    "progress": "进度条",
+    "target": "目标"
   },
   "expenses": {
     "EXPENSES": "支出",
     "totalExpenses": "总支出",
     "expensesCategory": "支出分类",
     "All_EXPENSES": "全部支出",
-    "DAILY_EXPENSES": "日常开销",
     "ADD_EXPENSES_ACCOUNT": "添加支出账户",
     "CATEGORIES": "分类",
     "noExpensesDataDetial": "添加支出账户以查看",
     "noExpensesData": "无数据",
-    "noExpensesAccount": "无支出账号"
+    "noExpensesAccount": "无支出账号",
+    "DAILY_EXPENSES": "日常开销",
+    "entertainment": "娱乐开支",
+    "housing": "房屋水电",
+    "utilities": "公用事业费",
+    "transportation": "交通出行",
+    "healthcare": "医疗健康",
+    "education": "教育学习",
+    "insurance": "保险支出",
+    "debt": "债务偿还",
+    "subscriptions": "订阅会员"
   },
-  "createAccount":{
-    "createNewGoal":"创造新目标",
-    "goalTitle":"目标名称",
-    "targetAmount":"目标额",
-    "goalPreview":"目标预览",
-    "cancelCreate":"取消创造",
-    "cancelInfo":"真的要取消创造新的账户吗？您所输入的会被清空",
-    "continueCreate":"继续创造"
+  "createAccount": {
+    "createNewGoal": "创造新目标",
+    "goalTitle": "目标名称",
+    "targetAmount": "目标额",
+    "goalPreview": "目标预览",
+    "cancelCreate": "取消创造",
+    "cancelInfo": "真的要取消创造新的账户吗？您所输入的会被清空",
+    "continueCreate": "继续创造"
   }
 }
