@@ -12,6 +12,7 @@ interface ExpenseCategorySectionProps {
 
 export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCurrency }: ExpenseCategorySectionProps) {
 
+
     return (
         <View className="px-4 mt-6">
             <Text className="text-gray-900 text-lg font-bold mb-3">{i18n.t("expenses.EXPENSES_CATEGORY")}</Text>
@@ -22,8 +23,8 @@ export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCur
                         className="bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-100"
                         activeOpacity={0.7}
                         onPress={() => router.push({
-                            pathname: "/accounts/[id]",
-                            params: { id: category.id },
+                            pathname: "/expenses/[id]",
+                            params: { id: category.accounts[0]?.id, },
                         })}
                     >
                         <View className="flex-row items-center justify-between">
@@ -51,7 +52,8 @@ export function ExpenseCategorySection({ categoryData, totalExpenses, primaryCur
                     <Ionicons name="receipt-outline" size={48} color="#d1d5db" />
                     <Text className="text-gray-400 text-center mt-2">{i18n.t("expenses.NO_EXPENSE_ACCOUNT")}</Text>
                 </View>
-            )}
-        </View>
+            )
+            }
+        </View >
     );
 }

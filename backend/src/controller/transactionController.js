@@ -37,8 +37,6 @@ export const createTransaction = async (req, res) => {
         if (!targetAccount) {
             targetAccount = await accountService.createAccount(userId, userExist.currency, clientData.toAccountName, clientData.accountType)
         }
-        console.log(clientData);
-        
 
         const transactionResult = await transactionService.createTransaction(userId, clientData.fromAccId, targetAccount.id, clientData.amount, clientData.accountType, clientData.note)
 
