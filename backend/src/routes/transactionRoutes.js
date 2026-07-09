@@ -1,12 +1,11 @@
 import { Router } from "express";
 import { protectRoute } from "../middleware/authMiddleware.js";
-import { getTransaction } from "../controller/transactionController.js";
+import { createTransaction, getTransaction } from "../controller/transactionController.js";
 
 const router = Router()
 router.use(protectRoute)
 
-router.get("/transaction", getTransaction)
-// router.patch("/transaction", createTransaction)
-// router.patch("/edit-transaction", editTransaction)
+router.get("/getTransaction", getTransaction)
+router.patch("/createTransaction", createTransaction)
 
 export default router

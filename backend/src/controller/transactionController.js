@@ -26,16 +26,22 @@ export const getTransaction = async (req, res) => {
 export const createTransaction = async (req, res) => {
     const userId = req.user.id;
     const clientData = req.body;
+
     try {
         const userExist = await userService.findByUserId(userId)
         if (!userExist) {
             return res.status(404).json({ code: "USER_NOT_FOUND" })
         }
-        const targetAccount = await accountService.getAccountByName(userId, clientData.name)
+        let targetAccount = await accountService.getAccountByName(userId, clientData.toAccountName)
+        
         if (!targetAccount) {
-            targetAccount = await accountService.createAccount(userId, userExist.currency, clientData.name, clientData.accountType)
+            targetAccount = await accountService.createAccount(userId, userExist.currency, clientData.toAccountName, clientData.accountType)
         }
-        const transactionResult = await transactionService.createTransaction(userId, clientData.fromAccId, targetAccount.id, clientData.amount, clientData.type, clientData.note)
+        console.log(clientData);
+        
+
+        const transactionResult = await transactionService.createTransaction(userId, clientData.fromAccId, targetAccount.id, clientData.amount, clientData.accountType, clientData.note)
+
         const updateAccount = await accountService.updateAccount(userId, clientData.fromAccId, targetAccount.id, clientData.amount)
 
         return res.status(201).json({

@@ -59,7 +59,7 @@ export default function AccountModal({
                                         </View>
 
                                         <Text className="text-gray-500 text-sm">
-                                            {formatCurrency(Number(item.current_balance), item.currency)}
+                                            {formatCurrency(item.current_balance, item.currency)}
                                         </Text>
                                     </View>
                                     {isSelected && <Ionicons name="checkmark-circle" size={24} color="#059669" />}

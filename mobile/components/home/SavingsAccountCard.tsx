@@ -88,7 +88,7 @@ export function SavingsAccountCard({ item }: SavingsAccountCardProps) {
                 {formatCurrency(0, item.currency)}
               </Text>
               <Text className="text-gray-600 text-xs font-medium">
-                {i18n.t("savings.target")}: {formatCurrency(Number(item.target_amount), item.currency)}
+                {i18n.t("savings.target")}: {formatCurrency(item.target_amount, item.currency)}
               </Text>
             </View>
           </View>

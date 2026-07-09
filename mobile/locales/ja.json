@@ -116,6 +116,7 @@
   "expenses": {
     "EXPENSES": "支出",
     "TOTAL_EXPENSES": "総支出",
+    "EXPENSES_BREAKDOWN": "支出の内訳",
     "EXPENSES_CATEGORY": "支出カテゴリー",
     "ALL_EXPENSES": "すべての支出",
     "DAILY_EXPENSES": "日常の経費",
@@ -157,6 +158,7 @@
     "AMOUNT": "金額",
     "DESCRIPTION": "説明（任意）",
     "TRANSFER": "振替",
-    "CANCEL_TRANSACTION": "振替を続ける"
+    "CANCEL_TRANSACTION": "振替を続ける",
+    "TRANSACTION_CREATED": "振替完成"
   }
 }

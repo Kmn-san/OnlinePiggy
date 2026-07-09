@@ -115,6 +115,7 @@
   "expenses": {
     "EXPENSES": "Expenses",
     "TOTAL_EXPENSES": "Total Expenses",
+    "EXPENSES_BREAKDOWN": "Expenses Breakdown",
     "EXPENSES_CATEGORY": "Expense Category",
     "ALL_EXPENSES": "All Expenses",
     "DAILY_EXPENSES": "Daily Expenses",
@@ -156,6 +157,7 @@
     "AMOUNT": "Amount",
     "DESCRIPTION": "Description (Optional)",
     "TRANSFER": "Transfer",
-    "CANCEL_TRANSACTION": "Cancel Transaction"
+    "CANCEL_TRANSACTION": "Cancel Transaction",
+    "TRANSACTION_CREATED": "Transaction Created"
   }
 }

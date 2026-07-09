@@ -11,6 +11,7 @@ interface ExpenseChartCardProps {
 }
 
 export function ExpenseChartCard({ categoryData, totalExpenses, primaryCurrency }: ExpenseChartCardProps) {
+
   if (categoryData.length === 0) {
     return (
       <View className="bg-white mx-4 mt-6 rounded-2xl p-8 shadow-sm border border-gray-100 items-center">
@@ -27,7 +28,7 @@ export function ExpenseChartCard({ categoryData, totalExpenses, primaryCurrency 
 
   return (
     <View className="bg-white mx-4 mt-6 rounded-2xl p-6 shadow-sm border border-gray-100">
-      <Text className="text-gray-900 text-lg font-bold text-center mb-4">Expense Breakdown</Text>
+      <Text className="text-gray-900 text-lg font-bold text-center mb-4">{i18n.t("expenses.EXPENSES_BREAKDOWN")}</Text>
       <DonutChart
         data={categoryData}
         total={totalExpenses}

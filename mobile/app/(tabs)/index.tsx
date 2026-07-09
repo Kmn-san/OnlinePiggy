@@ -26,7 +26,6 @@ export default function Home() {
   i18n.locale = language;
 
   const { accounts, isLoading } = useAccounts();
-
   // Filter accounts intended for this section
   const savingsAccounts = accounts?.filter(
     (account: Account) => account.type === "SAVINGS" || account.type === "GOAL"

@@ -55,7 +55,7 @@ export const DonutChart = ({ data, total, formatter }: DonutChartProps) => {
             {total > 0 ? formatter(total) : "$0"}
           </Text>
           <Text className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">
-            Total Expenses
+            {i18n.t("expenses.TOTAL_EXPENSES")}
           </Text>
         </View>
       </View>

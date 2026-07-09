@@ -143,7 +143,7 @@ export default function CreateGoal() {
               </Text>
               {targetAmount && (
                 <Text className="text-emerald-600 font-bold text-xl mt-1">
-                  {formatCurrency(Number(targetAmount), user?.currency!)}
+                  {formatCurrency(targetAmount, user?.currency!)}
                 </Text>
               )}
             </View>

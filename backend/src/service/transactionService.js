@@ -35,4 +35,5 @@ export const createTransaction = async (userId, fromAcc, toAcc, amount, type, no
         `,
         [transactionId, userId, fromAcc, toAcc, amount, type, note]
     )
+    return rows[0];
 }

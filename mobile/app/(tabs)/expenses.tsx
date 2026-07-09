@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, StatusBar, ScrollView, TouchableOpacity } from "react-native";
+import { View, StatusBar, ScrollView } from "react-native";
 import { Tabs, router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -7,11 +7,9 @@ import { useLanguage } from "../../context/languageContext";
 import useAccounts from "../../hooks/useAccounts";
 import { EXPENSE_CATEGORIES, getCategoryForAccount } from "../../constants/expenseCategorires";
 
-// New Extracted Sub-Components
 import { ExpensesHeader } from "../../components/expenses/ExpensesHeader";
 import { ExpenseChartCard } from "../../components/expenses/ExpenseChartCard";
 import { ExpenseCategorySection } from "../../components/expenses/ExpenseCategorySection";
-import { ExpenseAccountsSection } from "../../components/expenses/ExpenseAccountsSection";
 import LoadingComponent from "@/components/LoadingComponent";
 
 interface Account {
@@ -35,9 +33,20 @@ export default function Expenses() {
   const primaryCurrency = expenseAccounts[0]?.currency || "USD";
 
   const categoryData = EXPENSE_CATEGORIES.map(category => {
-    const accountsInCategory = expenseAccounts.filter(a => getCategoryForAccount(a.name) === category.id);
-    const total = accountsInCategory.reduce((sum, a) => sum + (a.current_balance || 0), 0);
-    return { ...category, value: total, accounts: accountsInCategory };
+    const accountsInCategory = expenseAccounts.filter(
+      a => getCategoryForAccount(a.name) === category.id
+    );
+
+    const total = accountsInCategory.reduce(
+      (sum, a) => sum + Number(a.current_balance || 0),
+      0
+    );
+
+    return {
+      ...category,
+      value: total,
+      accounts: accountsInCategory,
+    };
   }).filter(cat => cat.value > 0);
 
   const totalExpenses = categoryData.reduce((sum, cat) => sum + cat.value, 0);
@@ -68,10 +77,6 @@ export default function Expenses() {
             categoryData={categoryData}
             totalExpenses={totalExpenses}
             primaryCurrency={primaryCurrency}
-          />
-
-          <ExpenseAccountsSection
-            expenseAccounts={expenseAccounts}
           />
 
         </ScrollView>

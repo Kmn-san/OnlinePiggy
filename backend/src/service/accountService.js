@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const getAccount = async (userId) => {
     const { rows } = await query(
-        `SELECT * from account WHERE userId = $1`,
+        `SELECT * from account WHERE userid = $1`,
         [userId]
     )
     return rows;
@@ -12,38 +12,47 @@ export const getAccount = async (userId) => {
 export const getAccountByName = async (userId, accountName) => {
     const { rows } = await query(
         `SELECT * from account 
-        WHERE userId = $1 
+        WHERE userid = $1 
         AND name = $2
         `,
         [userId, accountName]
     )
-    return rows;
+    return rows[0];
 }
 
 export const updateAccount = async (userId, fromAccId, toAccId, amount) => {
+    let updatedFromAccount = null;
+    let updatedToAccount = null;
+
     if (fromAccId) {
         const { rows } = await query(
             `UPDATE account
-        SET current_balance = current_balance - $1
-        WHERE userid = $2 AND id = $3`,
+             SET current_balance = current_balance - $1
+             WHERE userid = $2 AND id = $3
+             RETURNING *`,
             [amount, userId, fromAccId]
-        )
-        updatedFromAccount = rows[0]
+        );
+
+        updatedFromAccount = rows[0];
     }
+
     if (toAccId) {
         const { rows } = await query(
             `UPDATE account
-        SET current_balance = current_balance + $1
-        WHERE userid = $2 AND id = $3`,
+             SET current_balance = current_balance + $1
+             WHERE userid = $2 AND id = $3
+             RETURNING *`,
             [amount, userId, toAccId]
-        )
-        updatedToAccount = rows[0]
+        );
+
+        updatedToAccount = rows[0];
     }
+
     return {
-        fromAccount: updatedFromAccount,
-        toAccount: updatedToAccount
+        updatedFromAccount,
+        updatedToAccount,
     };
-}
+};
 
 // when user just created the account
 export const createAccountForUser = async (userId) => {

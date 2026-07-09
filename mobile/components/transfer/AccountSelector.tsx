@@ -43,7 +43,7 @@ export default function AccountSelector({
                         </Text>
                         {account && (
                             <Text className="text-gray-500 text-xs">
-                                {formatCurrency(Number(account.current_balance), account.currency)}
+                                {formatCurrency(account.current_balance, account.currency)}
                             </Text>
                         )}
                     </View>

@@ -25,6 +25,7 @@ import { EXPENSE_CATEGORIES } from '@/constants/expenseCategorires';
 import i18n from '@/lib/i18n';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GradientHeader from '@/components/GradientHeader';
+import useTransactions from '@/hooks/useTransactions';
 
 export default function Transactions() {
   const router = useRouter();
@@ -39,6 +40,7 @@ export default function Transactions() {
   const [showFromModal, setShowFromModal] = useState(false);
   const [showToModal, setShowToModal] = useState(false);
   const [isIncome, setIsIncome] = useState(false);
+  const { createTransaction } = useTransactions();
   const BUILT_IN_EXPENSES = EXPENSE_CATEGORIES.map((category) => ({
     id: `builtin-${category.id}`,
     name: category.label,
@@ -74,7 +76,7 @@ export default function Transactions() {
     ...expenseAccounts,
   ];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // 1. Validation Logic based on Mode
     if (isIncome) {
       if (!toAccount) {
@@ -122,25 +124,33 @@ export default function Transactions() {
       );
       return;
     }
+    setIsSubmitting(true);
 
-    // 2. Payload Construction aligned with your database plan 
-    const transactionPayload = {
-      type: isIncome ? 'INCOME' : 'TRANSFER',
-      amount: Number(amount),
-      description: description.trim() || null,
-      sourceAccountId: isIncome ? null : fromAccount.id,
-      destinationAccountId: toAccount.id, // Lands here for both modes!
-      timestamp: new Date().toISOString(),
-    };
+    try {
+      await createTransaction.mutateAsync({
+        fromAccId: isIncome ? null : fromAccount.id,
+        toAccountName: toAccount.name,
+        accountType: toAccount.type,
+        amount: Number(amount),
+        note: description.trim(),
+      });
 
-    console.log('🚀 Sending Transaction Data:', JSON.stringify(transactionPayload, null, 2));
+      Alert.alert(
+        i18n.t("common.success"),
+        i18n.t("transaction.TRANSACTION_CREATED")
+      );
 
-    // // Simulate API Handling
-    // setIsSubmitting(true);
-    // setTimeout(() => {
-    //   setIsSubmitting(false);
-    //   router.back();
-    // }, 1000);
+      router.back();
+    } catch (error: any) {
+      Alert.alert(
+        i18n.t("common.error"),
+        error?.response?.data?.message ??
+        i18n.t("errorDetial.UNKNOWN_ERROR")
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+
   };
 
   const handleCancel = () => {

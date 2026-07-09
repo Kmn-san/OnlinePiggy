@@ -115,6 +115,7 @@
   "expenses": {
     "EXPENSES": "支出",
     "TOTAL_EXPENSES": "总支出",
+    "EXPENSES_BREAKDOWN": "支出明细",
     "EXPENSES_CATEGORY": "支出分类",
     "ALL_EXPENSES": "全部支出",
     "DAILY_EXPENSES": "日常开销",
@@ -156,6 +157,7 @@
     "AMOUNT": "金额",
     "DESCRIPTION": "备注（可选）",
     "TRANSFER": "转账",
-    "CANCEL_TRANSACTION": "取消转账"
+    "CANCEL_TRANSACTION": "取消转账",
+    "TRANSACTION_CREATED":"完成转账"
   }
 }
