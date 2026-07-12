@@ -115,6 +115,8 @@
   "expenses": {
     "EXPENSES": "Expenses",
     "TOTAL_EXPENSES": "Total Expenses",
+    "CURRENT_BALANCE": "Current Balance",
+    "DETIAL": "Detial;",
     "EXPENSES_BREAKDOWN": "Expenses Breakdown",
     "EXPENSES_CATEGORY": "Expense Category",
     "ALL_EXPENSES": "All Expenses",

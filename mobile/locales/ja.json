@@ -116,6 +116,8 @@
   "expenses": {
     "EXPENSES": "支出",
     "TOTAL_EXPENSES": "総支出",
+    "CURRENT_BALANCE": "現在の残高",
+    "DETIAL": "詳細",
     "EXPENSES_BREAKDOWN": "支出の内訳",
     "EXPENSES_CATEGORY": "支出カテゴリー",
     "ALL_EXPENSES": "すべての支出",

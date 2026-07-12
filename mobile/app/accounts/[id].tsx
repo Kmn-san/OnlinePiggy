@@ -7,29 +7,14 @@ import { LinearGradient } from 'expo-linear-gradient'
 import useAccounts from '../../hooks/useAccounts'
 import useTransactions from '../../hooks/useTransactions'
 import LoadingComponent from '../../components/LoadingComponent'
-
-interface Account {
-  id: string;
-  name: string;
-  type: string;
-  currency: string;
-  current_balance: number;
-  target_amount?: number;
-}
-
-interface Transaction {
-  id: string;
-  amount: string;
-  created_at: string;
-  from_account_id: string | null;
-  to_account_id: string;
-  note: string;
-  type: string;
-  userid: string;
-  updated_at: string;
-}
+import { Account, Transaction } from '@/types'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { formatCurrency } from '@/constants/currency'
+import { formatLocalizedDate } from '@/constants/expensesHelpers'
+import i18n from '@/lib/i18n'
 
 const AccountDetail = () => {
+  const insets = useSafeAreaInsets();
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
   const { accounts, isLoading: isAccountsLoading } = useAccounts()
@@ -51,7 +36,7 @@ const AccountDetail = () => {
   // Group transactions by year
   const groupTransactionsByYear = (transactions: Transaction[]) => {
     const grouped: { [year: string]: Transaction[] } = {}
-    
+
     transactions.forEach(transaction => {
       const year = new Date(transaction.created_at).getFullYear().toString()
       if (!grouped[year]) {
@@ -65,7 +50,7 @@ const AccountDetail = () => {
       .sort((a, b) => parseInt(b) - parseInt(a))
       .map(year => ({
         year,
-        transactions: grouped[year].sort((a, b) => 
+        transactions: grouped[year].sort((a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         )
       }))
@@ -73,27 +58,11 @@ const AccountDetail = () => {
 
   const groupedTransactions = groupTransactionsByYear(accountTransactions)
 
-  const formatCurrency = (amount: string, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-      minimumFractionDigits: 2,
-    }).format(Number(amount))
-  }
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric',
-      year: 'numeric'
-    })
-  }
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
       minute: '2-digit'
     })
   }
@@ -119,21 +88,6 @@ const AccountDetail = () => {
         return 'card-outline'
       default:
         return 'cash-outline'
-    }
-  }
-
-  const getTransactionColor = (type: string) => {
-    switch (type) {
-      case 'income':
-        return 'text-emerald-600'
-      case 'expense':
-        return 'text-red-600'
-      case 'SAVINGS':
-        return 'text-emerald-600'
-      case 'EXPENSES':
-        return 'text-red-600'
-      default:
-        return 'text-gray-600'
     }
   }
 
@@ -194,7 +148,8 @@ const AccountDetail = () => {
         colors={["#059669", "#047857"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        className="px-4 pt-12 pb-6"
+        className="px-4 pb-6"
+        style={{ paddingTop: insets.top + 16 }}
       >
         <View className="flex-row items-center justify-between">
           <TouchableOpacity
@@ -205,7 +160,7 @@ const AccountDetail = () => {
           </TouchableOpacity>
 
           <Text className="text-white text-lg font-bold" numberOfLines={1}>
-            {account.name}
+            {i18n.t(`savings.${account.name}`)}
           </Text>
 
           <View className="w-10" />
@@ -246,10 +201,7 @@ const AccountDetail = () => {
         </View>
 
         {isTransactionsLoading ? (
-          <View className="flex-1 items-center justify-center">
-            <ActivityIndicator size="large" color="#059669" />
-            <Text className="text-gray-500 mt-3 text-sm">Loading transactions...</Text>
-          </View>
+          <LoadingComponent />
         ) : accountTransactions.length === 0 ? (
           <View className="flex-1 items-center justify-center">
             <Ionicons name="receipt-outline" size={60} color="#d1d5db" />
@@ -284,7 +236,7 @@ const AccountDetail = () => {
                   const transactionType = getTransactionType(transaction)
                   const isIncome = transactionType === 'income'
                   const isExpense = transactionType === 'expense'
-                  
+
                   return (
                     <TouchableOpacity
                       key={transaction.id}
@@ -294,10 +246,10 @@ const AccountDetail = () => {
                       <View className="flex-row items-center justify-between">
                         <View className="flex-row items-center flex-1">
                           <View className={`w-12 h-12 rounded-full items-center justify-center ${getTransactionBg(transaction.type)}`}>
-                            <Ionicons 
-                              name={getTransactionIcon(transaction.type)} 
-                              size={22} 
-                              color={transaction.type === 'SAVINGS' ? '#059669' : '#DC2626'} 
+                            <Ionicons
+                              name={getTransactionIcon(transaction.type)}
+                              size={22}
+                              color={transaction.type === 'SAVINGS' ? '#059669' : '#DC2626'}
                             />
                           </View>
                           <View className="ml-3 flex-1">
@@ -306,7 +258,7 @@ const AccountDetail = () => {
                             </Text>
                             <View className="flex-row items-center mt-0.5 flex-wrap">
                               <Text className="text-gray-400 text-xs">
-                                {formatDate(transaction.created_at)}
+                                {formatLocalizedDate(transaction.created_at)}
                               </Text>
                               <View className="w-1 h-1 rounded-full bg-gray-300 mx-2" />
                               <Text className="text-gray-400 text-xs">

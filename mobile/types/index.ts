@@ -91,3 +91,15 @@ export interface TransactionNoteProps {
     onChangeText: (text: string) => void;
     maxLength?: number;
 }
+
+export interface Transaction {
+  id: string;
+  amount: string;
+  created_at: string;
+  from_account_id: string | null;
+  to_account_id: string;
+  note: string;
+  type: string;
+  userid: string;
+  updated_at: string;
+}

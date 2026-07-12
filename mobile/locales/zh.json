@@ -114,6 +114,8 @@
   },
   "expenses": {
     "EXPENSES": "支出",
+    "CURRENT_BALANCE": "现余额",
+    "DETIAL": "详细",
     "TOTAL_EXPENSES": "总支出",
     "EXPENSES_BREAKDOWN": "支出明细",
     "EXPENSES_CATEGORY": "支出分类",

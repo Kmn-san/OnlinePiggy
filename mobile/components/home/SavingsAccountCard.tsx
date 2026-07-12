@@ -21,6 +21,7 @@ const getAccountIcon = (type: string): IoniconsName => {
 
 export function SavingsAccountCard({ item }: SavingsAccountCardProps) {
   return (
+    
     <TouchableOpacity
       className="bg-white rounded-2xl p-5 mb-4 shadow-sm border border-gray-100"
       activeOpacity={0.7}
