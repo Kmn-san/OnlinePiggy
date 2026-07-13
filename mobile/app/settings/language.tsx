@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import i18n from "../../lib/i18n";
 import { useLanguage } from "../../context/languageContext";
+import PageHeader from "@/components/PageHeader";
 
 const languages = [
   { code: "en" },
@@ -20,24 +21,9 @@ export default function LanguageScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <View className="flex-1 bg-white">
       {/* Header */}
-      <View className="flex-row items-center px-5 py-4 border-b border-gray-200">
-        <TouchableOpacity
-          onPress={() => router.back()}
-          className="mr-4"
-        >
-          <Ionicons
-            name="chevron-back"
-            size={28}
-            color="black"
-          />
-        </TouchableOpacity>
-
-        <Text className="text-2xl font-bold">
-          {i18n.t("menu.language")}
-        </Text>
-      </View>
+      <PageHeader title={i18n.t("menu.language")} />
 
       {/* Language List */}
       <View className="p-5">
@@ -45,11 +31,10 @@ export default function LanguageScreen() {
           <TouchableOpacity
             key={item.code}
             onPress={() => handleChangeLanguage(item.code)}
-            className={`flex-row items-center justify-between p-5 rounded-xl mb-3 border ${
-              language === item.code
+            className={`flex-row items-center justify-between p-5 rounded-xl mb-3 border ${language === item.code
                 ? "border-green-500 bg-green-50"
                 : "border-gray-200"
-            }`}
+              }`}
           >
             <View>
               <Text className="text-lg font-semibold">
@@ -73,6 +58,6 @@ export default function LanguageScreen() {
           </TouchableOpacity>
         ))}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

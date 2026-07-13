@@ -1,51 +1,104 @@
-// components/GradientHeader.tsx
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-interface GradientHeaderProps {
-    title: string;
-    onBackPress?: () => void;
-    showBackButton?: boolean; // 👈 Controls which version renders
-}
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { GradientHeaderProps } from "@/types";
 
 export default function GradientHeader({
+    colors,
     title,
-    onBackPress,
-    showBackButton = true // Defaults to showing the back button
+    showBackButton = false,
+    showBranding = false,
+    showNotification = false,
+    onNotificationPress,
+    cardLabel,
+    cardValue,
+    badgeText,
+    badgeVariant = "emerald",
 }: GradientHeaderProps) {
     const insets = useSafeAreaInsets();
+    const router = useRouter();
+
+    const badgeBgClass = badgeVariant === "emerald" ? "bg-emerald-400/30" : "bg-red-400/30";
+    const badgeTextClass = badgeVariant === "emerald" ? "text-emerald-50" : "text-red-50";
 
     return (
         <LinearGradient
-            colors={["#059669", "#047857"]}
+            colors={colors}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
-            className="px-4 pb-10"
+            className="px-5 pb-6"
             style={{ paddingTop: insets.top + 16 }}
         >
-            <View
-                className={`flex-row items-center mx-2 ${showBackButton ? 'justify-between' : 'justify-center'
-                    }`}
-            >
-                {/* VERSION A: With Back Button */}
-                {showBackButton && (
+            {/* --- TOP ROW CONTROLS --- */}
+            <View className="flex-row items-center justify-between min-h-[48px]">
+                {/* Left Side: Back Button OR Brand Info */}
+                <View className="flex-row items-center flex-1">
+                    {showBackButton && (
+                        <TouchableOpacity
+                            onPress={() => router.back()}
+                            className="mr-3 p-1 -ml-1 active:opacity-70"
+                        >
+                            <Ionicons name="chevron-back" size={28} color="white" />
+                        </TouchableOpacity>
+                    )}
+
+                    {showBranding ? (
+                        <View className="flex-row items-center">
+                            <Image
+                                source={require("@/assets/images/icon.png")}
+                                className="w-11 h-11 rounded-full border-2 border-white/30"
+                                resizeMode="contain"
+                            />
+                            <Text className="text-white text-xl font-bold tracking-tight ml-3">
+                                OnlinePiggy
+                            </Text>
+                        </View>
+                    ) : (
+                        title && (
+                            <Text className={`text-white text-xl font-bold tracking-tight ${!showBackButton ? 'mx-auto' : ''}`}>
+                                {title}
+                            </Text>
+                        )
+                    )}
+                </View>
+
+                {/* Right Side: Notification Trigger Space Element */}
+                {showNotification && (
                     <TouchableOpacity
-                        className="w-10 h-10 rounded-full bg-white/20 items-center justify-center"
-                        onPress={onBackPress}
+                        activeOpacity={0.7}
+                        className="w-11 h-11 rounded-full bg-white/20 items-center justify-center"
+                        onPress={onNotificationPress}
                     >
-                        <Ionicons name="arrow-back" size={22} color="white" />
+                        <Ionicons name="notifications-outline" size={22} color="white" />
                     </TouchableOpacity>
                 )}
 
-                {/* Centered Screen Title */}
-                <Text className="text-white text-xl font-bold tracking-tight">
-                    {title}
-                </Text>
-                {showBackButton && <View className="w-10" />}
+                {/* Visual centering balancing shim for layout spacing */}
+                {!showNotification && !showBranding && showBackButton && <View className="w-7" />}
             </View>
+
+            {/* --- FLOATING METRICS DISPLAY CARD --- */}
+            {cardLabel && cardValue && (
+                <View className="mt-5 bg-white/20 rounded-2xl p-5 backdrop-blur-sm">
+                    <Text className="text-white/80 text-sm font-medium mb-1">
+                        {cardLabel}
+                    </Text>
+                    <Text className="text-white text-3xl font-bold tracking-tight">
+                        {cardValue}
+                    </Text>
+                    {badgeText && (
+                        <View className="flex-row items-center mt-2">
+                            <View className={`${badgeBgClass} px-3 py-1 rounded-full`}>
+                                <Text className={`${badgeTextClass} text-xs font-semibold`}>
+                                    {badgeText}
+                                </Text>
+                            </View>
+                        </View>
+                    )}
+                </View>
+            )}
         </LinearGradient>
     );
 }

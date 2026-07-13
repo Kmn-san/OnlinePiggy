@@ -5,20 +5,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import i18n from "../../lib/i18n";
 import { useLanguage } from "../../context/languageContext";
 import useAccounts from "../../hooks/useAccounts";
-
-import { HomeHeader } from "../../components/home/HomeHeader";
 import { HomeSectionTitle } from "../../components/home/HomeSectionTitle";
 import { SavingsAccountCard } from "../../components/home/SavingsAccountCard";
 import { FloatingActionButton } from "../../components/home/FloatingActionButton";
+import GradientHeader from "@/components/GradientHeader";
+import { formatCurrency } from "@/constants/currency";
+import { Account } from "@/types";
 
-interface Account {
-  id: string;
-  name: string;
-  type: string;
-  currency: string;
-  current_balance: number | number;
-  target_amount?: number;
-}
 
 export default function Home() {
   const { language } = useLanguage();
@@ -26,11 +19,11 @@ export default function Home() {
   i18n.locale = language;
 
   const { accounts, isLoading } = useAccounts();
+
   // Filter accounts intended for this section
   const savingsAccounts = accounts?.filter(
     (account: Account) => account.type === "SAVINGS" || account.type === "GOAL"
   ) || [];
-
 
   const totalBalance = savingsAccounts.reduce(
     (sum: number, account: Account) => sum + Number(account.current_balance || 0),
@@ -58,15 +51,21 @@ export default function Home() {
       ) : (
         <FlatList
           data={savingsAccounts}
-          keyExtractor={(item: Account) => item.id}
+          // Change this line to wrap item.id in String()
+          keyExtractor={(item: Account) => String(item.id)}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 110 }}
           ListHeaderComponent={
             <>
-              <HomeHeader
-                totalBalance={totalBalance}
-                primaryCurrency={primaryCurrency}
-                accountCount={savingsAccounts.length}
+              <GradientHeader
+                colors={["#059669", "#047857"]}
+                showBranding={true}
+                showNotification={true}
+                onNotificationPress={() => { /* router.push("/notifications") */ }}
+                cardLabel={i18n.t("savings.totalSavings")}
+                cardValue={formatCurrency(totalBalance, primaryCurrency)}
+                badgeText={`${savingsAccounts.length} ${i18n.t("savings.SAVINGS")}`}
+                badgeVariant="emerald"
               />
               <HomeSectionTitle count={savingsAccounts.length} />
             </>

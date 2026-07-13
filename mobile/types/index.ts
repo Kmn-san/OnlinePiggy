@@ -93,13 +93,51 @@ export interface TransactionNoteProps {
 }
 
 export interface Transaction {
-  id: string;
-  amount: string;
-  created_at: string;
-  from_account_id: string | null;
-  to_account_id: string;
-  note: string;
-  type: string;
-  userid: string;
-  updated_at: string;
+    id: string;
+    amount: string;
+    created_at: string;
+    from_account_id: string | null;
+    to_account_id: string;
+    note: string;
+    type: string;
+    userid: string;
+    updated_at: string;
+}
+
+export interface PricingPlan {
+    name: string;
+    price: string;
+    features: string[];
+    cta: string;
+    isCurrent: boolean;
+    id: string;
+    clerkPriceId: string | null;
+}
+
+export interface PricingCardProps {
+    plan: PricingPlan;
+    isPremium: boolean;
+    loading: boolean;
+    selectedPlan: string | null;
+    onSubscribe: (plan: PricingPlan) => Promise<void>;
+}
+
+export interface PageHeaderProps {
+    title: string;
+    subtitle?: string;
+    iconName?: keyof typeof Ionicons.glyphMap;
+    iconColor?: string;
+}
+
+export interface GradientHeaderProps {
+    colors: [string, string, ...string[]];
+    title?: string;
+    showBackButton?: boolean;
+    showBranding?: boolean;
+    showNotification?: boolean;
+    onNotificationPress?: () => void;
+    cardLabel?: string;
+    cardValue?: string;
+    badgeText?: string;
+    badgeVariant?: 'emerald' | 'red';
 }

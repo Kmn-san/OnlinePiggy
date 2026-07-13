@@ -26,14 +26,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GradientHeader from '@/components/GradientHeader';
 import useTransactions from '@/hooks/useTransactions';
 
+// ✨ FIX 1: Import the authentic centralized Account type from your project types
+import { Account } from '@/types';
+
 export default function Transactions() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { accounts, isLoading } = useAccounts();
   const { user } = useCurrentUser();
-  
-  const [fromAccount, setFromAccount] = useState<any>(null);
-  const [toAccount, setToAccount] = useState<any>(null);    
+
+  const [fromAccount, setFromAccount] = useState<Account | null>(null);
+  const [toAccount, setToAccount] = useState<Account | null>(null);
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,6 +45,7 @@ export default function Transactions() {
   const [isIncome, setIsIncome] = useState(false);
   const { createTransaction } = useTransactions();
 
+  // Cast or extend properties cleanly if the core Account type doesn't contain UI metadata fields
   const BUILT_IN_EXPENSES = EXPENSE_CATEGORIES.map((category) => ({
     id: `builtin-${category.id}`,
     name: category.label,
@@ -51,17 +55,17 @@ export default function Transactions() {
     isBuiltIn: true,
     icon: category.icon,
     color: category.color,
-  }));
+  })) as unknown as Account[];
 
-  const savingsAccounts = accounts?.filter((acc: any) => acc.type === "SAVINGS") || [];
-  const goalAccounts = accounts?.filter((acc: any) => acc.type === "GOAL") || [];
-  const databaseExpenseAccounts = accounts?.filter((acc: any) => acc.type === "EXPENSES") || [];
-  
-  const isSavingsAccount = (account: any) => account?.type === "SAVINGS" || account?.type === "GOAL";
+  const savingsAccounts = accounts?.filter((acc: Account) => acc.type === "SAVINGS") || [];
+  const goalAccounts = accounts?.filter((acc: Account) => acc.type === "GOAL") || [];
+  const databaseExpenseAccounts = accounts?.filter((acc: Account) => acc.type === "EXPENSES") || [];
+
+  const isSavingsAccount = (account: Account | null) => account?.type === "SAVINGS" || account?.type === "GOAL";
 
   const expenseAccounts = BUILT_IN_EXPENSES.map((builtIn) => {
     const existing = databaseExpenseAccounts.find(
-      (dbAcc: any) => dbAcc.name.trim().toLowerCase() === builtIn.name.trim().toLowerCase()
+      (dbAcc: Account) => dbAcc.name.trim().toLowerCase() === builtIn.name.trim().toLowerCase()
     );
     return existing ?? builtIn;
   });
@@ -72,7 +76,6 @@ export default function Transactions() {
     ...expenseAccounts,
   ];
 
-  // Helper utility to completely flush form inputs
   const resetForm = () => {
     setFromAccount(null);
     setToAccount(null);
@@ -81,7 +84,6 @@ export default function Transactions() {
   };
 
   const handleSubmit = async () => {
-    // 1. Validation Logic based on Mode
     if (isIncome) {
       if (!toAccount) {
         Alert.alert(i18n.t("common.error"), i18n.t("errorDetial.SELECT_INCOME_ACCOUNT"));
@@ -115,16 +117,14 @@ export default function Transactions() {
 
     try {
       await createTransaction.mutateAsync({
-        fromAccId: isIncome ? null : fromAccount.id,
-        toAccountName: toAccount.name,
-        accountType: toAccount.type,
+        fromAccId: isIncome || !fromAccount?.id ? null : String(fromAccount.id),
+        toAccountName: toAccount!.name,
+        accountType: toAccount!.type,
         amount: Number(amount),
         note: description.trim(),
       });
 
       Alert.alert(i18n.t("common.success"), i18n.t("transaction.TRANSACTION_CREATED"));
-      
-      // ✨ Clear input states upon successful record completion
       resetForm();
       router.back();
     } catch (error: any) {
@@ -140,13 +140,13 @@ export default function Transactions() {
   const handleCancel = () => {
     Alert.alert(i18n.t("transaction.CANCEL_TRANSACTION"), i18n.t("common.cancelInfo"), [
       { text: i18n.t("common.continue"), style: 'cancel' },
-      { 
-        text: i18n.t("common.cancel"), 
-        style: 'destructive', 
+      {
+        text: i18n.t("common.cancel"),
+        style: 'destructive',
         onPress: () => {
-          resetForm(); // Clear inputs on intentional cancellation
+          resetForm();
           router.back();
-        } 
+        }
       },
     ]);
   };
@@ -155,21 +155,23 @@ export default function Transactions() {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <GradientHeader title={i18n.t("transaction.NEW_TRANSACTION")} showBackButton={false} />
+      <GradientHeader
+        colors={["#059669", "#047857"]}
+        title={i18n.t("transaction.NEW_TRANSACTION")}
+        showBackButton={false}
+      />
 
       <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
 
-          {/* Mode Switcher */}
           <ModeToggle
             isIncome={isIncome}
             onToggle={(value) => {
               setIsIncome(value);
-              resetForm(); // ✨ Automatically empty all inputs when switching tabs/modes
+              resetForm();
             }}
           />
 
-          {/* Source Account Selector (Only visible for Transfers) */}
           {!isIncome && (
             <AccountSelector
               label={i18n.t("transaction.FROM_ACCOUNT")}
@@ -181,7 +183,6 @@ export default function Transactions() {
             />
           )}
 
-          {/* Destination Account Selector */}
           <AccountSelector
             label={i18n.t(`transaction.${isIncome ? "SELECT_ACCOUNT_TO_ADD_INCOME" : "TO_ACCOUNT"}`)}
             account={toAccount}
@@ -199,19 +200,18 @@ export default function Transactions() {
             }
           />
 
-          {/* Inputs */}
           <View className="mb-4">
             <Text className="text-gray-700 font-semibold mb-2">{i18n.t("transaction.AMOUNT")}</Text>
             <View className="bg-white rounded-2xl border border-gray-200 px-4 py-2 flex-row items-center">
               <Ionicons name="cash-outline" size={20} color="#9ca3af" />
-              <TextInput 
-                className="flex-1 ml-3 text-gray-900 text-2xl font-bold py-3" 
-                placeholder="0.00" 
-                value={amount} 
-                onChangeText={setAmount} 
-                keyboardType="decimal-pad" 
+              <TextInput
+                className="flex-1 ml-3 text-gray-900 text-2xl font-bold py-3"
+                placeholder="0.00"
+                value={amount}
+                onChangeText={setAmount}
+                keyboardType="decimal-pad"
               />
-              <Text className="text-gray-400 font-semibold">{user!.currency}</Text>
+              <Text className="text-gray-400 font-semibold">{user?.currency}</Text>
             </View>
           </View>
 
@@ -223,7 +223,6 @@ export default function Transactions() {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      {/* Persistent Bottom Action Bar */}
       <View className="px-6 pb-8 pt-4 bg-white border-t border-gray-200" style={{ paddingBottom: Math.max(insets.bottom, 24) }}>
         <View className="flex-row space-x-4">
           <TouchableOpacity className="flex-1 bg-gray-100 rounded-2xl py-4" onPress={handleCancel}>
@@ -239,7 +238,6 @@ export default function Transactions() {
         </View>
       </View>
 
-      {/* Modals Tree */}
       <AccountModal
         visible={showFromModal}
         title={i18n.t("transaction.SELECT_SOURCE_ACCOUNT")}
@@ -260,7 +258,7 @@ export default function Transactions() {
         accounts={
           isIncome
             ? savingsAccounts
-            : targetTransferAccounts.filter((acc) => acc.id !== fromAccount?.id)
+            : targetTransferAccounts.filter((acc: Account) => acc.id !== fromAccount?.id)
         }
         selectedAccountId={toAccount?.id}
         isIncome={isIncome}

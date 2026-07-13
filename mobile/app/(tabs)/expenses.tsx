@@ -1,4 +1,3 @@
-// app/expenses/index.tsx
 import { View, StatusBar, ScrollView, TouchableOpacity, Text, Modal } from "react-native";
 import { useState } from "react";
 import { Tabs } from "expo-router";
@@ -11,10 +10,11 @@ import useAccounts from "../../hooks/useAccounts";
 import useTransactions from "../../hooks/useTransactions";
 import { EXPENSE_CATEGORIES, getCategoryForAccount } from "../../constants/expenseCategorires";
 
-import { ExpensesHeader } from "../../components/expenses/ExpensesHeader";
 import { ExpenseChartCard } from "../../components/expenses/ExpenseChartCard";
 import { ExpenseCategorySection } from "../../components/expenses/ExpenseCategorySection";
 import LoadingComponent from "@/components/LoadingComponent";
+import GradientHeader from "@/components/GradientHeader";
+import { formatCurrency } from "@/constants/currency";
 
 interface Account {
   id: string;
@@ -46,7 +46,7 @@ export default function Expenses() {
   const { transactions, isLoading: isTransactionsLoading } = useTransactions();
 
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
-  const [isModalVisible, setIsModalVisible] = useState(false); // 👈 Controls month grid visibility
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const expenseAccounts = accounts?.filter((a: Account) => a.type !== "SAVINGS" && a.type !== "GOAL") || [];
   const primaryCurrency = expenseAccounts[0]?.currency || "USD";
@@ -60,7 +60,7 @@ export default function Expenses() {
       const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
       months.add(monthKey);
     });
-    // Ensure current month is always available even if there are no transactions yet
+
     const now = new Date();
     const currentMonthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     months.add(currentMonthKey);
@@ -92,7 +92,8 @@ export default function Expenses() {
       if (t.to_account_id && String(t.to_account_id).startsWith('exp-')) {
         categoryId = t.to_account_id;
       } else if (t.to_account_id) {
-        const matchingAccount = expenseAccounts.find(a => a.id === t.to_account_id);
+        // Fixed: Added explicit ': Account' type to parameter 'a'
+        const matchingAccount = expenseAccounts.find((a: Account) => a.id === t.to_account_id);
         if (matchingAccount) {
           categoryId = getCategoryForAccount(matchingAccount.name);
         }
@@ -135,12 +136,20 @@ export default function Expenses() {
       {isLoading ? (
         <LoadingComponent />
       ) : (
-        <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: insets.bottom + 130 }} showsVerticalScrollIndicator={false}>
-          
-          <ExpensesHeader
-            totalExpenses={totalExpenses}
-            primaryCurrency={primaryCurrency}
-            categoryCount={categoryData.length}
+        <ScrollView
+          className="flex-1"
+          contentContainerStyle={{ paddingBottom: insets.bottom + 130 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Integrated Dynamic Reusable Shared Component */}
+          <GradientHeader
+            colors={["#DC2626", "#B91C1C"]}
+            title={i18n.t("tabs.expenses")}
+            cardLabel={i18n.t("expenses.TOTAL_EXPENSES")}
+            cardValue={formatCurrency(totalExpenses, primaryCurrency)}
+            // Fixed: changed undefined categoryCount to categoryData.length
+            badgeText={`${categoryData.length} ${i18n.t("expenses.CATEGORIES")}`}
+            badgeVariant="red"
           />
 
           {/* 📅 Modern Month Grid Trigger Row */}
@@ -197,11 +206,10 @@ export default function Expenses() {
                             setSelectedMonth(date);
                             setIsModalVisible(false);
                           }}
-                          className={`py-3 px-2 rounded-2xl items-center justify-center border ${
-                            isSelected 
-                              ? 'bg-red-500 border-red-500 shadow-sm shadow-red-200' 
-                              : 'bg-gray-50 border-gray-100 active:bg-gray-100'
-                          }`}
+                          className={`py-3 px-2 rounded-2xl items-center justify-center border ${isSelected
+                            ? 'bg-red-500 border-red-500 shadow-sm shadow-red-200'
+                            : 'bg-gray-50 border-gray-100 active:bg-gray-100'
+                            }`}
                         >
                           <Text className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-gray-800'}`}>
                             {date.toLocaleDateString('en-US', { month: 'short' })}

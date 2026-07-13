@@ -18,6 +18,7 @@ export default function Menu() {
   i18n.locale = language;
 
   const currency = user?.currency ?? "MYR";
+  const isPremium = user?.is_premium ?? false; // Add this based on your user schema
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -125,7 +126,7 @@ export default function Menu() {
 
         {/* Currency */}
         <TouchableOpacity
-          className="flex-row items-center justify-between py-3"
+          className="flex-row items-center justify-between py-3 border-b border-gray-200"
           onPress={() => router.push("/settings/currency")}
         >
           <View className="flex-row items-center">
@@ -145,6 +146,47 @@ export default function Menu() {
               {currency}
             </Text>
 
+            <Ionicons
+              name="chevron-forward"
+              size={20}
+              color="#9CA3AF"
+            />
+          </View>
+        </TouchableOpacity>
+
+        {/* Premium Section */}
+        <TouchableOpacity
+          className="flex-row items-center justify-between py-3"
+          onPress={() => router.push("/settings/premium")}
+        >
+          <View className="flex-row items-center">
+            <Ionicons
+              name="diamond-outline"
+              size={24}
+              color="#8B5CF6"
+            />
+
+            <Text className="text-gray-700 text-base ml-3">
+              Premium
+            </Text>
+
+            {isPremium && (
+              <View className="ml-2 bg-purple-100 px-2 py-0.5 rounded-full">
+                <Text className="text-purple-700 text-xs font-semibold">
+                  Active
+                </Text>
+              </View>
+            )}
+          </View>
+
+          <View className="flex-row items-center">
+            {!isPremium && (
+              <View className="bg-purple-500 px-3 py-1 rounded-full mr-2">
+                <Text className="text-white text-xs font-semibold">
+                  Basic
+                </Text>
+              </View>
+            )}
             <Ionicons
               name="chevron-forward"
               size={20}
