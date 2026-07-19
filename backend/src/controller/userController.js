@@ -5,6 +5,7 @@ import cloudinary from "../utlis/cloudinary.js"
 export const getUser = async (req, res) => {
     try {
         const clerkId = req.clerkId;
+        const user = req.user
 
         const clientData = await userService.userData(clerkId);
         if (!clientData) {

@@ -4,7 +4,6 @@ import i18n from "../../lib/i18n";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const currencies = ["MYR", "JPY", "CNY"] as const;
 
@@ -20,8 +19,39 @@ export default function CurrencyScreen() {
     updateCurrency.mutate(
       { currency },
       {
-        onSuccess: () => {
-          router.back();
+        onSuccess: (data) => {
+          const code = data?.code;
+
+          if (code === "UPDATE_SUCCESS") {
+            Alert.alert(i18n.t("common.success"),
+              i18n.t("success.profileUpdated")
+              , [
+                {
+                  onPress: () => router.back()
+                }
+              ])
+          } else {
+            router.back()
+          }
+        },
+        onError: (error: any) => {
+          const code = error.response?.data?.code;
+          const errorHandlers: Record<string, () => void> = {
+            INTERNAL_SERVER_ERROR: () =>
+              Alert.alert(i18n.t("common.error"), i18n.t("errorDetial.INTERNAL_SERVER_ERROR")),
+
+            USER_NOT_FOUND: () =>
+              Alert.alert(i18n.t("error.notFound"), i18n.t("errorDetial.USER_NOT_FOUND")),
+
+            NO_DATA_PROVIDED: () =>
+              Alert.alert(i18n.t("error.noDataGiven"), i18n.t("errorDetial.NO_DATA_PROVIDED")),
+          };
+
+          if (code && errorHandlers[code]) {
+            errorHandlers[code]();
+          } else {
+            Alert.alert(i18n.t("common.error"), i18n.t("errorDetail.UNKNOWN_ERROR"));
+          }
         }
       }
     );

@@ -13,7 +13,6 @@ const api = axios.create({
 
 export const useApi = () => {
   const { getToken } = useAuth();
-
   useEffect(() => {
     const interceptor = api.interceptors.request.use(async (config) => {
       const token = await getToken();

@@ -33,34 +33,7 @@ const useCurrentUser = (options?: { enabled?: boolean }) => {
             queryClient.invalidateQueries({ queryKey: ["me"] });
             queryClient.invalidateQueries({ queryKey: ["accounts"] });
 
-            const code = data?.code;
-            const successHandlers: Record<string, () => void> = {
-                UPDATE_SUCCESS: () =>
-                    Alert.alert(i18n.t("common.success"), i18n.t("success.profileUpdated")),
-            };
-
-            if (code && successHandlers[code]) {
-                successHandlers[code]();
-            }
-        },
-        onError: (error: any) => {
-            const code = error.response?.data?.code;
-
-            const errorHandlers: Record<string, () => void> = {
-                INTERNAL_SERVER_ERROR: () =>
-                    Alert.alert(i18n.t("common.error"), i18n.t("errorDetial.INTERNAL_SERVER_ERROR")),
-
-                USER_NOT_FOUND: () =>
-                    Alert.alert(i18n.t("error.notFound"), i18n.t("errorDetial.USER_NOT_FOUND")),
-
-                NO_DATA_PROVIDED: () =>
-                    Alert.alert(i18n.t("error.noDataGiven"), i18n.t("errorDetial.NO_DATA_PROVIDED")),
-            };
-            if (code && errorHandlers[code]) {
-                errorHandlers[code]();
-            } else {
-                Alert.alert(i18n.t("common.error"), i18n.t("errorDetail.UNKNOWN_ERROR"));
-            }
+            return data
         }
     })
 

@@ -34,7 +34,7 @@
     "SELECT_SOURCE_ACCOUNT": "要从哪里搬运你的钱呢？",
     "SELECT_DESTINATION_ACCOUNT": "钱要寄去哪里呢?",
     "SAME_ACCOUNT_ERROR": "不能自己转给自己！账号相同",
-  "INSUFFICIENT_BALANCE": "你的钱好像有点不太够哦！",
+    "INSUFFICIENT_BALANCE": "你的钱好像有点不太够哦！",
     "INVALID_AMOUNT": "输入你想转的金额！"
   },
   "menu": {
@@ -160,6 +160,54 @@
     "DESCRIPTION": "备注（可选）",
     "TRANSFER": "转账",
     "CANCEL_TRANSACTION": "取消转账",
-    "TRANSACTION_CREATED":"完成转账"
+    "TRANSACTION_CREATED": "完成转账"
+  },
+  "premium": {
+    "header": {
+      "title": "会员",
+      "subtitle": "选择适合您需求的计划"
+    },
+    "status": {
+      "active": "高级会员已激活",
+      "description": "您已拥有所有高级功能的访问权限"
+    },
+    "labels": {
+      "recommended": "推荐",
+      "activeTag": "已激活",
+      "basicTag": "基础版",
+      "active": "已激活",
+      "perMonth": "/ 月",
+      "activeStatus": "已激活",
+      "currentPlan": "当前计划"
+    },
+    "plans": {
+      "starter": {
+        "name": "基础版",
+        "cta": "当前计划",
+        "feature_basic": "基础功能",
+        "feature_savings": "普通存钱管理",
+        "feature_expenses": "普通支出管理",
+        "feature_bot": "与机器人聊天"
+      },
+      "premium": {
+        "name": "高级版",
+        "cta": "解锁高级版",
+        "feature_savings": "解锁完整存钱功能",
+        "feature_expenses": "解锁完整支出功能",
+        "feature_ai": "实时 AI 聊天室助手"
+      }
+    },
+    "actions": {
+      "restore": "恢复购买"
+    },
+    "footer": {
+      "secure": "安全支付 • 可随时取消",
+      "renewal": "除非取消，否则高级订阅会自动续订",
+      "support": "有疑问？联系客服"
+    },
+    "alert": {
+      "info": "提示",
+      "freeForever": "基础版计划永久免费"
+    }
   }
 }

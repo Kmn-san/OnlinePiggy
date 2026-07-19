@@ -50,7 +50,7 @@ export const createUserFromClerk = async ({ clerkId, username, avatar_url }) => 
 
 export const userData = async (clerkId) => {
     const { rows } = await query(
-        `SELECT id, opid, opid_updated_at, username, country, is_premium, currency, avatar_url, avatar_public_id
+        `SELECT id, opid, opid_updated_at, username, country, is_premium, premium_expire_at,currency, avatar_url, avatar_public_id
         FROM users
         WHERE clerkid = $1`,
         [clerkId])
@@ -128,6 +128,29 @@ export const changeProfilePic = async (imageUrl, newPublicId, clerkId) => {
         WHERE clerkid = $3
         RETURNING *`,
         [imageUrl, newPublicId, clerkId]
+    )
+    return rows[0]
+}
+
+export const addStripeId = async (userId, stripeCustomerId) => {
+    const { rows } = await query(
+        `UPDATE users 
+        SET stripe_customer_id = $1
+        WHERE id = $2`, [
+        stripeCustomerId, userId
+    ]
+    )
+    return rows[0]
+}
+
+export const setPremium = async (userId, is_premium) => {
+    const now = new Date().toISOString()
+    const { rows } = await query(
+        `UPDATE users
+        SET is_premium = $1, premium_expire_at = $2
+        WHERE id = $3`, [
+        is_premium, now, userId
+    ]
     )
     return rows[0]
 }

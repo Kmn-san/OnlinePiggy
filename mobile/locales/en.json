@@ -161,5 +161,53 @@
     "TRANSFER": "Transfer",
     "CANCEL_TRANSACTION": "Cancel Transaction",
     "TRANSACTION_CREATED": "Transaction Created"
+  },
+  "premium": {
+    "header": {
+      "title": "Premium",
+      "subtitle": "Choose the plan that fits your needs"
+    },
+    "labels": {
+      "recommended": "RECOMMENDED",
+      "activeTag": "Active",
+      "basicTag": "Basic",
+      "active": "ACTIVE",
+      "perMonth": "/ month",
+      "activeStatus": "Active",
+      "currentPlan": "Current Plan"
+    },
+    "status": {
+      "active": "Premium Active",
+      "description": "You have access to all premium features"
+    },
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "cta": "Current Plan",
+        "feature_basic": "Basic Functions",
+        "feature_savings": "Normal Savings",
+        "feature_expenses": "Normal Expenses",
+        "feature_bot": "Text With Bot"
+      },
+      "premium": {
+        "name": "Premium",
+        "cta": "Unlock Premium",
+        "feature_savings": "Unlock Full Savings",
+        "feature_expenses": "Unlock Full Expenses",
+        "feature_ai": "Real-time AI Chat room assistant"
+      }
+    },
+    "actions": {
+      "restore": "Restore Purchase"
+    },
+    "footer": {
+      "secure": "Secure payment • Cancel anytime",
+      "renewal": "Premium subscription automatically renews unless canceled",
+      "support": "Questions? Contact support"
+    },
+    "alert": {
+      "info": "Info",
+      "freeForever": "Starter plan is free forever"
+    }
   }
 }

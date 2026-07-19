@@ -162,5 +162,53 @@
     "TRANSFER": "振替",
     "CANCEL_TRANSACTION": "振替を続ける",
     "TRANSACTION_CREATED": "振替完成"
+  },
+  "premium": {
+    "header": {
+      "title": "プレミアム",
+      "subtitle": "ニーズに合わせたプランをお選びください"
+    },
+    "labels": {
+      "recommended": "おすすめ",
+      "activeTag": "有効",
+      "basicTag": "ベーシック",
+      "active": "有効",
+      "perMonth": "/ 月",
+      "activeStatus": "有効",
+      "currentPlan": "現在のプラン"
+    },
+    "status": {
+      "active": "プレミアム有効",
+      "description": "すべてのプレミアム機能をご利用いただけます"
+    },
+    "plans": {
+      "starter": {
+        "name": "スターター",
+        "cta": "現在のプラン",
+        "feature_basic": "基本功能",
+        "feature_savings": "通常の貯金管理",
+        "feature_expenses": "通常の支出管理",
+        "feature_bot": "ボットとのチャット"
+      },
+      "premium": {
+        "name": "プレミアム",
+        "cta": "プレミアムをアンロック",
+        "feature_savings": "すべての貯金管理機能をアンロック",
+        "feature_expenses": "すべての支出管理機能をアンロック",
+        "feature_ai": "リアルタイムAIチャットアシスタント"
+      }
+    },
+    "actions": {
+      "restore": "購入を復元"
+    },
+    "footer": {
+      "secure": "安全な決済 • いつでも解約可能",
+      "renewal": "プレミアムサブスクリプションは、解約されない限り自動的に更新されます",
+      "support": "ご質問がありますか？サポートにお問い合わせください"
+    },
+    "alert": {
+      "info": "情報",
+      "freeForever": "スタータープランは永久に無料です"
+    }
   }
 }

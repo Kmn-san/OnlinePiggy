@@ -167,13 +167,13 @@ export default function Menu() {
             />
 
             <Text className="text-gray-700 text-base ml-3">
-              Premium
+              {i18n.t("premium.header.title")}
             </Text>
 
             {isPremium && (
               <View className="ml-2 bg-purple-100 px-2 py-0.5 rounded-full">
                 <Text className="text-purple-700 text-xs font-semibold">
-                  Active
+                  {i18n.t("premium.labels.activeTag")}
                 </Text>
               </View>
             )}
@@ -183,7 +183,7 @@ export default function Menu() {
             {!isPremium && (
               <View className="bg-purple-500 px-3 py-1 rounded-full mr-2">
                 <Text className="text-white text-xs font-semibold">
-                  Basic
+                  {i18n.t("premium.labels.basicTag")}
                 </Text>
               </View>
             )}
