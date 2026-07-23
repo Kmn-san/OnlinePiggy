@@ -11,4 +11,5 @@ router.patch("/me",updateUser)
 router.patch("/currency",changeCurrency)
 router.patch("/avatar",profilePicUpload,updateProfilePic)
 
+
 export default router

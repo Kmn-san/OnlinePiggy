@@ -1,17 +1,37 @@
+// components/GradientHeader.tsx
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { GradientHeaderProps } from "@/types";
+
+interface GradientHeaderProps {
+    // Enforces a tuple with at least two strings to satisfy expo-linear-gradient's requirements
+    colors: [string, string, ...string[]];
+    title?: string;
+    showBackButton?: boolean;
+    onBackPress?: () => void;
+    showBranding?: boolean;
+    showNotification?: boolean;
+    onNotificationPress?: () => void;
+    showAddButton?: boolean;
+    onAddPress?: () => void;
+    cardLabel?: string;
+    cardValue?: string;
+    badgeText?: string;
+    badgeVariant?: "emerald" | "red";
+}
 
 export default function GradientHeader({
     colors,
     title,
     showBackButton = false,
+    onBackPress,
     showBranding = false,
     showNotification = false,
     onNotificationPress,
+    showAddButton = false,
+    onAddPress,
     cardLabel,
     cardValue,
     badgeText,
@@ -37,7 +57,7 @@ export default function GradientHeader({
                 <View className="flex-row items-center flex-1">
                     {showBackButton && (
                         <TouchableOpacity
-                            onPress={() => router.back()}
+                            onPress={onBackPress || router.back}
                             className="mr-3 p-1 -ml-1 active:opacity-70"
                         >
                             <Ionicons name="chevron-back" size={28} color="white" />
@@ -64,19 +84,30 @@ export default function GradientHeader({
                     )}
                 </View>
 
-                {/* Right Side: Notification Trigger Space Element */}
-                {showNotification && (
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        className="w-11 h-11 rounded-full bg-white/20 items-center justify-center"
-                        onPress={onNotificationPress}
-                    >
-                        <Ionicons name="notifications-outline" size={22} color="white" />
-                    </TouchableOpacity>
-                )}
+                {/* Right Side Actions */}
+                <View className="flex-row items-center space-x-2">
+                    {showNotification && (
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            className="w-11 h-11 rounded-full bg-white/20 items-center justify-center"
+                            onPress={onNotificationPress}
+                        >
+                            <Ionicons name="notifications-outline" size={22} color="white" />
+                        </TouchableOpacity>
+                    )}
 
-                {/* Visual centering balancing shim for layout spacing */}
-                {!showNotification && !showBranding && showBackButton && <View className="w-7" />}
+                    {showAddButton && (
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            className="w-11 h-11 rounded-full bg-white/20 items-center justify-center"
+                            onPress={onAddPress}
+                        >
+                            <Ionicons name="add" size={26} color="white" />
+                        </TouchableOpacity>
+                    )}
+                </View>
+
+                {!showNotification && !showAddButton && !showBranding && showBackButton && <View className="w-7" />}
             </View>
 
             {/* --- FLOATING METRICS DISPLAY CARD --- */}

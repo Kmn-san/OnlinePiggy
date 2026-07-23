@@ -69,6 +69,7 @@ export default function CreateGoal() {
     <View className="flex-1 bg-gray-50">
       {/* Header */}
       <GradientHeader
+        colors={['#6D28D9', '#4F46E5']}
         title={i18n.t("createAccount.createNewGoal")}
         onBackPress={handleCancel}
       />

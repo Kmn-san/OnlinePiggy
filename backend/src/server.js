@@ -6,6 +6,8 @@ import transactionRoutes from "./routes/transactionRoutes.js"
 import premiumRoutes from "./routes/premiumRoutes.js"
 import chatbotRoutes from "./routes/chatbotRoutes.js"
 import paymentRoute from "./routes/paymentRoutes.js"
+import friendRoutes from "./routes/friendRoutes.js"
+
 
 import { clerkMiddleware } from "@clerk/express";
 
@@ -28,6 +30,7 @@ app.use("/api/user", userRoutes)
 app.use("/api/account", accountRoutes)
 app.use("/api/transaction", transactionRoutes)
 app.use("/api/premium", premiumRoutes)
+app.use("/api/friend", friendRoutes)
 app.use("/api/chatbot", chatbotRoutes)
 
 app.listen(ENV.PORT, () => {
