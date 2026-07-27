@@ -2,14 +2,10 @@ import dotenv from "dotenv";
 dotenv.config({ quiet: true })
 
 export const ENV = {
-    PORT: process.env.PORT,
+    PORT: process.env.PORT || 3000,
 
-    PG_USER: process.env.PG_USER,
-    PG_DATABASE: process.env.PG_DATABASE,
-    PG_PORT: process.env.PG_PORT,
-    PG_PASSWORD: process.env.PG_PASSWORD,
-    PG_HOST: process.env.PG_HOST,
-
+    DATABASE_URL: process.env.DATABASE_URL,
+    NODE_ENV: process.env.NODE_ENV,
     CLOUD_NAME: process.env.CLOUD_NAME,
     CLOUD_API_KEY: process.env.CLOUD_API_KEY,
     CLOUD_API_SECRET: process.env.CLOUD_API_SECRET,
