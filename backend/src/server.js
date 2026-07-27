@@ -1,5 +1,6 @@
 import express from "express";
 import { ENV } from "./config/env.js";
+import cors from "cors"
 import userRoutes from "./routes/userRoutes.js"
 import accountRoutes from "./routes/accountRoutes.js"
 import transactionRoutes from "./routes/transactionRoutes.js"
@@ -28,6 +29,7 @@ app.use("/api/payment", (req, res, next) => {
 
 app.use(express.json())
 app.use(clerkMiddleware()) //add auth object under the req => req.auth
+app.use(cors({ origin: ENV.FRONTEND_URL, credentials: true })) // credentials : true allows 
 
 app.use("/api/user", userRoutes)
 app.use("/api/account", accountRoutes)
