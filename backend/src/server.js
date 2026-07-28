@@ -6,17 +6,10 @@ import accountRoutes from "./routes/accountRoutes.js"
 import transactionRoutes from "./routes/transactionRoutes.js"
 import premiumRoutes from "./routes/premiumRoutes.js"
 import paymentRoute from "./routes/paymentRoutes.js"
-import friendRoutes from "./routes/friendRoutes.js"
-import chatRoutes from "./routes/chatRoutes.js"
-import messageRoutes from "./routes/messageRoutes.js"
-import { createServer } from "http";
 import { clerkMiddleware } from "@clerk/express";
-import { initializeSocket } from "./utlis/socket.ts";
 
 const app = express();
-const httpServer = createServer(app)
 
-initializeSocket(httpServer)
 app.use("/api/payment", (req, res, next) => {
     console.log(req.originalUrl);
 
@@ -35,12 +28,9 @@ app.use("/api/user", userRoutes)
 app.use("/api/account", accountRoutes)
 app.use("/api/transaction", transactionRoutes)
 app.use("/api/premium", premiumRoutes)
-app.use("/api/friend", friendRoutes)
-app.use("/api/chats", chatRoutes)
-app.use("/api/messages", messageRoutes)
 
 
-httpServer.listen(ENV.PORT, () => {
+app.listen(ENV.PORT, () => {
     console.log(`Server is running on ${ENV.PORT}`);
 
 })
