@@ -1,10 +1,7 @@
-// app/(tabs)/_layout.tsx
 import { Redirect, Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "@clerk/clerk-expo";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ActivityIndicator, View } from "react-native";
-
 import i18n from "../../lib/i18n";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";

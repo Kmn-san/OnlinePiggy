@@ -1,4 +1,4 @@
-import * as  transactionService from "../service/transactionService.js";
+import * as transactionService from "../service/transactionService.js";
 import * as userService from "../service/userService.js"
 import * as accountService from "../service/accountService.js"
 
