@@ -141,3 +141,14 @@ export interface GradientHeaderProps {
     badgeText?: string;
     badgeVariant?: 'emerald' | 'red';
 }
+
+export type Message = {
+    id: string;
+    role: 'user' | 'assistant';
+    content: string;
+};
+
+export const AI_USER = {
+    username: 'AI Assistant', 
+    avatar: 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png',
+};

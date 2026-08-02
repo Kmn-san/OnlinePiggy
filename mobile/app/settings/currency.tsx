@@ -63,7 +63,11 @@ export default function CurrencyScreen() {
       <PageHeader title={i18n.t("currency.title")} />
 
       {/* Currency List */}
-      <View className="p-5">
+      <View className="p-5 flex-1">
+
+        <Text className="text-gray-500 text-sm mb-4">
+          {i18n.t("currency.changeNotice", { defaultValue: "Selecting a currency will update your base currency immediately." })}
+        </Text>
         {currencies.map((currency) => {
           const selected = user?.currency === currency;
 
@@ -91,6 +95,15 @@ export default function CurrencyScreen() {
             </TouchableOpacity>
           );
         })}
+      </View>
+      {/* API Attribution Footer */}
+      <View className="pb-8 pt-4 items-center">
+        <Text className="text-xs text-gray-400 font-medium">
+          {i18n.t("currency.poweredBy", { defaultValue: "Exchange rates powered by" })}
+        </Text>
+        <Text className="text-xs text-gray-500 mt-1">
+          exchange-rates7.p.rapidapi.com
+        </Text>
       </View>
     </View>
   );

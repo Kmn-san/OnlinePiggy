@@ -113,28 +113,47 @@ export default function Transactions() {
       return;
     }
 
-    setIsSubmitting(true);
+    // 🛡️ Security / Scam Warning Confirmation Dialog
+    Alert.alert(
+      i18n.t("transaction.securityTitle", { defaultValue: "Verify Recipient" }),
+      i18n.t("transaction.securityMessage", {
+        defaultValue: "Please make sure you trust the recipient. Beware of scams and unauthorized transfers."
+      }),
+      [
+        {
+          text: i18n.t("common.cancel", { defaultValue: "Cancel" }),
+          style: "cancel",
+        },
+        {
+          text: i18n.t("transaction.confirmTransfer", { defaultValue: "Proceed" }),
+          style: "destructive", // highlights it as a conscious action
+          onPress: async () => {
+            setIsSubmitting(true);
 
-    try {
-      await createTransaction.mutateAsync({
-        fromAccId: isIncome || !fromAccount?.id ? null : String(fromAccount.id),
-        toAccountName: toAccount!.name,
-        accountType: toAccount!.type,
-        amount: Number(amount),
-        note: description.trim(),
-      });
+            try {
+              await createTransaction.mutateAsync({
+                fromAccId: isIncome || !fromAccount?.id ? null : String(fromAccount.id),
+                toAccountName: toAccount!.name,
+                accountType: toAccount!.type,
+                amount: Number(amount),
+                note: description.trim(),
+              });
 
-      Alert.alert(i18n.t("common.success"), i18n.t("transaction.TRANSACTION_CREATED"));
-      resetForm();
-      router.back();
-    } catch (error: any) {
-      Alert.alert(
-        i18n.t("common.error"),
-        error?.response?.data?.message ?? i18n.t("errorDetial.UNKNOWN_ERROR")
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
+              Alert.alert(i18n.t("common.success"), i18n.t("transaction.TRANSACTION_CREATED"));
+              resetForm();
+              router.back();
+            } catch (error: any) {
+              Alert.alert(
+                i18n.t("common.error"),
+                error?.response?.data?.message ?? i18n.t("errorDetial.UNKNOWN_ERROR")
+              );
+            } finally {
+              setIsSubmitting(false);
+            }
+          },
+        },
+      ]
+    );
   };
 
   const handleCancel = () => {

@@ -28,12 +28,13 @@ export const ExpenseTransactionRow: React.FC<RowProps> = ({
   const getTargetAccountLabel = () => {
     const targetId = isIncome ? transaction.from_account_id : transaction.to_account_id;
 
-    if (!targetId) return i18n.t("transactions.external") || 'External';
+    if (!targetId) return i18n.t("transactions.external", { defaultValue: 'External' });
 
     const targetAccount = allAccounts?.find(a => a.id === targetId);
-    if (!targetAccount) return i18n.t("transactions.other_account") || 'Other Account';
-    const accountType = targetAccount.type.toLowerCase(); 
-    const accountName = targetAccount.name;               
+    if (!targetAccount) return i18n.t("transactions.other_account", { defaultValue: 'Other Account' });
+
+    const accountType = targetAccount.type.toLowerCase();
+    const accountName = targetAccount.name;
     const translationKey = `${accountType}.${accountName}`;
     const localizedName = i18n.t(translationKey);
 
@@ -48,12 +49,12 @@ export const ExpenseTransactionRow: React.FC<RowProps> = ({
       <View className="flex-row items-center flex-1 mr-2">
         {/* Ionicons Container Block replacing native text emojis */}
         <View className={`w-12 h-12 rounded-full items-center justify-center ${design.bg}`}>
-          <Ionicons name={design.icon} size={22} color={design.color} />
+          <Ionicons name={design.icon as any} size={22} color={design.color} />
         </View>
 
         <View className="ml-3 flex-1">
           <Text className="text-gray-900 font-bold text-sm" numberOfLines={1}>
-            {transaction.note || 'No description'}
+            {transaction.note || i18n.t('expenses.noDescription', { defaultValue: 'No description' })}
           </Text>
 
           <View className="flex-row items-center mt-1 flex-wrap">
@@ -66,7 +67,9 @@ export const ExpenseTransactionRow: React.FC<RowProps> = ({
             </Text>
             <View className="w-1 h-1 rounded-full bg-gray-300 mx-1.5" />
             <Text className={`text-[11px] font-bold ${isIncome ? 'text-emerald-600' : 'text-red-600'}`}>
-              {isIncome ? 'Received' : 'Sent'}
+              {isIncome
+                ? i18n.t('expenses.received', { defaultValue: 'Received' })
+                : i18n.t('expenses.sent', { defaultValue: 'Sent' })}
             </Text>
           </View>
         </View>

@@ -65,7 +65,8 @@
     "title": "货币",
     "MYR": "🇲🇾 马来西亚林吉特",
     "JPY": "🇯🇵 日元",
-    "CNY": "🇨🇳 人民币"
+    "CNY": "🇨🇳 人民币",
+    "changeNotice": "选择货币将立即更新您的基准货币。"
   },
   "auth": {
     "google": "使用 Google 登录",
@@ -136,6 +137,34 @@
     "NO_EXPENSES_DATA": "无数据",
     "NO_EXPENSE_ACCOUNT": "暂无支出账户"
   },
+  "accountDetail": {
+    "notFound": {
+      "title": "未找到账户",
+      "subtitle": "您正在寻找的账户不存在",
+      "backButton": "返回"
+    },
+    "header": {
+      "currentBalance": "当前余额",
+      "target": "目标："
+    },
+    "transactions": {
+      "title": "交易记录",
+      "total": "共 {{count}} 笔",
+      "count": "{{count}} 笔交易",
+      "empty": {
+        "title": "暂无交易",
+        "subtitle": "此账户目前没有任何交易记录"
+      }
+    },
+    "transaction": {
+      "sent": "转出",
+      "received": "转入",
+      "defaultLabel": "交易",
+      "external": "外部",
+      "unknownAccount": "未知账户",
+      "noDescription": "无描述"
+    }
+  },
   "createAccount": {
     "createNewGoal": "创造新目标",
     "goalTitle": "目标名称",
@@ -160,7 +189,10 @@
     "DESCRIPTION": "备注（可选）",
     "TRANSFER": "转账",
     "CANCEL_TRANSACTION": "取消转账",
-    "TRANSACTION_CREATED": "完成转账"
+    "TRANSACTION_CREATED": "完成转账",
+    "securityTitle": "提醒",
+    "securityMessage": "请确保您信任收款人。\n谨防诈骗和未经授权的转账。",
+    "confirmTransfer": "继续"
   },
   "premium": {
     "header": {
@@ -209,5 +241,32 @@
       "info": "提示",
       "freeForever": "基础版计划永久免费"
     }
+  },
+  "aiChat": {
+    "headerTitle": "AI助手",
+    "privacy": {
+      "title": "隐私提示",
+      "subtitle": "请不要分享任何个人或敏感信息，例如：",
+      "items": {
+        "passwords": "密码",
+        "creditCards": "信用卡",
+        "idNumbers": "身份证号",
+        "bankDetails": "银行信息"
+      },
+      "footer": "您的对话会经过安全处理，但我们建议您对敏感数据保密。",
+      "button": "我明白了"
+    },
+    "empty": {
+      "title": "我能帮您什么？",
+      "subtitle": "您可以问我任何关于财务、目标或一般性的问题。",
+      "banner": "请保护您的个人信息"
+    },
+    "input": {
+      "thinking": "AI正在思考...",
+      "placeholder": "问点什么..."
+    },
+    "error": "出现了一些问题。",
+    "noResponse": "无响应",
+    "aiLabel": "AI"
   }
 }

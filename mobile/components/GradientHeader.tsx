@@ -12,8 +12,6 @@ interface GradientHeaderProps {
     showBackButton?: boolean;
     onBackPress?: () => void;
     showBranding?: boolean;
-    showNotification?: boolean;
-    onNotificationPress?: () => void;
     showAddButton?: boolean;
     onAddPress?: () => void;
     cardLabel?: string;
@@ -28,8 +26,6 @@ export default function GradientHeader({
     showBackButton = false,
     onBackPress,
     showBranding = false,
-    showNotification = false,
-    onNotificationPress,
     showAddButton = false,
     onAddPress,
     cardLabel,
@@ -54,18 +50,18 @@ export default function GradientHeader({
             {/* --- TOP ROW CONTROLS --- */}
             <View className="flex-row items-center justify-between min-h-[48px]">
                 {/* Left Side: Back Button OR Brand Info */}
-                <View className="flex-row items-center flex-1">
+                <View className="flex-row items-center flex-1 ">
                     {showBackButton && (
                         <TouchableOpacity
                             onPress={onBackPress || router.back}
-                            className="mr-3 p-1 -ml-1 active:opacity-70"
+                            className="mr-3 p-1 -ml-1 active:opacity-70 "
                         >
                             <Ionicons name="chevron-back" size={28} color="white" />
                         </TouchableOpacity>
                     )}
 
                     {showBranding ? (
-                        <View className="flex-row items-center">
+                        <View className="flex-row items-center ml-4">
                             <Image
                                 source={require("@/assets/images/icon.png")}
                                 className="w-11 h-11 rounded-full border-2 border-white/30"
@@ -86,16 +82,6 @@ export default function GradientHeader({
 
                 {/* Right Side Actions */}
                 <View className="flex-row items-center space-x-2">
-                    {showNotification && (
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            className="w-11 h-11 rounded-full bg-white/20 items-center justify-center"
-                            onPress={onNotificationPress}
-                        >
-                            <Ionicons name="notifications-outline" size={22} color="white" />
-                        </TouchableOpacity>
-                    )}
-
                     {showAddButton && (
                         <TouchableOpacity
                             activeOpacity={0.7}
@@ -107,7 +93,7 @@ export default function GradientHeader({
                     )}
                 </View>
 
-                {!showNotification && !showAddButton && !showBranding && showBackButton && <View className="w-7" />}
+                {!showAddButton && !showBranding && showBackButton && <View className="w-7" />}
             </View>
 
             {/* --- FLOATING METRICS DISPLAY CARD --- */}

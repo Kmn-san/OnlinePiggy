@@ -65,7 +65,8 @@
     "title": "Currency",
     "MYR": "🇲🇾 Malaysian Ringgit",
     "JPY": "🇯🇵 Japanese Yen",
-    "CNY": "🇨🇳 Chinese Yuan"
+    "CNY": "🇨🇳 Chinese Yuan",
+    "changeNotice": "Selecting a currency will update your base currency immediately."
   },
   "auth": {
     "google": "Continue with Google",
@@ -136,6 +137,34 @@
     "NO_EXPENSES_DATA": "No Data",
     "NO_EXPENSE_ACCOUNT": "No Expense Account"
   },
+  "accountDetail": {
+    "notFound": {
+      "title": "Account not found",
+      "subtitle": "The account you're looking for doesn't exist",
+      "backButton": "Go Back"
+    },
+    "header": {
+      "currentBalance": "Current Balance",
+      "target": "Target:"
+    },
+    "transactions": {
+      "title": "Transactions",
+      "total": "{{count}} total",
+      "count": "{{count}} transactions",
+      "empty": {
+        "title": "No transactions",
+        "subtitle": "This account doesn't have any transactions yet"
+      }
+    },
+    "transaction": {
+      "sent": "Sent",
+      "received": "Received",
+      "defaultLabel": "Transaction",
+      "external": "External",
+      "unknownAccount": "Unknown Account",
+      "noDescription": "No description"
+    }
+  },
   "createAccount": {
     "createNewGoal": "Create New Goal",
     "goalTitle": "Goal Title",
@@ -160,7 +189,10 @@
     "DESCRIPTION": "Description (Optional)",
     "TRANSFER": "Transfer",
     "CANCEL_TRANSACTION": "Cancel Transaction",
-    "TRANSACTION_CREATED": "Transaction Created"
+    "TRANSACTION_CREATED": "Transaction Created",
+    "securityTitle": "Aware",
+    "securityMessage": "Please make sure you trust the recipient. \nBeware of scams and unauthorized transfers.",
+    "confirmTransfer": "Proceed"
   },
   "premium": {
     "header": {
@@ -209,5 +241,32 @@
       "info": "Info",
       "freeForever": "Starter plan is free forever"
     }
+  },
+  "aiChat": {
+    "headerTitle": "AI Assistant",
+    "privacy": {
+      "title": "Privacy Notice",
+      "subtitle": "Please do not share any personal or sensitive information such as:",
+      "items": {
+        "passwords": "Passwords",
+        "creditCards": "Credit Cards",
+        "idNumbers": "ID Numbers",
+        "bankDetails": "Bank Details"
+      },
+      "footer": "Your conversations are processed securely, but we recommend keeping sensitive data private.",
+      "button": "I Understand"
+    },
+    "empty": {
+      "title": "How can I help you?",
+      "subtitle": "Ask me anything about your finances, goals, or general questions.",
+      "banner": "Keep your personal info private"
+    },
+    "input": {
+      "thinking": "AI is thinking...",
+      "placeholder": "Ask something..."
+    },
+    "error": "Something went wrong.",
+    "noResponse": "No response",
+    "aiLabel": "AI"
   }
 }

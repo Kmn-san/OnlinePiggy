@@ -6,7 +6,7 @@ import PricingCard from "../../components/premium/PricingCard";
 import PageHeader from "@/components/PageHeader";
 import { useMemo, useEffect, useState } from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useSubscription } from "@/hooks/useSubscription"; // ⬅️ Import your subscription hook
+import { useSubscription } from "@/hooks/useSubscription";
 import { useApi } from "@/lib/api";
 
 export default function Premium() {
@@ -14,23 +14,38 @@ export default function Premium() {
     const { language } = useLanguage();
     i18n.locale = language;
 
-    // 🎯 FIX: Added () to execute the hook properly
     const { user } = useCurrentUser();
     console.log(user);
 
-    // 🎯 Hook integration replaces hardcoded local variables
-    const { loading, isPremium, handleSubscribe, checkPremiumStatus } = useSubscription();
+    const { loading, isPremium, checkPremiumStatus } = useSubscription();
 
-    // Manage which plan card is highlighted or selected (defaults to premium product)
     const [selectedPlan, setSelectedPlan] = useState('premium');
     const [restoring, setRestoring] = useState(false);
 
-    // 🎯 Run status check against PostgreSQL database immediately on mount
     useEffect(() => {
         checkPremiumStatus();
     }, []);
 
-    // ✨ Dynamically assemble pricing plans, refreshing with language switches or subscription status changes
+    // 🚀 RevenueCat Demo Subscribe Handler (Accepts the full plan object)
+    const handleSubscribeDemo = async (plan: any) => {
+        setSelectedPlan(plan.id);
+
+        if (plan.id === 'starter') {
+            Alert.alert(
+                i18n.t("common.info", { defaultValue: "Notice" }),
+                i18n.t("premium.demo.starterSelected", { defaultValue: "You are already on the Starter plan." })
+            );
+            return;
+        }
+
+        // Simulating the RevenueCat purchase flow for demo purposes
+        Alert.alert(
+            i18n.t("premium.demo.title", { defaultValue: "RevenueCat Purchase (Demo)" }),
+            i18n.t("premium.demo.message", { defaultValue: "RevenueCat SDK integration pending. In production, this opens the native iOS App Store / Google Play billing sheet." }),
+            [{ text: i18n.t("common.ok", { defaultValue: "OK" }) }]
+        );
+    };
+
     const pricingPlans = useMemo(() => [
         {
             id: 'starter',
@@ -43,7 +58,7 @@ export default function Premium() {
                 i18n.t('premium.plans.starter.feature_bot')
             ],
             cta: i18n.t('premium.plans.starter.cta'),
-            isCurrent: !isPremium, // 💡 Dynamic check: If not premium, then current plan is starter
+            isCurrent: !isPremium,
             clerkPriceId: null
         },
         {
@@ -56,16 +71,16 @@ export default function Premium() {
                 i18n.t('premium.plans.premium.feature_ai')
             ],
             cta: i18n.t('premium.plans.premium.cta'),
-            isCurrent: !!isPremium, // 💡 Dynamic check: If premium, then current plan is premium
+            isCurrent: !!isPremium,
             clerkPriceId: 'price_premium_id'
         }
-    ], [language, isPremium]); // 🔒 Dependencies to recalculate on language or premium status updates
+    ], [language, isPremium]);
 
-    // Optional: Restore Purchase action linked to your backend endpoint
     const handleRestorePurchase = async () => {
         if (!api) return;
         try {
             setRestoring(true);
+            // In RevenueCat, you would typically call Purchases.restorePurchases() here
             const response = await api.post('/payment/restore-purchase');
             if (response.data?.is_premium) {
                 await checkPremiumStatus();
@@ -86,7 +101,6 @@ export default function Premium() {
 
     return (
         <View className="flex-1 bg-white">
-            {/* 1. Header Internationalization */}
             <PageHeader
                 title={i18n.t("premium.header.title")}
                 subtitle={i18n.t("premium.header.subtitle")}
@@ -95,7 +109,6 @@ export default function Premium() {
             />
 
             <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-                {/* 2. Active Status Banner Internationalization */}
                 {!!isPremium && (
                     <View className="mx-6 mt-6 bg-green-50 rounded-xl p-4 border border-green-200">
                         <View className="flex-row items-center">
@@ -111,7 +124,6 @@ export default function Premium() {
                 )}
 
                 <View className="px-6 py-6">
-                    {/* Render dynamically calculated pricingPlans */}
                     {pricingPlans.map((plan) => (
                         <PricingCard
                             key={plan.id}
@@ -119,11 +131,10 @@ export default function Premium() {
                             isPremium={!!isPremium}
                             loading={loading}
                             selectedPlan={selectedPlan}
-                            onSubscribe={handleSubscribe}
+                            onSubscribe={handleSubscribeDemo}
                         />
                     ))}
 
-                    {/* 3. Restore Purchase Button Internationalization */}
                     {showRestoreButton && (
                         <TouchableOpacity
                             onPress={handleRestorePurchase}
@@ -140,7 +151,6 @@ export default function Premium() {
                         </TouchableOpacity>
                     )}
 
-                    {/* 4. Footer Secure Info & Terms Internationalization */}
                     <View className="mt-6 pt-6 border-t border-gray-200 mb-8">
                         <View className="flex-row justify-center items-center">
                             <Ionicons name="shield-checkmark" size={20} color="#9CA3AF" />

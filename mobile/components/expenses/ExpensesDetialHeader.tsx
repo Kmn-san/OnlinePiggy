@@ -25,7 +25,7 @@ export const ExpenseDetailHeader: React.FC<HeaderProps> = ({
             className="px-4 pb-6"
             style={{ paddingTop: insets.top + 16 }}
         >
-            <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center justify-between ml-4">
                 <TouchableOpacity
                     className="w-10 h-10 rounded-full bg-white/20 items-center justify-center"
                     onPress={onBack}

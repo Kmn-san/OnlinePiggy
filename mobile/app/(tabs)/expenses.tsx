@@ -163,14 +163,18 @@ export default function Expenses() {
                   <Ionicons name="calendar-outline" size={20} color="#DC2626" />
                 </View>
                 <View className="ml-3">
-                  <Text className="text-gray-400 text-xs font-medium">Selected Period</Text>
+                  <Text className="text-gray-400 text-xs font-medium">
+                    {i18n.t('expenses.selectedPeriod', { defaultValue: 'Selected Period' })}
+                  </Text>
                   <Text className="text-gray-900 font-bold text-base mt-0.5">
                     {formatMonthDisplay(selectedMonth)}
                   </Text>
                 </View>
               </View>
               <View className="bg-gray-50 px-3 py-1.5 rounded-xl flex-row items-center">
-                <Text className="text-gray-600 text-xs font-semibold mr-1">Change</Text>
+                <Text className="text-gray-600 text-xs font-semibold mr-1">
+                  {i18n.t('expenses.change', { defaultValue: 'Change' })}
+                </Text>
                 <Ionicons name="chevron-down" size={14} color="#4b5563" />
               </View>
             </TouchableOpacity>
@@ -186,7 +190,9 @@ export default function Expenses() {
             <View className="flex-1 justify-end bg-black/50">
               <View className="bg-white rounded-t-3xl p-6" style={{ paddingBottom: insets.bottom + 24 }}>
                 <View className="flex-row items-center justify-between mb-4 border-b border-gray-100 pb-3">
-                  <Text className="text-gray-900 text-lg font-bold">Select Statement Month</Text>
+                  <Text className="text-gray-900 text-lg font-bold">
+                    {i18n.t('expenses.selectStatementMonth', { defaultValue: 'Select Statement Month' })}
+                  </Text>
                   <TouchableOpacity onPress={() => setIsModalVisible(false)} className="p-1">
                     <Ionicons name="close-circle" size={26} color="#9ca3af" />
                   </TouchableOpacity>
@@ -212,7 +218,8 @@ export default function Expenses() {
                             }`}
                         >
                           <Text className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-gray-800'}`}>
-                            {date.toLocaleDateString('en-US', { month: 'short' })}
+                            {/* Uses i18n.locale dynamically instead of hardcoded 'en-US' */}
+                            {date.toLocaleDateString(i18n.locale || 'en-US', { month: 'short' })}
                           </Text>
                           <Text className={`text-[10px] mt-0.5 font-medium ${isSelected ? 'text-red-100' : 'text-gray-400'}`}>
                             {year}

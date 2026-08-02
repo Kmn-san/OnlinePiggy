@@ -60,8 +60,6 @@ export default function Home() {
               <GradientHeader
                 colors={["#059669", "#047857"]}
                 showBranding={true}
-                showNotification={true}
-                onNotificationPress={() => { /* router.push("/notifications") */ }}
                 cardLabel={i18n.t("savings.totalSavings")}
                 cardValue={formatCurrency(totalBalance, primaryCurrency)}
                 badgeText={`${savingsAccounts.length} ${i18n.t("savings.SAVINGS")}`}

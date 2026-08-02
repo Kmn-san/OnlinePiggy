@@ -6,6 +6,8 @@ import accountRoutes from "./routes/accountRoutes.js"
 import transactionRoutes from "./routes/transactionRoutes.js"
 import premiumRoutes from "./routes/premiumRoutes.js"
 import paymentRoute from "./routes/paymentRoutes.js"
+import aiRoutes from "./routes/aiRoutes.js"
+
 import { clerkMiddleware } from "@clerk/express";
 
 const app = express();
@@ -28,7 +30,7 @@ app.use("/api/user", userRoutes)
 app.use("/api/account", accountRoutes)
 app.use("/api/transaction", transactionRoutes)
 app.use("/api/premium", premiumRoutes)
-
+app.use("/api/ai", aiRoutes)
 
 app.listen(ENV.PORT, () => {
     console.log(`Server is running on ${ENV.PORT}`);

@@ -65,7 +65,8 @@
     "title": "通貨",
     "MYR": "🇲🇾 マレーシアリンギット",
     "JPY": "🇯🇵 日本円",
-    "CNY": "🇨🇳 中国人民元"
+    "CNY": "🇨🇳 中国人民元",
+    "changeNotice": "通貨を選択すると、ベース通貨が即座に更新されます。"
   },
   "auth": {
     "google": "Googleで続行",
@@ -137,6 +138,34 @@
     "NO_EXPENSES_DATA": "データなし",
     "NO_EXPENSE_ACCOUNT": "支出アカウントなし"
   },
+  "accountDetail": {
+    "notFound": {
+      "title": "アカウントが見つかりません",
+      "subtitle": "お探しの口座は存在しません",
+      "backButton": "戻る"
+    },
+    "header": {
+      "currentBalance": "現在の残高",
+      "target": "目標:"
+    },
+    "transactions": {
+      "title": "取引履歴",
+      "total": "全 {{count}} 件",
+      "count": "{{count}} 件の取引",
+      "empty": {
+        "title": "取引なし",
+        "subtitle": "この口座にはまだ取引履歴がありません"
+      }
+    },
+    "transaction": {
+      "sent": "送金",
+      "received": "受取",
+      "defaultLabel": "取引",
+      "external": "外部",
+      "unknownAccount": "不明な口座",
+      "noDescription": "説明なし"
+    }
+  },
   "createAccount": {
     "createNewGoal": "新しい目標を作成",
     "goalTitle": "目標名",
@@ -161,7 +190,10 @@
     "DESCRIPTION": "説明（任意）",
     "TRANSFER": "振替",
     "CANCEL_TRANSACTION": "振替を続ける",
-    "TRANSACTION_CREATED": "振替完成"
+    "TRANSACTION_CREATED": "振替完成",
+    "securityTitle": "注意事項",
+    "securityMessage": "受取人を信用できるか確認してください。\n詐欺や不正送金にご注意ください。",
+    "confirmTransfer": "続行する"
   },
   "premium": {
     "header": {
@@ -210,5 +242,32 @@
       "info": "情報",
       "freeForever": "スタータープランは永久に無料です"
     }
+  },
+  "aiChat": {
+    "headerTitle": "AIアシスタント",
+    "privacy": {
+      "title": "プライバシーに関するお知らせ",
+      "subtitle": "以下のような個人情報や機密情報は共有しないでください：",
+      "items": {
+        "passwords": "パスワード",
+        "creditCards": "クレジットカード",
+        "idNumbers": "マイナンバー",
+        "bankDetails": "銀行口座情報"
+      },
+      "footer": "会話は安全に処理されますが、機密データは共有しないことをお勧めします。",
+      "button": "理解しました"
+    },
+    "empty": {
+      "title": "どのようなご用件でしょうか？",
+      "subtitle": "財務、目標、または一般的な質問など、何でもお聞きください。",
+      "banner": "個人情報を共有しないでください"
+    },
+    "input": {
+      "thinking": "AIが考え中...",
+      "placeholder": "何か聞いてください..."
+    },
+    "error": "エラーが発生しました。",
+    "noResponse": "応答がありません",
+    "aiLabel": "AI"
   }
 }
