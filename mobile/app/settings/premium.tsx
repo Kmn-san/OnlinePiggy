@@ -4,45 +4,68 @@ import { Ionicons } from "@expo/vector-icons";
 import i18n from "../../lib/i18n";
 import PricingCard from "../../components/premium/PricingCard";
 import PageHeader from "@/components/PageHeader";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useSubscription } from "@/hooks/useSubscription";
-import { useApi } from "@/lib/api";
 
 export default function Premium() {
-    const api = useApi();
     const { language } = useLanguage();
     i18n.locale = language;
 
     const { user } = useCurrentUser();
-    console.log(user);
 
-    const { loading, isPremium, checkPremiumStatus } = useSubscription();
-
+    // 🚀 Demo state replacing useSubscription
+    const [isPremium, setIsPremium] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [selectedPlan, setSelectedPlan] = useState('premium');
     const [restoring, setRestoring] = useState(false);
 
-    useEffect(() => {
-        checkPremiumStatus();
-    }, []);
-
-    // 🚀 RevenueCat Demo Subscribe Handler (Accepts the full plan object)
+    // 🚀 RevenueCat Demo Subscribe & Cancel Handler
     const handleSubscribeDemo = async (plan: any) => {
         setSelectedPlan(plan.id);
 
         if (plan.id === 'starter') {
-            Alert.alert(
-                i18n.t("common.info", { defaultValue: "Notice" }),
-                i18n.t("premium.demo.starterSelected", { defaultValue: "You are already on the Starter plan." })
-            );
+            if (isPremium) {
+                // 🛑 Demo behavior for canceling / downgrading
+                Alert.alert(
+                    i18n.t("premium.demo.cancelTitle", { defaultValue: "Manage Subscription (Demo)" }),
+                    i18n.t("premium.demo.cancelMessage", {
+                        defaultValue: "In production, subscriptions are canceled via your Apple ID or Google Play settings. Would you like to simulate downgrading to the Starter plan for testing?"
+                    }),
+                    [
+                        { text: i18n.t("common.cancel", { defaultValue: "Keep Premium" }), style: "cancel" },
+                        {
+                            text: i18n.t("premium.demo.confirmDowngrade", { defaultValue: "Simulate Downgrade" }),
+                            style: "destructive",
+                            onPress: () => {
+                                setIsPremium(false);
+                                Alert.alert("Success", "Switched back to Starter plan.");
+                            }
+                        }
+                    ]
+                );
+            } else {
+                Alert.alert(
+                    i18n.t("common.info", { defaultValue: "Notice" }),
+                    i18n.t("premium.demo.starterSelected", { defaultValue: "You are already on the Starter plan." })
+                );
+            }
             return;
         }
 
-        // Simulating the RevenueCat purchase flow for demo purposes
+        // Simulating the RevenueCat purchase flow for Premium
         Alert.alert(
             i18n.t("premium.demo.title", { defaultValue: "RevenueCat Purchase (Demo)" }),
             i18n.t("premium.demo.message", { defaultValue: "RevenueCat SDK integration pending. In production, this opens the native iOS App Store / Google Play billing sheet." }),
-            [{ text: i18n.t("common.ok", { defaultValue: "OK" }) }]
+            [
+                { text: i18n.t("common.cancel", { defaultValue: "Cancel" }), style: "cancel" },
+                {
+                    text: "Simulate Success",
+                    onPress: () => {
+                        setIsPremium(true);
+                        Alert.alert("Success", "Demo subscription activated successfully!");
+                    }
+                }
+            ]
         );
     };
 
@@ -77,22 +100,18 @@ export default function Premium() {
     ], [language, isPremium]);
 
     const handleRestorePurchase = async () => {
-        if (!api) return;
         try {
             setRestoring(true);
-            // In RevenueCat, you would typically call Purchases.restorePurchases() here
-            const response = await api.post('/payment/restore-purchase');
-            if (response.data?.is_premium) {
-                await checkPremiumStatus();
-                Alert.alert('Restored', 'Your premium access has been successfully restored.');
-            } else {
-                Alert.alert('No Purchase Found', 'We couldn’t find an active historical transaction for this account.');
-            }
+            // Simulating RevenueCat restore action
+            setTimeout(() => {
+                setRestoring(false);
+                setIsPremium(true);
+                Alert.alert('Restored', 'Your demo premium access has been successfully restored.');
+            }, 1000);
         } catch (error) {
             console.error("Error restoring purchase:", error);
-            Alert.alert('Error', 'Could not communicate with the billing server.');
-        } finally {
             setRestoring(false);
+            Alert.alert('Error', 'Could not restore purchases.');
         }
     };
 

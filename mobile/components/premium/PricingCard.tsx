@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PricingCardProps } from '@/types';
 import i18n from '@/lib/i18n';
+
 export default function PricingCard({
     plan,
     isPremium,
@@ -63,15 +64,15 @@ export default function PricingCard({
 
             <TouchableOpacity
                 onPress={() => onSubscribe(plan)}
-                disabled={loading || plan.isCurrent || isPremium}
-                className={`mt-6 py-3 rounded-full ${plan.isCurrent || isPremium
+                disabled={loading || plan.isCurrent}
+                className={`mt-6 py-3 rounded-full ${plan.isCurrent
                     ? 'bg-gray-200'
                     : isPremiumPlan
                         ? 'bg-purple-600'
                         : 'bg-gray-300'
                     } ${loading && selectedPlan === plan.id ? 'opacity-50' : ''}`}
             >
-                <Text className={`text-center font-semibold ${plan.isCurrent || isPremium
+                <Text className={`text-center font-semibold ${plan.isCurrent
                     ? 'text-gray-600'
                     : isPremiumPlan
                         ? 'text-white'
