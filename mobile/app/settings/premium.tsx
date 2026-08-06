@@ -87,7 +87,7 @@ export default function Premium() {
         {
             id: 'premium',
             name: i18n.t('premium.plans.premium.name'),
-            price: 'RM 50',
+            price: 'RM 12',
             features: [
                 i18n.t('premium.plans.premium.feature_savings'),
                 i18n.t('premium.plans.premium.feature_expenses'),
