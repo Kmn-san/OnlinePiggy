@@ -20,7 +20,8 @@ export interface User {
     is_premium: Boolean;
     premium_expire_at: string | null;
 
-    is_active: boolean;
+    is_delete: boolean;
+    deleted_at: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -149,6 +150,6 @@ export type Message = {
 };
 
 export const AI_USER = {
-    username: 'AI Assistant', 
+    username: 'AI Assistant',
     avatar: 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png',
 };

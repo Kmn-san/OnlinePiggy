@@ -7,7 +7,7 @@ export const getUser = async (req, res) => {
         const clerkId = req.clerkId;
         const user = req.user
 
-        const clientData = await userService.userData(clerkId);
+        const clientData = await userService.findByClerkId(clerkId);
         if (!clientData) {
             return res.status(404).json({ code: "USER_NOT_FOUND" })
         }
@@ -150,7 +150,46 @@ export const updateProfilePic = async (req, res) => {
         console.error("Error in updateProfilePic controller:", error);
         return res.status(500).json({
             code: "INTERNAL_SERVER_ERROR",
-            message: error.message // Helpful for debugging
+            message: error.message
+        });
+    }
+}
+
+export const softDeleteUser = async (req, res) => {
+    try {
+        const clerkId = req.clerkId;
+        const clientData = await userService.findByClerkId(clerkId)
+        if (!clientData) {
+            return res.status(404).json({ code: "USER_NOT_FOUND" })
+        }
+        const result = await userService.softDelete(clerkId)
+        return res.status(200).json(result)
+    } catch (error) {
+        console.error("Error in softDeleteUser controller:", error);
+        return res.status(500).json({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error.message
+        });
+    }
+}
+
+export const recoverUser = async (req, res) => {
+    try {
+        const clerkId = req.clerkId;
+        const clientData = await userService.findByClerkId(clerkId)
+        if (!clientData) {
+            return res.status(404).json({ code: "USER_NOT_FOUND" })
+        }
+
+        const result = await userService.recoverUser(clerkId)
+        
+        return res.status(200).json(result)
+
+    } catch (error) {
+        console.error("Error in recoverUser controller:", error);
+        return res.status(500).json({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error.message
         });
     }
 }

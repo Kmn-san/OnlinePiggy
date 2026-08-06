@@ -1,19 +1,18 @@
 {
   "cli": {
-    "version": ">= 12.0.0"
+    "version": ">= 21.4.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "node": "22.x"
+      "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal",
-      "node": "22.x"
+      "distribution": "internal"
     },
     "production": {
-      "node": "22.x"
+      "autoIncrement": true
     }
   },
   "submit": {

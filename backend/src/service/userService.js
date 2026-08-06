@@ -48,15 +48,6 @@ export const createUserFromClerk = async ({ clerkId, username, avatar_url }) => 
     return rows[0]
 }
 
-export const userData = async (clerkId) => {
-    const { rows } = await query(
-        `SELECT id, opid, opid_updated_at, username, country, is_premium, premium_expire_at,currency, avatar_url, avatar_public_id
-        FROM users
-        WHERE clerkid = $1`,
-        [clerkId])
-    return rows[0]
-}
-
 export const existedOpid = async (Opid) => {
     const { rows } = await query(
         `SELECT id 
@@ -132,17 +123,6 @@ export const changeProfilePic = async (imageUrl, newPublicId, clerkId) => {
     return rows[0]
 }
 
-export const addStripeId = async (userId, stripeCustomerId) => {
-    const { rows } = await query(
-        `UPDATE users 
-        SET stripe_customer_id = $1
-        WHERE id = $2`, [
-        stripeCustomerId, userId
-    ]
-    )
-    return rows[0]
-}
-
 export const setPremium = async (userId, is_premium) => {
     const now = new Date().toISOString()
     const { rows } = await query(
@@ -151,6 +131,29 @@ export const setPremium = async (userId, is_premium) => {
         WHERE id = $3`, [
         is_premium, now, userId
     ]
+    )
+    return rows[0]
+}
+
+export const softDelete = async (clerkId) => {
+    const { rows } = await query(
+        `UPDATE users
+        SET is_delete = $1, deleted_at = NOW()
+        WHERE clerkid = $2
+        RETURNING *
+        `,
+        [true, clerkId]
+    )
+    return rows[0]
+}
+
+export const recoverUser = async (clerkId) => {
+    const { rows } = await query(
+        `UPDATE users 
+        SET is_delete = $1, deleted_at = null
+        WHERE clerkid = $2
+        RETURNING *`,
+        [false, clerkId]
     )
     return rows[0]
 }

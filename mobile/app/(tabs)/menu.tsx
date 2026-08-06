@@ -7,10 +7,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";
-import { useLayoutEffect } from "react"; // Removed useState and useEffect
+import { useLayoutEffect } from "react";
+import { useApi } from "@/lib/api";
 
 export default function Menu() {
-  const { user } = useCurrentUser();
+  const api = useApi();
+  const { user, deleteUser, isLoading } = useCurrentUser();
   const { signOut } = useAuth();
   const { language } = useLanguage();
   const navigation = useNavigation();
@@ -18,7 +20,7 @@ export default function Menu() {
   i18n.locale = language;
 
   const currency = user?.currency ?? "MYR";
-  const isPremium = user?.is_premium ?? false; // Add this based on your user schema
+  const isPremium = user?.is_premium ?? false;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,6 +48,43 @@ export default function Menu() {
                 i18n.t("common.error"),
                 "Failed to sign out"
               );
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      i18n.t("auth.deleteAccount", { defaultValue: "Delete Account" }),
+      i18n.t("auth.deleteAccountConfirm", {
+        defaultValue: "Are you sure you want to delete your account? This action is permanent and will erase all your data."
+      }),
+      [
+        {
+          text: i18n.t("common.cancel", { defaultValue: "Cancel" }),
+          style: "cancel",
+        },
+        {
+          text: i18n.t("common.delete", { defaultValue: "Delete" }),
+          style: "destructive",
+          onPress: async () => {
+            try {
+              deleteUser(undefined, {
+                onSuccess: async () => {
+                  await signOut();
+                },
+                onError: (error) => {
+                  console.error("Failed to delete account:", error);
+                  Alert.alert(
+                    i18n.t("common.error"),
+                    i18n.t("auth.deleteAccountError", { defaultValue: "Failed to delete account. Please try again." })
+                  );
+                }
+              });
+            } catch (error) {
+              console.error("Failed to delete account:", error);
             }
           },
         },
@@ -196,22 +235,41 @@ export default function Menu() {
         </TouchableOpacity>
       </View>
 
-      {/* Sign Out */}
-      <TouchableOpacity
-        onPress={handleLogout}
-        className="bg-red-500 px-8 py-4 rounded-full flex-row items-center justify-center mt-auto"
-        activeOpacity={0.7}
-      >
-        <Ionicons
-          name="log-out-outline"
-          size={24}
-          color="white"
-        />
+      {/* Actions Section */}
+      <View className="mt-auto">
+        {/* Sign Out */}
+        <TouchableOpacity
+          onPress={handleLogout}
+          className="bg-red-500 px-8 py-4 rounded-full flex-row items-center justify-center mb-3"
+          activeOpacity={0.7}
+        >
+          <Ionicons
+            name="log-out-outline"
+            size={24}
+            color="white"
+          />
 
-        <Text className="text-white font-bold text-lg ml-2">
-          {i18n.t("auth.signOut")}
-        </Text>
-      </TouchableOpacity>
+          <Text className="text-white font-bold text-lg ml-2">
+            {i18n.t("auth.signOut")}
+          </Text>
+        </TouchableOpacity>
+
+        {/* Delete Account */}
+        <TouchableOpacity
+          onPress={handleDeleteAccount}
+          className="py-3 flex-row items-center justify-center"
+          activeOpacity={0.7}
+        >
+          <Ionicons
+            name="trash-outline"
+            size={20}
+            color="#EF4444"
+          />
+          <Text className="text-red-500 font-semibold text-base ml-2">
+            {i18n.t("auth.deleteAccount", { defaultValue: "Delete Account" })}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }

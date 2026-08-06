@@ -89,6 +89,15 @@ const useCurrentUser = (options?: { enabled?: boolean }) => {
         }
     })
 
+    const { mutate: deleteUser, isPending: isDeleting } = useMutation({
+        mutationFn: () => api.delete('/user/remove-user')
+    })
+
+    const { mutate: recoverUser, isPending: isRecovering } = useMutation({
+        mutationFn: () => api.patch('/user/recover-user'),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["me"] }),
+    })
+
     return {
         user,
         isLoading,
@@ -96,6 +105,10 @@ const useCurrentUser = (options?: { enabled?: boolean }) => {
         error,
         updateCurrency,
         updateUser: useUpdateUser,
+        deleteUser,
+        isDeleting,
+        recoverUser,
+        isRecovering,
         updateAvatar
     };
 }

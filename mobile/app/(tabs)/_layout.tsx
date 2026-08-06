@@ -6,10 +6,11 @@ import i18n from "../../lib/i18n";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";
 import LoadingComponent from "@/components/LoadingComponent";
+import { useEffect } from "react";
 
 export default function TabsLayout() {
   const { isLoaded, isSignedIn } = useAuth();
-  const { isLoading: userLoading } = useCurrentUser({
+  const { isLoading: userLoading, recoverUser, isRecovering, user } = useCurrentUser({
     enabled: isLoaded && isSignedIn,
   });
 
@@ -17,6 +18,16 @@ export default function TabsLayout() {
   const insets = useSafeAreaInsets();
 
   i18n.locale = language;
+  
+  useEffect(() => {
+    if (user?.is_delete && !isRecovering) {
+      recoverUser(undefined, {
+        onError: (error) => {
+          console.error("Failed to auto-recover account:", error);
+        },
+      });
+    }
+  }, [user?.is_delete]);
 
   if (!isLoaded || userLoading) {
     return (
@@ -27,6 +38,11 @@ export default function TabsLayout() {
   if (!isSignedIn) {
     return <Redirect href="/(auth)" />;
   }
+
+  if (user?.is_delete || isRecovering) {
+    return <LoadingComponent />;
+  }
+
 
   return (
     <Tabs
