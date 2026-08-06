@@ -5,7 +5,10 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mypiggyapp",
+    "scheme": [
+      "mobile",
+      "com.shouhei03.mobile"
+    ],
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
@@ -48,6 +51,7 @@
       "eas": {
         "projectId": "dd3e1972-ce70-4b8f-a6d4-aa778303b6d7"
       }
-    }
+    },
+    "owner": "shouhei03"
   }
 }

@@ -4,8 +4,10 @@ import { Ionicons } from "@expo/vector-icons";
 import i18n from "../../lib/i18n";
 import PricingCard from "../../components/premium/PricingCard";
 import PageHeader from "@/components/PageHeader";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import Purchases, { PurchasesPackage } from 'react-native-purchases';
+import { PricingPlan } from "@/types";
 
 export default function Premium() {
     const { language } = useLanguage();
@@ -13,35 +15,56 @@ export default function Premium() {
 
     const { user } = useCurrentUser();
 
-    // 🚀 Demo state replacing useSubscription
     const [isPremium, setIsPremium] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [selectedPlan, setSelectedPlan] = useState('premium');
     const [restoring, setRestoring] = useState(false);
+    const [packages, setPackages] = useState<PurchasesPackage[]>([]);
+    const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
-    // 🚀 RevenueCat Demo Subscribe & Cancel Handler
-    const handleSubscribeDemo = async (plan: any) => {
-        setSelectedPlan(plan.id);
+    // 🚀 Fetch Offerings & Customer Status on Mount
+    useEffect(() => {
+        loadRevenueCatData();
+    }, []);
 
+    const loadRevenueCatData = async () => {
+        try {
+            // Check current subscription status from RevenueCat
+            const customerInfo = await Purchases.getCustomerInfo();
+            updateSubscriptionStatus(customerInfo);
+
+            // Fetch live offerings/packages
+            const offerings = await Purchases.getOfferings();
+            console.log("RevenueCat Offerings Debug:", JSON.stringify(offerings, null, 2));
+
+            // Fallback: If 'current' is null, grab the first available offering from 'all'
+            const activeOffering = offerings.current || Object.values(offerings.all)[0];
+
+            if (activeOffering && activeOffering.availablePackages.length > 0) {
+                setPackages(activeOffering.availablePackages);
+            } else {
+                console.warn("No packages found in current or all offerings. Check RevenueCat dashboard configuration.");
+            }
+        } catch (error) {
+            console.error("Error loading RevenueCat offerings:", error);
+        }
+    };
+
+    const updateSubscriptionStatus = (customerInfo: any) => {
+        // Replace "premium" with your actual RevenueCat Entitlement Identifier if different
+        const activeEntitlement = customerInfo.entitlements.active["premium"] || Object.values(customerInfo.entitlements.active)[0];
+        setIsPremium(!!activeEntitlement);
+    };
+
+    // 🚀 Handle Live Purchase via RevenueCat
+    const handleSubscribe = async (plan: any) => {
         if (plan.id === 'starter') {
             if (isPremium) {
-                // 🛑 Demo behavior for canceling / downgrading
                 Alert.alert(
-                    i18n.t("premium.demo.cancelTitle", { defaultValue: "Manage Subscription (Demo)" }),
+                    i18n.t("premium.demo.cancelTitle", { defaultValue: "Manage Subscription" }),
                     i18n.t("premium.demo.cancelMessage", {
-                        defaultValue: "In production, subscriptions are canceled via your Apple ID or Google Play settings. Would you like to simulate downgrading to the Starter plan for testing?"
+                        defaultValue: "Subscriptions are managed via your Apple ID or Google Play account settings."
                     }),
-                    [
-                        { text: i18n.t("common.cancel", { defaultValue: "Keep Premium" }), style: "cancel" },
-                        {
-                            text: i18n.t("premium.demo.confirmDowngrade", { defaultValue: "Simulate Downgrade" }),
-                            style: "destructive",
-                            onPress: () => {
-                                setIsPremium(false);
-                                Alert.alert("Success", "Switched back to Starter plan.");
-                            }
-                        }
-                    ]
+                    [{ text: i18n.t("common.cancel", { defaultValue: "OK" }), style: "cancel" }]
                 );
             } else {
                 Alert.alert(
@@ -52,68 +75,109 @@ export default function Premium() {
             return;
         }
 
-        // Simulating the RevenueCat purchase flow for Premium
-        Alert.alert(
-            i18n.t("premium.demo.title", { defaultValue: "RevenueCat Purchase (Demo)" }),
-            i18n.t("premium.demo.message", { defaultValue: "RevenueCat SDK integration pending. In production, this opens the native iOS App Store / Google Play billing sheet." }),
-            [
-                { text: i18n.t("common.cancel", { defaultValue: "Cancel" }), style: "cancel" },
-                {
-                    text: "Simulate Success",
-                    onPress: () => {
-                        setIsPremium(true);
-                        Alert.alert("Success", "Demo subscription activated successfully!");
-                    }
-                }
-            ]
-        );
+        // Use 'let' instead of 'const' so it can be reassigned if fallback runs
+        let targetPackage = packages.find((pkg) => pkg.identifier === plan.id || pkg.product.identifier === plan.clerkPriceId);
+
+        if (!targetPackage && packages.length > 0) {
+            targetPackage = packages[0];
+        }
+
+        if (!targetPackage) {
+            Alert.alert("Error", "No subscription package available at the moment.");
+            return;
+        }
+
+        try {
+            setLoading(true);
+            setSelectedPlanId(plan.id);
+
+            const { customerInfo } = await Purchases.purchasePackage(targetPackage);
+            updateSubscriptionStatus(customerInfo);
+            Alert.alert("Success", "Subscription activated successfully!");
+        } catch (error: any) {
+            if (!error.userCancelled) {
+                Alert.alert("Purchase Failed", error.message || "An error occurred during checkout.");
+            }
+        } finally {
+            setLoading(false);
+            setSelectedPlanId(null);
+        }
     };
 
-    const pricingPlans = useMemo(() => [
-        {
-            id: 'starter',
-            name: i18n.t('premium.plans.starter.name'),
-            price: 'RM 0',
-            features: [
-                i18n.t('premium.plans.starter.feature_basic'),
-                i18n.t('premium.plans.starter.feature_savings'),
-                i18n.t('premium.plans.starter.feature_expenses'),
-                i18n.t('premium.plans.starter.feature_bot')
-            ],
-            cta: i18n.t('premium.plans.starter.cta'),
-            isCurrent: !isPremium,
-            clerkPriceId: null
-        },
-        {
-            id: 'premium',
-            name: i18n.t('premium.plans.premium.name'),
-            price: 'RM 12',
-            features: [
-                i18n.t('premium.plans.premium.feature_savings'),
-                i18n.t('premium.plans.premium.feature_expenses'),
-                i18n.t('premium.plans.premium.feature_ai')
-            ],
-            cta: i18n.t('premium.plans.premium.cta'),
-            isCurrent: !!isPremium,
-            clerkPriceId: 'price_premium_id'
-        }
-    ], [language, isPremium]);
-
+    // 🚀 Handle Restore Purchases
     const handleRestorePurchase = async () => {
         try {
             setRestoring(true);
-            // Simulating RevenueCat restore action
-            setTimeout(() => {
-                setRestoring(false);
-                setIsPremium(true);
-                Alert.alert('Restored', 'Your demo premium access has been successfully restored.');
-            }, 1000);
-        } catch (error) {
+            const customerInfo = await Purchases.restorePurchases();
+            updateSubscriptionStatus(customerInfo);
+
+            const hasActive = Object.keys(customerInfo.entitlements.active).length > 0;
+            if (hasActive) {
+                Alert.alert('Restored', 'Your premium access has been successfully restored.');
+            } else {
+                Alert.alert('No Active Subscription', 'No active purchases were found to restore.');
+            }
+        } catch (error: any) {
             console.error("Error restoring purchase:", error);
+            Alert.alert('Error', error.message || 'Could not restore purchases.');
+        } finally {
             setRestoring(false);
-            Alert.alert('Error', 'Could not restore purchases.');
         }
     };
+
+    // 🚀 Dynamic Pricing Plans Mapping (Starter + RevenueCat Packages)
+    const pricingPlans = useMemo(() => {
+        const plans: PricingPlan[] = [
+            {
+                id: 'starter',
+                name: i18n.t('premium.plans.starter.name'),
+                price: 'RM 0',
+                features: [
+                    i18n.t('premium.plans.starter.feature_basic'),
+                    i18n.t('premium.plans.starter.feature_savings'),
+                    i18n.t('premium.plans.starter.feature_expenses'),
+                    i18n.t('premium.plans.starter.feature_bot')
+                ],
+                cta: i18n.t('premium.plans.starter.cta'),
+                isCurrent: !isPremium,
+                clerkPriceId: null
+            }
+        ];
+
+        if (packages.length > 0) {
+            packages.forEach((pkg) => {
+                plans.push({
+                    id: pkg.identifier,
+                    name: pkg.product.title || i18n.t('premium.plans.premium.name'),
+                    price: pkg.product.priceString || 'RM 12',
+                    features: [
+                        i18n.t('premium.plans.premium.feature_savings'),
+                        i18n.t('premium.plans.premium.feature_expenses'),
+                        i18n.t('premium.plans.premium.feature_ai')
+                    ],
+                    cta: i18n.t('premium.plans.premium.cta'),
+                    isCurrent: !!isPremium,
+                    clerkPriceId: pkg.product.identifier
+                });
+            });
+        } else {
+            plans.push({
+                id: 'premium',
+                name: i18n.t('premium.plans.premium.name'),
+                price: 'RM 12',
+                features: [
+                    i18n.t('premium.plans.premium.feature_savings'),
+                    i18n.t('premium.plans.premium.feature_expenses'),
+                    i18n.t('premium.plans.premium.feature_ai')
+                ],
+                cta: i18n.t('premium.plans.premium.cta'),
+                isCurrent: !!isPremium,
+                clerkPriceId: 'price_premium_id'
+            });
+        }
+
+        return plans;
+    }, [language, isPremium, packages]);
 
     const hasPurchasedBefore = user?.premium_expire_at !== null;
     const showRestoreButton = !isPremium || hasPurchasedBefore;
@@ -149,8 +213,8 @@ export default function Premium() {
                             plan={plan}
                             isPremium={!!isPremium}
                             loading={loading}
-                            selectedPlan={selectedPlan}
-                            onSubscribe={handleSubscribeDemo}
+                            selectedPlan={selectedPlanId || ''}
+                            onSubscribe={handleSubscribe}
                         />
                     ))}
 

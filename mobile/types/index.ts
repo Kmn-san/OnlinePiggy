@@ -106,12 +106,12 @@ export interface Transaction {
 }
 
 export interface PricingPlan {
+    id: string;
     name: string;
     price: string;
     features: string[];
     cta: string;
     isCurrent: boolean;
-    id: string;
     clerkPriceId: string | null;
 }
 
