@@ -4,8 +4,11 @@ import cloudinary from "../utlis/cloudinary.js"
 
 export const getUser = async (req, res) => {
     try {
+        
         const clerkId = req.clerkId;
         const user = req.user
+        console.log(user);
+
 
         const clientData = await userService.findByClerkId(clerkId);
         if (!clientData) {
