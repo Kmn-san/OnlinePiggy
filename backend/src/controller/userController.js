@@ -7,8 +7,6 @@ export const getUser = async (req, res) => {
         
         const clerkId = req.clerkId;
         const user = req.user
-        console.log(user);
-
 
         const clientData = await userService.findByClerkId(clerkId);
         if (!clientData) {
@@ -19,6 +17,7 @@ export const getUser = async (req, res) => {
         console.error("Error in getUser controller: ", error.message);
         return res.status(500).json({
             code: "INTERNAL_SERVER_ERROR",
+            error: error.message
         });
     }
 }
