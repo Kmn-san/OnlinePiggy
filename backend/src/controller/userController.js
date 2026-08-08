@@ -17,7 +17,7 @@ export const getUser = async (req, res) => {
         console.error("Error in getUser controller: ", error.message);
         return res.status(500).json({
             code: "INTERNAL_SERVER_ERROR",
-            error: error.message
+            error: error.message || String(error),
         });
     }
 }
