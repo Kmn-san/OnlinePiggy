@@ -21,6 +21,9 @@ app.use("/api/account", accountRoutes)
 app.use("/api/transaction", transactionRoutes)
 app.use("/api/premium", premiumRoutes)
 app.use("/api/ai", aiRoutes)
+app.get('/', (req, res) => {
+    res.status(200).json({ message: "OnlinePiggy API is running successfully!" });
+});
 
 app.listen(ENV.PORT, () => {
     console.log(`Server is running on ${ENV.PORT}`);
