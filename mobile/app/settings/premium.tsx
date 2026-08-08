@@ -28,24 +28,24 @@ export default function Premium() {
 
     const loadRevenueCatData = async () => {
         try {
+            setLoading(true);
+
             // Check current subscription status from RevenueCat
             const customerInfo = await Purchases.getCustomerInfo();
             updateSubscriptionStatus(customerInfo);
 
-            // Fetch live offerings/packages
+            // Fetch live offerings/packages with a safety check
             const offerings = await Purchases.getOfferings();
-            console.log("RevenueCat Offerings Debug:", JSON.stringify(offerings, null, 2));
-
-            // Fallback: If 'current' is null, grab the first available offering from 'all'
             const activeOffering = offerings.current || Object.values(offerings.all)[0];
 
             if (activeOffering && activeOffering.availablePackages.length > 0) {
                 setPackages(activeOffering.availablePackages);
-            } else {
-                console.warn("No packages found in current or all offerings. Check RevenueCat dashboard configuration.");
             }
         } catch (error) {
             console.error("Error loading RevenueCat offerings:", error);
+        } finally {
+            // GUARANTEE the loader stops even if an error occurs
+            setLoading(false);
         }
     };
 
