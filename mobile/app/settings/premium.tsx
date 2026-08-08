@@ -44,7 +44,6 @@ export default function Premium() {
         } catch (error) {
             console.error("Error loading RevenueCat offerings:", error);
         } finally {
-            // GUARANTEE the loader stops even if an error occurs
             setLoading(false);
         }
     };

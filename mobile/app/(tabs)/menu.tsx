@@ -26,20 +26,6 @@ export default function Menu() {
     });
   }, [language, navigation]);
 
-  const handlePrintToken = async () => {
-    try {
-      const token = await getToken();
-      console.log("========================================");
-      console.log("🔑 CLERK BEARER TOKEN FOR POSTMAN:");
-      console.log(token);
-      console.log("========================================");
-      Alert.alert("Token Logged", "Check your Metro terminal console for your Bearer token.");
-    } catch (error) {
-      console.error("Error getting token:", error);
-      Alert.alert("Error", "Failed to retrieve token.");
-    }
-  };
-
   const handleLogout = () => {
     Alert.alert(
       i18n.t("auth.signOut"),
@@ -251,22 +237,7 @@ export default function Menu() {
         </View>
 
         {/* Actions Section */}
-        <View className="mt-8 mb-4">
-          {/* Debug Button for Postman Token */}
-          <TouchableOpacity
-            onPress={handlePrintToken}
-            className="bg-indigo-600 px-8 py-3 rounded-full flex-row items-center justify-center mb-3"
-            activeOpacity={0.7}
-          >
-            <Ionicons
-              name="key-outline"
-              size={20}
-              color="white"
-            />
-            <Text className="text-white font-bold text-base ml-2">
-              Print Bearer Token
-            </Text>
-          </TouchableOpacity>
+        <View className="mt-8">
 
           {/* Sign Out */}
           <TouchableOpacity
