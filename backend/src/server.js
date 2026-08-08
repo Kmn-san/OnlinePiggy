@@ -22,7 +22,7 @@ app.use("/api/transaction", transactionRoutes)
 app.use("/api/premium", premiumRoutes)
 app.use("/api/ai", aiRoutes)
 app.get('/', (req, res) => {
-    res.status(200).json({ message: "OnlinePiggy API is running successfully!" });
+    res.status(200).json({ message: "HI" });
 });
 
 app.listen(ENV.PORT, () => {
