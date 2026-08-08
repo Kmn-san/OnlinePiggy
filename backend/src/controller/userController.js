@@ -22,7 +22,7 @@ export const getUser = async (req, res) => {
     }
 }
 
-export const updateUser = async (req, res) => {
+export const  updateUser = async (req, res) => {
     try {
         const clerkId = req.clerkId;
         const clientData = req.body;
@@ -39,7 +39,7 @@ export const updateUser = async (req, res) => {
             })
         }
         if (clientData.opid) {
-            const user = await userService.userData(clerkId)
+            const user = await userService.findByClerkId(clerkId)
 
             if (user.opid_updated_at) {
                 const lastChanged = new Date(user.opid_updated_at);

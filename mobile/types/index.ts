@@ -153,3 +153,12 @@ export const AI_USER = {
     username: 'AI Assistant',
     avatar: 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png',
 };
+
+export interface MenuRowProps {
+  icon: keyof typeof Ionicons.glyphMap;
+  color: string;
+  title: string;
+  value?: string;          // <--- Added '?' to make it optional
+  showBorder?: boolean;    // <--- Added '?' here too for best practice
+  onPress: () => void;
+}

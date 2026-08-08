@@ -4,7 +4,6 @@ import cors from "cors"
 import userRoutes from "./routes/userRoutes.js"
 import accountRoutes from "./routes/accountRoutes.js"
 import transactionRoutes from "./routes/transactionRoutes.js"
-import premiumRoutes from "./routes/premiumRoutes.js"
 
 import aiRoutes from "./routes/aiRoutes.js"
 
@@ -19,7 +18,6 @@ app.use(cors({ origin: ENV.FRONTEND_URL, credentials: true })) // credentials : 
 app.use("/api/user", userRoutes)
 app.use("/api/account", accountRoutes)
 app.use("/api/transaction", transactionRoutes)
-app.use("/api/premium", premiumRoutes)
 app.use("/api/ai", aiRoutes)
 
 app.listen(ENV.PORT, () => {

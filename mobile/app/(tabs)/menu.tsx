@@ -7,11 +7,36 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { useLanguage } from "../../context/languageContext";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
+import AppInfoModal from "@/components/AppInfoModal";
+import { MenuRowProps } from "@/types";
+
+// Reusable Menu Row Component for cleaner layout
+const MenuRow = ({ icon, color, title, value, showBorder = true, onPress }: MenuRowProps) => (
+  <TouchableOpacity
+    className={`flex-row items-center justify-between py-3.5 px-4 ${showBorder ? "border-b border-gray-100" : ""
+      }`}
+    onPress={onPress}
+    activeOpacity={0.7}
+  >
+    <View className="flex-row items-center">
+      <View className="p-2 rounded-xl bg-gray-100 mr-3">
+        <Ionicons name={icon} size={20} color={color} />
+      </View>
+      <Text className="text-gray-800 text-base font-medium">{title}</Text>
+    </View>
+
+    <View className="flex-row items-center">
+      {value && <Text className="text-gray-500 mr-2 text-sm">{value}</Text>}
+      <Ionicons name="chevron-forward" size={18} color="#9CA3AF" />
+    </View>
+  </TouchableOpacity>
+);
 
 export default function Menu() {
-  const { user, deleteUser, isLoading } = useCurrentUser();
-  const { signOut, getToken } = useAuth();
+  const { user, deleteUser } = useCurrentUser();
+  const { signOut } = useAuth();
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
   const { language } = useLanguage();
   const navigation = useNavigation();
 
@@ -31,10 +56,7 @@ export default function Menu() {
       i18n.t("auth.signOut"),
       i18n.t("auth.signOutConfirm"),
       [
-        {
-          text: i18n.t("common.cancel"),
-          style: "cancel",
-        },
+        { text: i18n.t("common.cancel"), style: "cancel" },
         {
           text: i18n.t("auth.signOut"),
           style: "destructive",
@@ -42,10 +64,7 @@ export default function Menu() {
             try {
               await signOut();
             } catch {
-              Alert.alert(
-                i18n.t("common.error"),
-                "Failed to sign out"
-              );
+              Alert.alert(i18n.t("common.error"), "Failed to sign out");
             }
           },
         },
@@ -60,10 +79,7 @@ export default function Menu() {
         defaultValue: "Are you sure you want to delete your account? This action is permanent and will erase all your data."
       }),
       [
-        {
-          text: i18n.t("common.cancel", { defaultValue: "Cancel" }),
-          style: "cancel",
-        },
+        { text: i18n.t("common.cancel", { defaultValue: "Cancel" }), style: "cancel" },
         {
           text: i18n.t("common.delete", { defaultValue: "Delete" }),
           style: "destructive",
@@ -91,188 +107,111 @@ export default function Menu() {
   };
 
   return (
-    <SafeAreaView key={language} className="flex-1 bg-white">
-      <ScrollView contentContainerStyle={{ padding: 16, flexGrow: 1, justifyContent: "space-between" }}>
-        <View>
-          {/* Profile */}
-          <TouchableOpacity
-            className="bg-gray-50 rounded-2xl p-4 mb-4"
-            onPress={() => router.push("/settings/profile")}
-          >
-            <View className="flex-row items-center">
-              <Image
-                source={{
-                  uri:
-                    user?.avatar_url ??
-                    "https://ui-avatars.com/api/?name=User",
-                }}
-                className="w-20 h-20 rounded-full bg-gray-200"
-              />
+    <SafeAreaView key={language} className="flex-1 bg-gray-50">
+      <ScrollView
+        contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Profile Card */}
+        <TouchableOpacity
+          className="bg-white rounded-2xl p-4 mb-5 shadow-sm border border-gray-100 flex-row items-center"
+          onPress={() => router.push("/settings/profile")}
+          activeOpacity={0.8}
+        >
+          <Image
+            source={{
+              uri: user?.avatar_url ?? "https://ui-avatars.com/api/?name=User",
+            }}
+            className="w-16 h-16 rounded-full bg-gray-200"
+          />
 
-              <View className="flex-1 ml-4">
-                <Text className="text-xl font-bold text-gray-800">
-                  {user?.username ?? "User"}
-                </Text>
-
-                <Text className="text-gray-500 mt-1">
-                  OnlinePiggy ID
-                </Text>
-
-                <Text className="text-gray-400 text-sm">
-                  {user?.opid}
-                </Text>
-              </View>
-
-              <Ionicons
-                name="chevron-forward"
-                size={22}
-                color="#9CA3AF"
-              />
-            </View>
-          </TouchableOpacity>
-
-          {/* Settings */}
-          <View className="bg-gray-50 rounded-2xl p-4 mb-4">
-            {/* Language */}
-            <TouchableOpacity
-              className="flex-row items-center justify-between py-3 border-b border-gray-200"
-              onPress={() => router.push("/settings/language")}
-            >
-              <View className="flex-row items-center">
-                <Ionicons
-                  name="globe-outline"
-                  size={24}
-                  color="#4B5563"
-                />
-
-                <Text className="text-gray-700 text-base ml-3">
-                  {i18n.t("menu.language")}
-                </Text>
-              </View>
-
-              <View className="flex-row items-center">
-                <Text className="text-gray-600 mr-2">
-                  {i18n.t(`languages.${language}.short`)}
-                </Text>
-
-                <Ionicons
-                  name="chevron-forward"
-                  size={20}
-                  color="#9CA3AF"
-                />
-              </View>
-            </TouchableOpacity>
-
-            {/* Currency */}
-            <TouchableOpacity
-              className="flex-row items-center justify-between py-3 border-b border-gray-200"
-              onPress={() => router.push("/settings/currency")}
-            >
-              <View className="flex-row items-center">
-                <Ionicons
-                  name="cash-outline"
-                  size={24}
-                  color="#4B5563"
-                />
-
-                <Text className="text-gray-700 text-base ml-3">
-                  {i18n.t("currency.title")}
-                </Text>
-              </View>
-
-              <View className="flex-row items-center">
-                <Text className="text-gray-600 mr-2">
-                  {currency}
-                </Text>
-
-                <Ionicons
-                  name="chevron-forward"
-                  size={20}
-                  color="#9CA3AF"
-                />
-              </View>
-            </TouchableOpacity>
-
-            {/* Premium Section */}
-            <TouchableOpacity
-              className="flex-row items-center justify-between py-3"
-              onPress={() => router.push("/settings/premium")}
-            >
-              <View className="flex-row items-center">
-                <Ionicons
-                  name="diamond-outline"
-                  size={24}
-                  color="#8B5CF6"
-                />
-
-                <Text className="text-gray-700 text-base ml-3">
-                  {i18n.t("premium.header.title")}
-                </Text>
-
-                {isPremium && (
-                  <View className="ml-2 bg-purple-100 px-2 py-0.5 rounded-full">
-                    <Text className="text-purple-700 text-xs font-semibold">
-                      {i18n.t("premium.labels.activeTag")}
-                    </Text>
-                  </View>
-                )}
-              </View>
-
-              <View className="flex-row items-center">
-                {!isPremium && (
-                  <View className="bg-purple-500 px-3 py-1 rounded-full mr-2">
-                    <Text className="text-white text-xs font-semibold">
-                      {i18n.t("premium.labels.basicTag")}
-                    </Text>
-                  </View>
-                )}
-                <Ionicons
-                  name="chevron-forward"
-                  size={20}
-                  color="#9CA3AF"
-                />
-              </View>
-            </TouchableOpacity>
+          <View className="flex-1 ml-4">
+            <Text className="text-lg font-bold text-gray-900" numberOfLines={1}>
+              {user?.username ?? "User"}
+            </Text>
+            <Text className="text-xs text-gray-400 mt-0.5">OnlinePiggy ID</Text>
+            <Text className="text-gray-500 text-xs font-mono mt-0.5" numberOfLines={1}>
+              {user?.opid}
+            </Text>
           </View>
+
+          <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
+        </TouchableOpacity>
+
+        {/* Section: Preferences */}
+        <Text className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 ml-1">
+          Preferences
+        </Text>
+        <View className="bg-white rounded-2xl mb-5 shadow-sm border border-gray-100 overflow-hidden">
+          <MenuRow
+            icon="globe-outline"
+            color="#4B5563"
+            title={i18n.t("menu.language")}
+            value={i18n.t(`languages.${language}.short`)}
+            onPress={() => router.push("/settings/language")}
+          />
+          <MenuRow
+            icon="cash-outline"
+            color="#4B5563"
+            title={i18n.t("currency.title")}
+            value={currency}
+            onPress={() => router.push("/settings/currency")}
+          />
+          <MenuRow
+            icon="diamond-outline"
+            color="#8B5CF6"
+            title={i18n.t("premium.header.title")}
+            value={isPremium ? i18n.t("premium.labels.activeTag") : i18n.t("premium.labels.basicTag")}
+            showBorder={false}
+            onPress={() => router.push("/settings/premium")}
+          />
+        </View>
+
+        {/* Section: About & Privacy */}
+        <Text className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 ml-1">
+          About & Transparency
+        </Text>
+        <View className="bg-white rounded-2xl mb-6 shadow-sm border border-gray-100 overflow-hidden">
+          <MenuRow
+            icon="information-circle-outline"
+            color="#059669"
+            title="App Data & Services Info"
+            showBorder={false}
+            onPress={() => setInfoModalVisible(true)}
+          />
         </View>
 
         {/* Actions Section */}
-        <View className="mt-8">
-
-          {/* Sign Out */}
+        <View className="space-y-3">
           <TouchableOpacity
             onPress={handleLogout}
-            className="bg-red-500 px-8 py-4 rounded-full flex-row items-center justify-center mb-3"
+            className="bg-red-50 py-3.5 rounded-xl flex-row items-center justify-center border border-red-100"
             activeOpacity={0.7}
           >
-            <Ionicons
-              name="log-out-outline"
-              size={24}
-              color="white"
-            />
-
-            <Text className="text-white font-bold text-lg ml-2">
+            <Ionicons name="log-out-outline" size={20} color="#EF4444" />
+            <Text className="text-red-500 font-semibold text-base ml-2">
               {i18n.t("auth.signOut")}
             </Text>
           </TouchableOpacity>
 
-          {/* Delete Account */}
           <TouchableOpacity
             onPress={handleDeleteAccount}
             className="py-3 flex-row items-center justify-center"
             activeOpacity={0.7}
           >
-            <Ionicons
-              name="trash-outline"
-              size={20}
-              color="#EF4444"
-            />
-            <Text className="text-red-500 font-semibold text-base ml-2">
+            <Ionicons name="trash-outline" size={18} color="#9CA3AF" />
+            <Text className="text-gray-400 font-medium text-sm ml-2">
               {i18n.t("auth.deleteAccount", { defaultValue: "Delete Account" })}
             </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      {/* Modal Component */}
+      <AppInfoModal
+        visible={infoModalVisible}
+        onClose={() => setInfoModalVisible(false)}
+      />
     </SafeAreaView>
   );
 }

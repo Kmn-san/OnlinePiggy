@@ -147,7 +147,7 @@ export default function Premium() {
             packages.forEach((pkg) => {
                 plans.push({
                     id: pkg.identifier,
-                    name: pkg.product.title || i18n.t('premium.plans.premium.name'),
+                    name: i18n.t('premium.plans.premium.name'),
                     price: pkg.product.priceString || 'RM 12',
                     features: [
                         i18n.t('premium.plans.premium.feature_savings'),

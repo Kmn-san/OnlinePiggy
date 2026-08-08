@@ -65,28 +65,16 @@ export default function PricingCard({
             <TouchableOpacity
                 onPress={() => onSubscribe(plan)}
                 disabled={loading || plan.isCurrent}
-                className={`mt-6 py-3 rounded-full ${plan.isCurrent
-                    ? 'bg-gray-200'
-                    : isPremiumPlan
-                        ? 'bg-purple-600'
-                        : 'bg-gray-300'
-                    } ${loading && selectedPlan === plan.id ? 'opacity-50' : ''}`}
+                className={`py-4 rounded-xl items-center justify-center shadow-md ${plan.id === 'starter'
+                        ? 'bg-gray-100' // Neutral for free plan
+                        : 'bg-purple-600 shadow-purple-200' // 💜 Vibrant Purple & Shadow for Premium!
+                    } ${loading && selectedPlan === plan.id ? 'opacity-70' : ''}`}
             >
-                <Text className={`text-center font-semibold ${plan.isCurrent
-                    ? 'text-gray-600'
-                    : isPremiumPlan
-                        ? 'text-white'
-                        : 'text-gray-700'
-                    }`}>
-                    {loading && selectedPlan === plan.id ? (
-                        <ActivityIndicator color={isPremiumPlan ? 'white' : 'gray'} />
-                    ) : isActive ? (
-                        i18n.t("premium.labels.activeStatus")
-                    ) : plan.isCurrent ? (
-                        i18n.t("premium.labels.currentPlan")
-                    ) : (
-                        plan.cta
-                    )}
+                <Text
+                    className={`font-bold text-base ${plan.id === 'starter' ? 'text-gray-700' : 'text-white'
+                        }`}
+                >
+                    {plan.cta}
                 </Text>
             </TouchableOpacity>
         </View>
