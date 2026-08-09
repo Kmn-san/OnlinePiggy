@@ -76,7 +76,8 @@ export default function Menu() {
     Alert.alert(
       i18n.t("auth.deleteAccount", { defaultValue: "Delete Account" }),
       i18n.t("auth.deleteAccountConfirm", {
-        defaultValue: "Are you sure you want to delete your account? This action is permanent and will erase all your data."
+        defaultValue:
+          "Your account will be scheduled for deletion. You can recover your account within 1 month by logging in again. After 1 month, your account and all associated data will be permanently deleted. Are you sure you want to continue?",
       }),
       [
         { text: i18n.t("common.cancel", { defaultValue: "Cancel" }), style: "cancel" },
@@ -140,7 +141,7 @@ export default function Menu() {
 
         {/* Section: Preferences */}
         <Text className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 ml-1">
-          Preferences
+          {i18n.t("menu.preferences")}
         </Text>
         <View className="bg-white rounded-2xl mb-5 shadow-sm border border-gray-100 overflow-hidden">
           <MenuRow
@@ -169,13 +170,13 @@ export default function Menu() {
 
         {/* Section: About & Privacy */}
         <Text className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 ml-1">
-          About & Transparency
+          {i18n.t("menu.aboutTransparency")}
         </Text>
         <View className="bg-white rounded-2xl mb-6 shadow-sm border border-gray-100 overflow-hidden">
           <MenuRow
             icon="information-circle-outline"
             color="#059669"
-            title="App Data & Services Info"
+            title={i18n.t("menu.appDataServicesInfo")}
             showBorder={false}
             onPress={() => setInfoModalVisible(true)}
           />

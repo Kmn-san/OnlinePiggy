@@ -7,7 +7,8 @@
     "cancel": "Cancel",
     "continue": "Continue",
     "done": "Done",
-    "cancelInfo": "Are you sure you want to cancel? All entered data will be lost."
+    "cancelInfo": "Are you sure you want to cancel? All entered data will be lost.",
+    "delete": "DELETE"
   },
   "success": {
     "profilePicUpdated": "Update Profile Pic Successfully!",
@@ -42,7 +43,10 @@
     "selectLanguage": "Choose your preferred language",
     "currency": "Currency",
     "selectCurrency": "Choose your preferred currency",
-    "profile": "Profile"
+    "profile": "Profile",
+    "preferences": "Preferences",
+    "aboutTransparency": "About & Transparency",
+    "appDataServicesInfo": "App Data & Services Info"
   },
   "languages": {
     "en": {
@@ -78,7 +82,9 @@
     "agreement": "By signing up, you agree to our ",
     "selectLanguage": "Select Language",
     "signOut": "Sign Out",
-    "signOutConfirm": "Are you sure you want to sign out?"
+    "signOutConfirm": "Are you sure you want to sign out?",
+    "deleteAccount": "Delete Account",
+    "deleteAccountConfirm": "Your account will be scheduled for deletion. You can recover your account within 1 month by logging in again. After 1 month, your account and all associated data will be permanently deleted. Are you sure you want to continue?"
   },
   "tabs": {
     "home": "Home",
@@ -206,7 +212,13 @@
       "active": "ACTIVE",
       "perMonth": "/ month",
       "activeStatus": "Active",
-      "currentPlan": "Current Plan"
+      "currentPlan": "Current Plan",
+      "selectPlan": "Select this plan"
+    },
+    "cancel": {
+      "title": "Cancel Premium?",
+      "message": "Your Premium subscription will be cancelled. You will keep your Premium benefits until the end of your current billing period.",
+      "confirm": "Cancel Premium"
     },
     "status": {
       "active": "Premium Active",
@@ -268,5 +280,22 @@
     "error": "Something went wrong.",
     "noResponse": "No response",
     "aiLabel": "AI"
+  },
+  "appInfo": {
+    "title": "App Data & Services",
+    "dataCollected": "Data We Collect",
+    "googleProfile": "Google Name & Profile Picture",
+    "financialRecords": "Account & Transaction Financial Records",
+    "currencyPreferences": "Currency Preferences",
+    "poweredBy": "Powered By",
+    "authentication": "Authentication (Clerk)",
+    "authenticationDescription": "Handles secure login, logout, registration, and user sessions.",
+    "database": "Database (Neon Postgres)",
+    "databaseDescription": "Stores user accounts, balances, and transaction logs securely on the cloud.",
+    "moneyExchange": "Money Exchange (RapidAPI)",
+    "moneyExchangeDescription": "Powered by exchange-rates7.p.rapidapi.com for accurate live currency rates.",
+    "aiAssistant": "AI Assistant (DeepSeek via OpenRouter)",
+    "aiAssistantDescription": "Processes chat prompts via OpenRouter to provide financial insights.",
+    "gotIt": "Got it"
   }
 }

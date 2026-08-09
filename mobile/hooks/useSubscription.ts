@@ -1,123 +1,182 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import Purchases, { PurchasesPackage, CustomerInfo } from 'react-native-purchases';
 import { Alert } from 'react-native';
-import { useAuth, useUser } from '@clerk/clerk-expo';
-import { useStripe } from '@stripe/stripe-react-native';
-import i18n from '@/lib/i18n';
-import { useApi } from '@/lib/api';
+import { router } from 'expo-router';
+import i18n from '../lib/i18n';
+import { PricingPlan } from '@/types';
+import useCurrentUser from './useCurrentUser'; // Import your hook
 
 export function useSubscription() {
-    const api = useApi();
-    const { user } = useUser();
-    const { getToken } = useAuth();
-    const [loading, setLoading] = useState(false);
-    const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
-    // Check premium status. You can track this in state or via a DB fetch
+    const { user, updatePremium } = useCurrentUser(); // 🚀 Grab updatePremium from your API hook
+
     const [isPremium, setIsPremium] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [restoring, setRestoring] = useState(false);
+    const [packages, setPackages] = useState<PurchasesPackage[]>([]);
+    const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
-    // 1. Fetch latest subscription status directly from your Postgres DB
-    const checkPremiumStatus = async () => {
-        if (!api) return;
-        try {
-            const response = await api.get('/payment/status');
-            setIsPremium(!!response.data?.is_premium);
-        } catch (error) {
-            console.error('Error fetching user premium status:', error);
-        }
+    const updateSubscriptionStatus = (customerInfo: CustomerInfo) => {
+        const activeEntitlementsList = Object.values(customerInfo.entitlements.active);
+
+        const activeEntitlement =
+            customerInfo.entitlements.active["Online Piggy Premium"] ||
+            activeEntitlementsList[0];
+
+        setIsPremium(!!activeEntitlement);
     };
 
-    // 2. Poll/Verify after Stripe Sheet closes to give the Webhook time to finish
-    const verifySubscription = async () => {
+    const loadRevenueCatData = useCallback(async () => {
         try {
             setLoading(true);
-            // Give Stripe's webhook 2 seconds to write to PostgreSQL
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            const customerInfo = await Purchases.getCustomerInfo();
+            updateSubscriptionStatus(customerInfo);
 
-            if (api) {
-                const response = await api.get('/payment/status');
-                const updatedStatus = !!response.data?.is_premium;
-                setIsPremium(updatedStatus);
-
-                if (updatedStatus) {
-                    Alert.alert('Success! 🎉', 'Welcome to Premium! Your features are now active.');
-                } else {
-                    Alert.alert('Processing...', 'Your payment went through! It may take a minute for your profile to update.');
-                }
+            const offeringsData = await Purchases.getOfferings();
+            const activeOffering = offeringsData.current || Object.values(offeringsData.all)[0];
+            if (activeOffering && activeOffering.availablePackages.length > 0) {
+                setPackages(activeOffering.availablePackages);
             }
         } catch (error) {
-            console.error('Verification error:', error);
+            console.error("Error loading RevenueCat offerings:", error);
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
-    // 3. Initiate checkout process
-    const handleSubscribe = async () => {
-        if (isPremium) {
-            Alert.alert('Info', 'You already have an active premium subscription!');
-            return;
-        }
+    useEffect(() => {
+        loadRevenueCatData();
+    }, [loadRevenueCatData]);
 
-        if (!api) {
-            Alert.alert('Error', 'API connection is not ready.');
-            return;
-        }
+    // 🚀 Handle Purchase & Backend Sync using your API hook mutation
+    const handleSubscribe = async (plan: PricingPlan) => {
+        if (plan.id === 'starter') return;
 
         try {
             setLoading(true);
-            const token = await getToken();
+            setSelectedPlanId(plan.id);
 
-            // Fetch Client Secret from your paymentController.js
-            const response = await api.post('/payment/create-intent', {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-
-            const clientSecret = response.data?.clientSecret;
-            if (!clientSecret) {
-                throw new Error('Failed to retrieve checkout details from server.');
-            }
-
-            // Initialize Native Mobile Stripe Payment Sheet
-            const { error: initError } = await initPaymentSheet({
-                paymentIntentClientSecret: clientSecret,
-                merchantDisplayName: 'OnlinePiggy', returnURL: 'mypiggyapp://stripe-redirect',
-            });
-
-            if (initError) {
-                Alert.alert('Error', 'Failed to load checkout sheet.');
-                console.error('Stripe Init Error:', initError);
+            const targetPackage = packages.find(pkg => pkg.identifier === plan.id) || packages[0];
+            if (!targetPackage) {
+                Alert.alert("Error", "Selected subscription package could not be found.");
                 return;
             }
 
-            // Present the native checkout modal
-            const { error: presentError } = await presentPaymentSheet();
+            const { customerInfo } = await Purchases.purchasePackage(targetPackage);
+            updateSubscriptionStatus(customerInfo);
 
-            if (presentError) {
-                if (presentError.code === 'Canceled') {
-                    console.log('User closed payment sheet');
-                    return;
+            const hasActive = Object.keys(customerInfo.entitlements.active).length > 0;
+
+            if (hasActive) {
+                try {
+                    // Clean and secure call using React Query mutation (auto-includes auth headers)
+                    await updatePremium.mutateAsync({
+                        packageIdentifier: targetPackage.identifier,
+                        entitlements: customerInfo.entitlements.active,
+                    });
+                    console.log("Backend successfully synced with subscription.");
+                } catch (backendError) {
+                    console.error("Failed to sync subscription with backend:", backendError);
                 }
-                throw new Error(presentError.message);
+
+                Alert.alert("Success!", "You have successfully unlocked Premium.");
+                router.replace("/");
             }
-
-            // Wait for Webhook to execute on backend, then update UI state
-            await verifySubscription();
-
         } catch (error: any) {
-            const errorMessage = error.response?.data?.error || error.message;
-            Alert.alert(i18n.t('common.error'), errorMessage || 'Payment could not be completed.');
-            console.error('Payment Error:', error);
+            if (!error.userCancelled) {
+                console.error("Purchase error:", error);
+                Alert.alert("Purchase Failed", error.message || "Could not complete the purchase.");
+            }
         } finally {
             setLoading(false);
+            setSelectedPlanId(null);
         }
     };
 
+    const handleRestorePurchase = async () => {
+        try {
+            setRestoring(true);
+            const customerInfo = await Purchases.restorePurchases();
+            updateSubscriptionStatus(customerInfo);
+
+            const hasActive = Object.keys(customerInfo.entitlements.active).length > 0;
+            if (hasActive) {
+                Alert.alert('Restored', 'Your premium access has been successfully restored.');
+            } else {
+                Alert.alert('No Active Subscription', 'No active purchases were found to restore.');
+            }
+        } catch (error: any) {
+            console.error("Error restoring purchase:", error);
+            Alert.alert('Error', error.message || 'Could not restore purchases.');
+        } finally {
+            setRestoring(false);
+        }
+    };
+
+    const pricingPlans = useMemo(() => {
+        const plans: PricingPlan[] = [
+            {
+                id: 'starter',
+                name: i18n.t('premium.plans.starter.name'),
+                price: 'RM 0',
+                features: [
+                    i18n.t('premium.plans.starter.feature_basic'),
+                    i18n.t('premium.plans.starter.feature_savings'),
+                    i18n.t('premium.plans.starter.feature_expenses'),
+                    i18n.t('premium.plans.starter.feature_bot')
+                ],
+                cta: i18n.t('premium.plans.starter.cta'),
+                isCurrent: !isPremium,
+                clerkPriceId: null
+            }
+        ];
+
+        if (packages.length > 0) {
+            packages.forEach((pkg) => {
+                plans.push({
+                    id: pkg.identifier,
+                    name: i18n.t('premium.plans.premium.name'),
+                    price: pkg.product.priceString || 'RM 12',
+                    features: [
+                        i18n.t('premium.plans.premium.feature_savings'),
+                        i18n.t('premium.plans.premium.feature_expenses'),
+                        i18n.t('premium.plans.premium.feature_ai')
+                    ],
+                    cta: i18n.t('premium.plans.premium.cta'),
+                    isCurrent: !!isPremium,
+                    clerkPriceId: pkg.product.identifier
+                });
+            });
+        } else {
+            plans.push({
+                id: 'premium',
+                name: i18n.t('premium.plans.premium.name'),
+                price: 'RM 12',
+                features: [
+                    i18n.t('premium.plans.premium.feature_savings'),
+                    i18n.t('premium.plans.premium.feature_expenses'),
+                    i18n.t('premium.plans.premium.feature_ai')
+                ],
+                cta: i18n.t('premium.plans.premium.cta'),
+                isCurrent: !!isPremium,
+                clerkPriceId: 'price_premium_id'
+            });
+        }
+
+        return plans;
+    }, [isPremium, packages]);
+
+    const hasPurchasedBefore = user?.premium_expire_at !== null;
+    const showRestoreButton = !isPremium || hasPurchasedBefore;
+
     return {
-        loading,
         isPremium,
+        loading,
+        restoring,
+        selectedPlanId,
+        pricingPlans,
+        showRestoreButton,
         handleSubscribe,
-        checkPremiumStatus,
+        handleRestorePurchase,
     };
 }

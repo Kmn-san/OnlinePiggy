@@ -7,7 +7,8 @@
     "cancel": "取消",
     "done": "完成",
     "continue": "继续",
-    "cancelInfo": "真的要取消您的操作吗？您所输入的会被清空"
+    "cancelInfo": "真的要取消您的操作吗？您所输入的会被清空",
+    "delete":"删除账号"
   },
   "success": {
     "profilePicUpdated": "你的帅/美照更新好啦！",
@@ -42,7 +43,10 @@
     "selectLanguage": "请选择您偏好的语言",
     "currency": "货币",
     "selectCurrency": "请选择您使用的货币",
-    "profile": "个人资料"
+    "profile": "个人资料",
+    "preferences": "偏好设置",
+    "aboutTransparency": "关于与隐私",
+    "appDataServicesInfo": "应用数据与服务信息"
   },
   "languages": {
     "en": {
@@ -78,7 +82,9 @@
     "agreement": "注册即表示您同意我们的",
     "selectLanguage": "选择语言",
     "signOut": "退出登录",
-    "signOutConfirm": "你要离开我了吗 Q _ Q"
+    "signOutConfirm": "你要离开我了吗 Q _ Q",
+    "deleteAccount": "删除账号",
+    "deleteAccountConfirm": "您的账户将被设为待删除状态。您可以在1个月内重新登录以恢复账户。1个月后，您的账户及所有相关数据将被永久删除。确定要继续吗？"
   },
   "tabs": {
     "home": "首页",
@@ -210,7 +216,13 @@
       "active": "已激活",
       "perMonth": "/ 月",
       "activeStatus": "已激活",
-      "currentPlan": "当前计划"
+      "currentPlan": "当前计划",
+      "selectPlan": "选择此方案"
+    },
+    "cancel": {
+      "title": "取消 Premium？",
+      "message": "您的 Premium 订阅将被取消。在当前计费周期结束之前，您仍然可以继续使用 Premium 功能。",
+      "confirm": "取消 Premium"
     },
     "plans": {
       "starter": {
@@ -268,5 +280,22 @@
     "error": "出现了一些问题。",
     "noResponse": "无响应",
     "aiLabel": "AI"
+  },
+  "appInfo": {
+    "title": "应用数据与服务",
+    "dataCollected": "我们收集的数据",
+    "googleProfile": "Google姓名和头像",
+    "financialRecords": "账户和交易财务记录",
+    "currencyPreferences": "货币设置",
+    "poweredBy": "使用的服务",
+    "authentication": "身份验证（Clerk）",
+    "authenticationDescription": "负责安全的登录、登出、注册以及用户会话管理。",
+    "database": "数据库（Neon Postgres）",
+    "databaseDescription": "在云端安全地存储用户账户、余额和交易记录。",
+    "moneyExchange": "汇率服务（RapidAPI）",
+    "moneyExchangeDescription": "使用exchange-rates7.p.rapidapi.com提供准确的实时汇率。",
+    "aiAssistant": "AI助手（DeepSeek via OpenRouter）",
+    "aiAssistantDescription": "通过OpenRouter处理聊天内容，为用户提供财务分析和建议。",
+    "gotIt": "知道了"
   }
 }

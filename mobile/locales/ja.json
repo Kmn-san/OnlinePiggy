@@ -7,7 +7,8 @@
     "cancel": "取消",
     "done": "完成",
     "continue": "続ける",
-    "cancelInfo": "本当にキャンセルしますか？入力したデータはすべて失われます。"
+    "cancelInfo": "本当にキャンセルしますか？入力したデータはすべて失われます。",
+    "delete":"削除"
   },
   "success": {
     "profilePicUpdated": "プロファイル　ピクチャーを変更しました",
@@ -42,7 +43,10 @@
     "selectLanguage": "使用する言語を選択してください",
     "currency": "通貨",
     "selectCurrency": "使用する通貨を選択してください",
-    "profile": "プロフィール"
+    "profile": "プロフィール",
+    "preferences": "設定",
+    "aboutTransparency": "アプリ情報とプライバシー",
+    "appDataServicesInfo": "アプリのデータとサービスについて"
   },
   "languages": {
     "en": {
@@ -79,7 +83,9 @@
     "selectLanguage": "言語を選択",
     "cancel": "キャンセル",
     "signOut": "サインアウト",
-    "signOutConfirm": "サインアウトしてもよろしいですか？"
+    "signOutConfirm": "サインアウトしてもよろしいですか？",
+    "deleteAccount": "アカウントを削除",
+    "deleteAccountConfirm": "アカウントは削除予定として設定されます。1か月以内であれば、再度ログインすることでアカウントを復元できます。1か月が経過すると、アカウントと関連するすべてのデータが完全に削除されます。続行しますか？"
   },
   "tabs": {
     "home": "ホーム",
@@ -207,7 +213,13 @@
       "active": "有効",
       "perMonth": "/ 月",
       "activeStatus": "有効",
-      "currentPlan": "現在のプラン"
+      "currentPlan": "現在のプラン",
+      "selectPlan": "このプランを選択"
+    },
+    "cancel": {
+      "title": "プレミアムを解約しますか？",
+      "message": "プレミアムのサブスクリプションが解約されます。現在の請求期間が終了するまで、プレミアム機能を引き続き利用できます。",
+      "confirm": "プレミアムを解約"
     },
     "status": {
       "active": "プレミアム有効",
@@ -269,5 +281,22 @@
     "error": "エラーが発生しました。",
     "noResponse": "応答がありません",
     "aiLabel": "AI"
+  },
+  "appInfo": {
+    "title": "アプリのデータとサービス",
+    "dataCollected": "収集するデータ",
+    "googleProfile": "Googleの名前とプロフィール画像",
+    "financialRecords": "アカウントと取引の財務記録",
+    "currencyPreferences": "通貨設定",
+    "poweredBy": "使用しているサービス",
+    "authentication": "認証（Clerk）",
+    "authenticationDescription": "安全なログイン、ログアウト、登録、ユーザーセッションを管理します。",
+    "database": "データベース（Neon Postgres）",
+    "databaseDescription": "ユーザーアカウント、残高、取引履歴をクラウド上で安全に保存します。",
+    "moneyExchange": "為替レート（RapidAPI）",
+    "moneyExchangeDescription": "exchange-rates7.p.rapidapi.comを使用して、最新の為替レートを提供します。",
+    "aiAssistant": "AIアシスタント（DeepSeek via OpenRouter）",
+    "aiAssistantDescription": "OpenRouterを通じてチャット内容を処理し、財務に関するアドバイスや分析を提供します。",
+    "gotIt": "了解"
   }
 }

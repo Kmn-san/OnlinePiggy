@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { protectRoute } from "../middleware/authMiddleware.js";
 import { profilePicUpload } from "../middleware/multer.js";
-import { changeCurrency, getUser, recoverUser, softDeleteUser, updateProfilePic, updateUser } from "../controller/userController.js";
+import { changeCurrency, getUser, recoverUser, softDeleteUser, updatePremium, updateProfilePic, updateUser } from "../controller/userController.js";
 const router = Router()
 
 router.use(protectRoute);
@@ -12,5 +12,6 @@ router.patch("/currency", changeCurrency)
 router.patch("/avatar", profilePicUpload, updateProfilePic)
 router.delete("/remove-user", softDeleteUser)
 router.patch("/recover-user", recoverUser)
+router.patch("/premium", updatePremium)
 
 export default router

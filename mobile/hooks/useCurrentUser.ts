@@ -37,6 +37,17 @@ const useCurrentUser = (options?: { enabled?: boolean }) => {
         }
     })
 
+    const updatePremium = useMutation({
+        mutationFn: async (body: { packageIdentifier: string; entitlements: any }) => {
+            const { data } = await api.patch("/user/premium", body)
+            return data
+        },
+        onSuccess: () => {
+            // Invalidate "me" so the user object immediately updates with new premium status
+            queryClient.invalidateQueries({ queryKey: ["me"] });
+        }
+    })
+
     const useUpdateUser = useMutation({
         mutationFn: async (body: Partial<User>) => {
             const { data } = await api.patch("/user/me", body)
@@ -109,7 +120,8 @@ const useCurrentUser = (options?: { enabled?: boolean }) => {
         isDeleting,
         recoverUser,
         isRecovering,
-        updateAvatar
+        updateAvatar,
+        updatePremium
     };
 }
 export default useCurrentUser

@@ -4,7 +4,7 @@ import cloudinary from "../utlis/cloudinary.js"
 
 export const getUser = async (req, res) => {
     try {
-        
+
         const clerkId = req.clerkId;
         const user = req.user
 
@@ -22,7 +22,7 @@ export const getUser = async (req, res) => {
     }
 }
 
-export const  updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
     try {
         const clerkId = req.clerkId;
         const clientData = req.body;
@@ -184,7 +184,7 @@ export const recoverUser = async (req, res) => {
         }
 
         const result = await userService.recoverUser(clerkId)
-        
+
         return res.status(200).json(result)
 
     } catch (error) {
@@ -195,3 +195,32 @@ export const recoverUser = async (req, res) => {
         });
     }
 }
+
+export const updatePremium = async (req, res) => {
+    try {
+        const clerkId = req.clerkId; // Adjust based on how you get clerkId from your auth middleware
+        const { entitlements } = req.body;
+
+
+        // Find the active entitlement sent from RevenueCat client SDK
+        const activeEntitlement = Object.values(entitlements)[0];
+
+        if (!activeEntitlement) {
+            return res.status(400).json({ message: "No active entitlements found" });
+        }
+
+        // RevenueCat provides 'expiresDate' (e.g., "2026-05-09T12:00:00Z")
+        const expireAt = activeEntitlement.expiresDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
+        // Update database
+        const updatedUser = await userService.setPremium(clerkId, expireAt);
+        return res.status(200).json({
+            success: true,
+            message: "Premium status updated successfully",
+            user: updatedUser,
+        });
+    } catch (error) {
+        console.error("Error updating premium status:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};

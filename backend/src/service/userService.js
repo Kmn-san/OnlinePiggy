@@ -123,17 +123,17 @@ export const changeProfilePic = async (imageUrl, newPublicId, clerkId) => {
     return rows[0]
 }
 
-export const setPremium = async (userId, is_premium) => {
-    const now = new Date().toISOString()
+export const setPremium = async (clerkId, expireAt) => {
     const { rows } = await query(
         `UPDATE users
         SET is_premium = $1, premium_expire_at = $2
-        WHERE id = $3`, [
-        is_premium, now, userId
+        WHERE clerkid = $3
+        RETURNING *`, [
+        true, expireAt, clerkId
     ]
-    )
-    return rows[0]
-}
+    );
+    return rows[0];
+};
 
 export const softDelete = async (clerkId) => {
     const { rows } = await query(
