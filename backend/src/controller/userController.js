@@ -198,29 +198,47 @@ export const recoverUser = async (req, res) => {
 
 export const updatePremium = async (req, res) => {
     try {
-        const clerkId = req.clerkId; // Adjust based on how you get clerkId from your auth middleware
-        const { entitlements } = req.body;
+        const clerkId = req.clerkId;
+        const { packageIdentifier, entitlements } = req.body;
 
+        // Check if there are active entitlements sent from the client
+        const activeEntitlementsList = Object.values(entitlements || {});
+        const activeEntitlement = activeEntitlementsList[0];
 
-        // Find the active entitlement sent from RevenueCat client SDK
-        const activeEntitlement = Object.values(entitlements)[0];
+        let isPremium = false;
+        let expireAt = null;
 
-        if (!activeEntitlement) {
-            return res.status(400).json({ message: "No active entitlements found" });
+        if (activeEntitlement) {
+            isPremium = true;
+
+            // RevenueCat provides expiresDate as an ISO string for subscriptions.
+            // If for any reason it's missing, default to 30 days from now (matching your P1M billing period).
+            const rawExpiresDate = activeEntitlement.expiresDate;
+
+            if (rawExpiresDate) {
+                expireAt = new Date(rawExpiresDate).toISOString();
+            } else {
+                // Fallback: 30 days out for monthly subscription
+                const futureDate = new Date();
+                futureDate.setDate(futureDate.getDate() + 30);
+                expireAt = futureDate.toISOString();
+            }
+        } else {
+            isPremium = false;
+            // Set to current time to mark it as expired immediately
+            expireAt = new Date().toISOString();
         }
 
-        // RevenueCat provides 'expiresDate' (e.g., "2026-05-09T12:00:00Z")
-        const expireAt = activeEntitlement.expiresDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+        // Update database using your helper function
+        const updatedUser = await setPremium(clerkId, isPremium, expireAt);
 
-        // Update database
-        const updatedUser = await userService.setPremium(clerkId, expireAt);
         return res.status(200).json({
             success: true,
-            message: "Premium status updated successfully",
+            message: "Subscription status synced successfully",
             user: updatedUser,
         });
     } catch (error) {
-        console.error("Error updating premium status:", error);
+        console.error("Error updating subscription:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 };

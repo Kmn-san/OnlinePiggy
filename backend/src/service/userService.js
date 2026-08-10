@@ -123,13 +123,13 @@ export const changeProfilePic = async (imageUrl, newPublicId, clerkId) => {
     return rows[0]
 }
 
-export const setPremium = async (clerkId, expireAt) => {
+export const setPremium = async (clerkId, isPremium, expireAt) => {
     const { rows } = await query(
         `UPDATE users
         SET is_premium = $1, premium_expire_at = $2
         WHERE clerkid = $3
         RETURNING *`, [
-        true, expireAt, clerkId
+        isPremium, expireAt, clerkId
     ]
     );
     return rows[0];

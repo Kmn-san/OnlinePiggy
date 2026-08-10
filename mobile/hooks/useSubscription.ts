@@ -4,11 +4,11 @@ import { Alert } from 'react-native';
 import { router } from 'expo-router';
 import i18n from '../lib/i18n';
 import { PricingPlan } from '@/types';
-import useCurrentUser from './useCurrentUser'; // Import your hook
+import useCurrentUser from './useCurrentUser';
 
 export function useSubscription() {
-
-    const { user, updatePremium } = useCurrentUser(); // 🚀 Grab updatePremium from your API hook
+    // 🚀 Grab user and updatePremium mutation from useCurrentUser
+    const { user, updatePremium } = useCurrentUser();
 
     const [isPremium, setIsPremium] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -18,19 +18,29 @@ export function useSubscription() {
 
     const updateSubscriptionStatus = (customerInfo: CustomerInfo) => {
         const activeEntitlementsList = Object.values(customerInfo.entitlements.active);
-
         const activeEntitlement =
             customerInfo.entitlements.active["Online Piggy Premium"] ||
             activeEntitlementsList[0];
 
         setIsPremium(!!activeEntitlement);
+        return !!activeEntitlement;
     };
 
     const loadRevenueCatData = useCallback(async () => {
         try {
             setLoading(true);
             const customerInfo = await Purchases.getCustomerInfo();
-            updateSubscriptionStatus(customerInfo);
+            const active = updateSubscriptionStatus(customerInfo);
+
+            // 🚀 Auto-sync with backend if RevenueCat says active, but backend database says false
+            if (active && user && !user.is_premium) {
+                const activeEntitlement = Object.values(customerInfo.entitlements.active)[0] as any;
+                await updatePremium.mutateAsync({
+                    packageIdentifier: activeEntitlement?.productIdentifier || 'premium',
+                    entitlements: customerInfo.entitlements.active,
+                });
+                console.log("Auto-synced active subscription with backend.");
+            }
 
             const offeringsData = await Purchases.getOfferings();
             const activeOffering = offeringsData.current || Object.values(offeringsData.all)[0];
@@ -42,13 +52,12 @@ export function useSubscription() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         loadRevenueCatData();
     }, [loadRevenueCatData]);
 
-    // 🚀 Handle Purchase & Backend Sync using your API hook mutation
     const handleSubscribe = async (plan: PricingPlan) => {
         if (plan.id === 'starter') return;
 
@@ -63,13 +72,10 @@ export function useSubscription() {
             }
 
             const { customerInfo } = await Purchases.purchasePackage(targetPackage);
-            updateSubscriptionStatus(customerInfo);
+            const active = updateSubscriptionStatus(customerInfo);
 
-            const hasActive = Object.keys(customerInfo.entitlements.active).length > 0;
-
-            if (hasActive) {
+            if (active) {
                 try {
-                    // Clean and secure call using React Query mutation (auto-includes auth headers)
                     await updatePremium.mutateAsync({
                         packageIdentifier: targetPackage.identifier,
                         entitlements: customerInfo.entitlements.active,
@@ -97,10 +103,15 @@ export function useSubscription() {
         try {
             setRestoring(true);
             const customerInfo = await Purchases.restorePurchases();
-            updateSubscriptionStatus(customerInfo);
+            const active = updateSubscriptionStatus(customerInfo);
 
-            const hasActive = Object.keys(customerInfo.entitlements.active).length > 0;
-            if (hasActive) {
+            if (active) {
+                const activeEntitlement = Object.values(customerInfo.entitlements.active)[0] as any;
+                await updatePremium.mutateAsync({
+                    packageIdentifier: activeEntitlement?.productIdentifier || 'premium',
+                    entitlements: customerInfo.entitlements.active,
+                });
+
                 Alert.alert('Restored', 'Your premium access has been successfully restored.');
             } else {
                 Alert.alert('No Active Subscription', 'No active purchases were found to restore.');
