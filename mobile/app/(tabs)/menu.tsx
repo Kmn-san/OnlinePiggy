@@ -1,5 +1,5 @@
 // app/(tabs)/Menu.js
-import { useAuth } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/expo";
 import { Text, View, TouchableOpacity, Alert, Image, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import i18n from "../../lib/i18n";

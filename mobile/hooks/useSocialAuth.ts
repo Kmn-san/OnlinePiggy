@@ -1,4 +1,4 @@
-import { useOAuth, useAuth } from "@clerk/clerk-expo"; // 1. Import useAuth
+import { useOAuth, useAuth } from "@clerk/expo";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 import { useCallback, useState } from "react";
@@ -13,7 +13,7 @@ type OAuthStrategy = "oauth_google" | "oauth_apple";
 export default function useSocialAuth() {
   const [loadingStrategy, setLoadingStrategy] = useState<OAuthStrategy | null>(null);
   
-  const { getToken } = useAuth(); // 2. Extract getToken
+  const { getToken } = useAuth(); // Keep this if you need it elsewhere
 
   const googleOAuth = useOAuth({
     strategy: "oauth_google",
@@ -39,17 +39,6 @@ export default function useSocialAuth() {
             session: createdSessionId,
           });
 
-          // 3. Grab and log the Clerk Bearer Token for Postman!
-          try {
-            const token = await getToken();
-            console.log("========================================");
-            console.log("🔑 CLERK BEARER TOKEN FOR POSTMAN:");
-            console.log(token);
-            console.log("========================================");
-          } catch (tokenError) {
-            console.error("Failed to fetch token:", tokenError);
-          }
-
           router.replace("/(tabs)");
         }
       } catch (err) {
@@ -65,7 +54,7 @@ export default function useSocialAuth() {
         setLoadingStrategy(null);
       }
     },
-    [googleOAuth, appleOAuth, getToken]
+    [googleOAuth, appleOAuth]
   );
 
   return {

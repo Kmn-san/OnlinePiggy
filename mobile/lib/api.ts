@@ -1,4 +1,4 @@
-import { useAuth } from "@clerk/clerk-expo"
+import { useAuth } from "@clerk/expo"
 import axios from "axios"
 import { useEffect } from "react"
 
